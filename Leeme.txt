@@ -1,0 +1,47 @@
+php artisan storage:link
+
+
+copiar las estructuras de archivos
+
+en storage
+
+/*************---------------*/
+crear en storage:
+
+app/
+framework/
+logs/
+
+/*----------------------------*/
+en /storage/app/
+
+carteras/
+documentos/
+pagos/
+pagos/bcp
+pagos/financiero
+pagos/resumen_scotiabank
+pagos/scotiabank
+public/
+public/avatar
+public/firma
+public/fotoIng
+public/fotos
+public/fotos_bienestar
+public/fotos_rechazadas
+public/fotosok
+public/fotosok/tmp
+public/huella
+public/huellabmp
+public/tmp
+
+/*----------------------------*/
+
+
+
+
+
+
+
+
+
