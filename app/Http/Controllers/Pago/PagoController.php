@@ -676,7 +676,7 @@ public function CalculoServiciosAd($postulante)
 
         PDF::SetXY(18,70);
 
-	#	PDF::Cell(123,5,'PUEDES PAGAR DESDE: '.$pagodatime,0,0,'L');
+	#PDF::Cell(123,5,'PUEDES PAGAR DESDE: '.$pagodatime,0,0,'L');
 
 
         if( $pagodatime == 'NO PUEDE PAGAR YA QUE LA DECLARACIÓN NO ESTÁ APROBADA'){
@@ -686,11 +686,11 @@ public function CalculoServiciosAd($postulante)
 
             if($postulante->idmodalidad==16){
            #     PDF::MultiCell(150,5,$pagodatime, 0, 'L', false);
-               PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 27/07/2023', 0, 'L', false);
+           #    PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 27/07/2023', 0, 'L', false);
 
             }else {
              #    PDF::MultiCell(150,5,'PUEDES PAGAR DESDE: '.$pagodatime, 0, 'L', false);
-               PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 27/07/2023', 0, 'L', false);
+             #  PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 27/07/2023', 0, 'L', false);
             }
 
 

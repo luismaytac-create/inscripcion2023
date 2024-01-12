@@ -36,10 +36,38 @@
 
                                     <b>ESTADO     :</b> {!! $data->declaracionEva->estado !!} <br>
 
-
+					<b>DNI: </b><a data-toggle="modal" data-target="#m_modal_4" onclick="modalFoto({!! $data->numero_identificacion !!})" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="DNI"> <i class="flaticon-profile-1"></i> </a>
 
 
                                     <p></p>
+<div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">DNI SUBIDO</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+
+                                        <div id="resultado">
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             @if($documentos->count() == 0)
@@ -210,8 +238,6 @@
 @stop
 
 @section('js-scripts')
-    {!! Html::script('assets/foto/jquery-3.4.1.slim.min.js') !!}
-    {!! Html::script('assets/foto/bootstrap.bundle.min.js') !!}
 
 
 
@@ -227,7 +253,68 @@
                 },
             });
         });
+
+
+
+        function obtenerfotos(e){
+            $('#resultado').empty();
+            $('#resultado2').empty();
+            $('#resultado3').empty();
+            $.ajax({
+                type: "GET",
+                url: '/admin/verificador-archivos',
+                data: { dni : e},
+                success: function(data)
+                {
+                    if(typeof data === 'object'){
+                        var i;
+                        for (i = 0; i < data.length; i++) {
+                            var f = '/storage/'+data[i].archivo;
+                            var len = data[i].archivo.length;
+                            var res = data[i].archivo.substring(len-5);
+                            if(res.includes(".pdf") || res.includes(".PDF") ){
+                                $( "#resultado" ).append( "<iframe src='" + f + "' class='embed-responsive-item'  width='100%' height='600px'></iframe>");
+                                $( "#resultado2" ).append( "<iframe src='" + f + "' class='embed-responsive-item' width='100%' height='600px'></iframe>");
+                                $( "#resultado3" ).append( "<iframe src='" + f + "' class='embed-responsive-item' width='100%' height='600px'></iframe>");
+                            }else {
+                                $( "#resultado" ).append( " <img src='" + f + "' class='img-fluid'>");
+                                $( "#resultado2" ).append( " <img src='" + f + "' class='img-fluid'>");
+                                $( "#resultado3" ).append( " <img src='" + f + "' class='img-fluid'>");
+                            }
+                        }
+                    }else {
+                        var f = '/storage/'+data;
+                        var len = data.length;
+                        var res = data.substring(len-5);
+                        if(res.includes(".pdf") || res.includes(".PDF") ){
+                            $( "#resultado" ).append( "<iframe src='" + f + "' class='embed-responsive-item'  width='100%' height='600px'></iframe>");
+                            $( "#resultado2" ).append( "<iframe src='" + f + "' class='embed-responsive-item'  width='100%' height='600px'></iframe>");
+                            $( "#resultado3" ).append( "<iframe src='" + f + "'  class='embed-responsive-item' width='100%' height='600px'></iframe>");
+                        }else {
+                            $( "#resultado" ).append( " <img src='" + f + "' class='img-fluid'>");
+                            $( "#resultado2" ).append( " <img src='" + f + "' class='img-fluid'>");
+                            $( "#resultado3" ).append( " <img src='" + f + "' class='img-fluid'>");
+                        }
+                    }
+                },
+                error: function (data) {
+                    $('#dnidatos').val("ERROR");
+                    alert("ERROR EN CARGAR OBSERVACION");
+                }
+            });
+        }
+
+        function modalFoto(e) {
+
+
+            obtenerfotos(e);
+
+        }
+
+
     </script>
+
+
 
 @stop
 

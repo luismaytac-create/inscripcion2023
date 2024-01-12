@@ -69,10 +69,11 @@
         @if (str_contains(Auth::user()->codigo_rol,['informes']))
 
             {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
-            {!!Form::menu('Buscar Postulante',route('admin.pos.index'),'fa fa-book')!!}
-            {!!Form::menu('Estadistica',route('admin.estadisticas.index'),'fa fa-bar-chart')!!}
-            {!!Form::menu('Editar Fotos',route('admin.fotos.index'),'fa fa-file-image-o')!!}
-            {!!Form::menu('Listados',route('admin.listados.index'),'fa fa-file-image-o')!!}
+<!--            {!!Form::menu('Buscar Postulante',route('admin.pos.index'),'fa fa-book')!!} -->
+     <!--       {!!Form::menu('Estadistica',route('admin.estadisticas.index'),'fa fa-bar-chart')!!} -->
+	<!--            {!!Form::menu('Editar Fotos',route('admin.fotos.index'),'fa fa-file-image-o')!!} -->
+        <!--    {!!Form::menu('Listados',route('admin.listados.index'),'fa fa-file-image-o')!!} -->
+	{!!Form::menu('Declaración',route('admin.declaracion.index'),'fa fa-dollar')!!}
             
             @if(Auth::user()->id == 1 || Auth::user()->id == 7 || Auth::user()->id == 19 || Auth::user()->id == 2172 || Auth::user()->id == 13 || Auth::user()->id == 12 || Auth::user()->id == 14
             || Auth::user()->id == 6205)
@@ -181,7 +182,7 @@
 
 
             {!!Form::menu('Estadistica',route('admin.estadisticas.index'),'fa fa-bar-chart')!!}
-            {!!Form::menu('Postulantes',route('admin.listados.inscrito'),'fa fa-users')!!}
+          <!--  {!!Form::menu('Postulantes',route('admin.listados.inscrito'),'fa fa-users')!!} -->
 
 
         @endif
@@ -223,13 +224,11 @@
 
         @endif
 
-        @if (str_contains(Auth::user()->codigo_rol,['verificador']) && false)
+        @if (str_contains(Auth::user()->codigo_rol,['verificador']))
 
 
-            {!!Form::menu('Editar Fotos',route('admin.fotos.index'),'fa fa-file-image-o')!!}
-            {!!Form::menu('Preinscritos',route('admin.listados.index'),'fa fa-users')!!}
-            {!!Form::menu('Padron',route('admin.padron.index'),'fa fa-database')!!}
-            {!!Form::menu('Padron Verificador',route('admin.padron.verificador'),'fa fa-database')!!}
+     {!!Form::menu('Declaracion',route('admin.declaracion.index'),'fa fa-database')!!}
+{!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
         @endif
 
 
@@ -294,8 +293,8 @@
 
         @endif
 
-        {!!Form::menu('Asitencia',route('admin.sorteo.index'),'fa fa-check-square-o')!!}
-        {!!Form::menu('Sorteo',route('admin.sorteo.sorteo'),'fa fa-check-square-o')!!}
+      <!--  {!!Form::menu('Asitencia',route('admin.sorteo.index'),'fa fa-check-square-o')!!} -->
+<!--        {!!Form::menu('Sorteo',route('admin.sorteo.sorteo'),'fa fa-check-square-o')!!} -->
 
     </ul>
 </div>

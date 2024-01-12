@@ -35,7 +35,7 @@ class DeclaracionController extends Controller
         $variduser=Auth::user()->id;
         if($variduser==1 || $variduser==7 || $varrole=='root' || $varrole=='Sistemas' || $variduser==19 
         || $variduser==2172 || $variduser==13 || $variduser==12 || $variduser==14 || $variduser==6205
-        || $variduser==6535
+        || $variduser==6535 || $varrole=='verificador' ||  $varrole=='Verificador'
         ){
             $Lista = DB::table("vista_solicitantes_declaracion")->get();
             $cnt_pendientes = DB::table("vista_solicitantes_declaracion")->where('estado','PENDIENTE')->count();
@@ -103,9 +103,9 @@ class DeclaracionController extends Controller
         {
             $var_otor = 'DENEGADO';//72718912
             $postulante = Postulante::find($request->idpostulante);
-            Mail::to($postulante->email)
-                ->send(new DenegadoEmail('Declaracion Jurada',$request->observaciones));
-            (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI: Su declaración jurada ha sido observada, revise su correo electrónico');
+           Mail::to($postulante->email)
+               ->send(new DenegadoEmail('Declaracion Jurada',$request->observaciones));
+         //   (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI: Su declaración jurada ha sido observada, revise su correo electrónico');
 
         }else if($request->otorga == 'APROBADO')
         {
