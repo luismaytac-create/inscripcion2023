@@ -41,7 +41,7 @@
                                 <div class="col-md-12">
 
                                     @if (PagoProspecto())
-                                        <div class="list-group">
+                                      <!--  <div class="list-group">
 
 
 
@@ -60,6 +60,12 @@
 
 
                                                 @endif
+                                        </div>
+                                        -->
+                                        <div class="note note-danger">
+                                            <h4 class="block">Aviso</h4>
+                                            <p> Se enviará una notificación a su correo electrónico cuando esté disponible para su descarga.  </p>
+                                            
                                         </div>
                                     @else
                                         <div class="note note-danger">
