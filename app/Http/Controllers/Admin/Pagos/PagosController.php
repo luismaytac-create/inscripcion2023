@@ -546,7 +546,7 @@ class PagosController extends Controller
     public function create()
     {
         //CREP0001-IVAN
-    	$name = 'CREP'.date(Hi).'.txt';
+    	$name = 'CREP'.'.txt';
         Storage::disk('carteras')->delete($name);
 
         $servicios = Servicio::where('activo',1)->get();

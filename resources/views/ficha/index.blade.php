@@ -29,7 +29,7 @@
         </div>
 
         <div class="m-portlet__body lead">
-            @if( $postulante->idmodalidad == 16 )
+            @if( false )
             <!--
                 <h2>EXAMEN FINAL CEPRE-UNI</h2>
             <h3>El Examen Final CEPRE-UNI 2022-1 será en la modalidad virtual. Debe tener la ficha de Inscripción CEPRE-UNI.</h3>
@@ -47,11 +47,12 @@
                 <a target="_blank" href="{{ route('ficha.pdf') }}">
                     <button type="button" class="btn m-btn--pill btn-info btn-lg m-btn m-btn--custom">FICHA CONCURSO DE ADMISIÓN
                     </button> </a>
-
-            @else
                 <iframe src="{{route('ficha.pdf',$id)}}" width="100%" height="700px" scrolling="auto"></iframe>
+            @else
+
             @endif
 
+                <h3>La ficha de inscripción podrá descargarla desde el 25 de enero del 2024.</h3>
 
         </div>
 
