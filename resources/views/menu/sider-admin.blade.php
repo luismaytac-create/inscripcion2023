@@ -257,7 +257,7 @@
             </li>
         <!-- {!!Form::menu('Constancias',route('admin.ingresantes.constancias'),'fa fa-file-pdf-o')!!} -->
         <!-- {!!Form::menu('Etiquetas',route('admin.ingresantes.etiquetas'),'fa fa-sticky-note-o')!!} -->
-            {!!Form::menu('Ingresante',route('admin.ingresantes.index'),'fa fa-graduation-cap')!!}
+         <!--   {!!Form::menu('Ingresante',route('admin.ingresantes.index'),'fa fa-graduation-cap')!!} -->
 
 
         <!-- {!!Form::menu('Listado General',route('admin.ingresantes.listadogeneral'),'fa fa-file-pdf-o')!!} -->
@@ -273,11 +273,15 @@
 
         @endif
 
+        @if(str_contains(Auth::user()->dni,['aromero']))
+
+            {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
+        @endif
 
 
 
         @if (str_contains(Auth::user()->codigo_rol,['identificacion','sistemas','root','admin']) )
-        {!!Form::menu('Listado Ingresantes',route('admin.ingresantes.control.index'),'fa fa-check-square-o')!!}
+      <!--  {!!Form::menu('Listado Ingresantes',route('admin.ingresantes.control.index'),'fa fa-check-square-o')!!} -->
        @endif
         @if (str_contains(Auth::user()->codigo_rol,['constancia']))
 
