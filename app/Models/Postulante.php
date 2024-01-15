@@ -822,7 +822,7 @@ class Postulante extends Model
         $declaracion = DeclaracionEva::select('idpostulante')->where('estado','APROBADO')->get();
         $documentos = SolicitanteVictima::select('idpostulante')->where('estado','<>','APROBADO')->get();
         $quitar_cartera = QuitarCartera::select('id')->get();
-        $orden_pago = OrdenPago::select('idpostulante')->whereIn('servicio',['464','465'])->get();
+       // $orden_pago = OrdenPago::select('idpostulante')->whereIn('servicio',['464','465'])->get();
         if($ie=='Colegio'){
             return $cadenaSQL->select('postulante.*')
                              ->join('colegio as c','c.id','=','postulante.idcolegio')
@@ -833,7 +833,7 @@ class Postulante extends Model
 							 ->whereNotIn('postulante.numero_identificacion',$dni_pagoscolepriv->toArray())
 							 ->whereNotIn('postulante.numero_identificacion',$dni_pagoscolestatal->toArray())
                              ->whereNotIn('postulante.id',$documentos->toArray())
-                            ->whereNotIn('postulante.id',$orden_pago->toArray())
+                //      ->whereNotIn('postulante.id',$orden_pago->toArray())
                              ->where('c.gestion',$gestion)
                             ->where('postulante.pago',0)
             ;
@@ -847,7 +847,7 @@ class Postulante extends Model
                              ->whereNotIn('postulante.numero_identificacion',$dni_descuentos->toArray())
                              ->whereNotIn('postulante.id',$documentos->toArray())
                             ->whereNotIn('postulante.id',$quitar_cartera->toArray())
-                            ->whereNotIn('postulante.id',$orden_pago->toArray())
+                //        ->whereNotIn('postulante.id',$orden_pago->toArray())
                              ->where('postulante.anulado',0)
                              ->where('postulante.pago',0);
 
@@ -860,7 +860,7 @@ class Postulante extends Model
                             ->whereNotIn('postulante.numero_identificacion',$dni_descuentos->toArray())
                              ->whereNotIn('postulante.id',$documentos->toArray())
                              ->whereNotIn('postulante.id',$quitar_cartera->toArray())
-                            ->whereNotIn('postulante.id',$orden_pago->toArray())
+                //         ->whereNotIn('postulante.id',$orden_pago->toArray())
                             ->where('postulante.anulado',0)
                             ->where('postulante.pago',0);
         }elseif (isset($codesp) && !isset($cep) ) {
@@ -878,7 +878,7 @@ class Postulante extends Model
                     ->whereNotIn('postulante.id',$declaracion->toArray())
                     ->whereIn('postulante.id',$documentos->toArray())
                     ->whereNotIn('postulante.numero_identificacion', $pagos_arqui_nocepre->toArray())
-                    ->whereNotIn('postulante.id',$orden_pago->toArray())
+                    //        ->whereNotIn('postulante.id',$orden_pago->toArray())
 
                     ->whereNotIn('postulante.id',$quitar_cartera->toArray());
                     #->where('postulante.pago',0);
@@ -893,7 +893,7 @@ class Postulante extends Model
                             #  ->whereNotIn('postulante.numero_identificacion', $pagos_arqui_nocepre->toArray())
                              ->whereNotIn('postulante.id',$documentos->toArray())
                              ->whereNotIn('postulante.id',$quitar_cartera->toArray())
-                            ->whereNotIn('postulante.id',$orden_pago->toArray())
+                    //    ->whereNotIn('postulante.id',$orden_pago->toArray())
                             ->where('postulante.anulado',0);
                             #->where('postulante.pago',0);
             }
@@ -907,7 +907,7 @@ class Postulante extends Model
                             ->whereIn('postulante.id',$declaracion->toArray())
                             ->whereNotIn('postulante.id',$documentos->toArray())
                             ->whereNotIn('postulante.id',$quitar_cartera->toArray())
-                            ->whereNotIn('postulante.id',$orden_pago->toArray())
+                //      ->whereNotIn('postulante.id',$orden_pago->toArray())
 							 #->where('postulante.pago',0)
 						 ;
 
