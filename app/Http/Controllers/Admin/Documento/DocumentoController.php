@@ -101,7 +101,7 @@ class DocumentoController extends Controller
             $postulante = Postulante::find($request->idpostulante);
             Mail::to($postulante->email)
                 ->send(new DenegadoEmail('Documentos',$request->observaciones));
-            (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI: Sus documentos han sido observados, revise su correo electrónico.');
+            // (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI: Sus documentos han sido observados, revise su correo electrónico.');
 
         }else if($request->otorga == 'APROBADO')
         {
