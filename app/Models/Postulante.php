@@ -866,7 +866,7 @@ class Postulante extends Model
         }elseif (isset($codesp) && !isset($cep) ) {
             $datexx = Carbon::now()->toDateString();
             $fecha_cepere_voca= Cronograma::FechaFin('INCE');
-            if( false ){
+            if( true ){
                 # if( $datexx <= $fecha_cepere_voca ){
                 return $cadenaSQL->select('postulante.*')
                     ->join('especialidad as e',function($join){
