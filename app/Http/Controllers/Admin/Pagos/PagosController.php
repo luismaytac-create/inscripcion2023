@@ -546,8 +546,9 @@ class PagosController extends Controller
     public function create()
     {
         //CREP0001-IVAN
-    	$name = 'CREP'.'.txt';
+    	$name = 'CARTERA_TOTAL'.'.txt';
         Storage::disk('carteras')->delete($name);
+        Log::info('info: cartera scrota');
 
         $servicios = Servicio::where('activo',1)->get();
         foreach ($servicios->chunk(5) as $key => $items) {
@@ -561,13 +562,13 @@ class PagosController extends Controller
                     // $param = $this->Parametros($postulantes,$codigo_servicio,$codigo_cronograma);
                     $header='CC19302437633CUNIVERSIDAD NACIONAL DE INGENIERIA      '.date('Ymd').'000000296000000008443000A';
 
-                    Storage::disk('carteras')->append($name,$param['header']);
-                    // foreach ($postulantes->chunk(500) as $key => $Lista) {
-                    //     foreach ($Lista as $key => $postulante) {
-                    //         $detalle = $this->ParametrosDetalle($postulante,$codigo_servicio,$codigo_cronograma);
-                    //         Storage::disk('carteras')->append($name, $detalle);
-                    //     }
-                    // }
+                    //Storage::disk('carteras')->append($name,$param['header']);
+                   foreach ($postulantes->chunk(500) as $key => $Lista) {
+                        foreach ($Lista as $key => $postulante) {
+                            $detalle = $this->ParametrosDetalle($postulante,$codigo_servicio,$codigo_cronograma);
+                            Storage::disk('carteras')->append($name, $detalle);
+                        }
+                     }
                 }//end if
             }//end foreach
         }
@@ -737,15 +738,15 @@ class PagosController extends Controller
 
 
                 break;
-		*/
+
 			 case '518':
                 $postulantes = Postulante::Traslados()->IsNull(0)->Alfabetico()->get();
                 break;	
 				case '519':
                 $postulantes = Postulante::Titulados()->IsNull(0)->Alfabetico()->get();
                 break;	
+*/
 
-        /*
 
 			 case '475':
                 $postulantes = Postulante::Prospecto()->IsNull(0)->Alfabetico()->get();
@@ -778,7 +779,7 @@ class PagosController extends Controller
                 $postulantes = Postulante::PagoGestion(null,null,null,'A1',null)->IsNull(0)->get();
                break;
 
-               */
+
 
            /* case '516':
                 $postulantes = Postulante::PagoGestion(null,null,null,'A1','ID-CEPRE')->IsNull(0)->get();
@@ -847,7 +848,22 @@ class PagosController extends Controller
 				
 				$cronograma = Cronograma::where('codigo','INBE')->first();
 			}
-		
+        $detalle = collect([
+            '2',';',
+            $postulante->numero_identificacion,';',
+            strtoupper(str_clean($postulante->nombre_cliente)),';',
+            strtoupper(str_clean($postulante->paterno)),';',
+            strtoupper(str_clean($postulante->materno)),';',
+            '',';',
+            strtoupper(str_clean($postulante->email)),';',
+            $servicio->descripcion_recortada,';',
+            $servicio->partida,';',
+            '09253',';',
+            $servicio->monto
+
+
+        ]);
+        /*
     	$detalle = collect([
 	    	$TipoDetalle = 'D',
 	    	$Cuenta = pad($this->cuentaUNI,14,' '),
@@ -885,13 +901,14 @@ class PagosController extends Controller
 			$FillerFinDetalle = pad(' ',15,' ','L'),
 			$FinderegistroDetalle = '*'
 		]);
+        */
 		return $detalle->implode('');
     }
     public function descarga()
     {
     	$headers = [];
     	return response()->download(
-    			storage_path('app/carteras/UNIADMIS.txt'),
+    			storage_path('app/carteras/CARTERA_TOTAL.txt'),
     			null,
     			$headers
     		);
