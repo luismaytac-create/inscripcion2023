@@ -832,7 +832,7 @@ class Postulante extends Model
                              ->whereNotIn('postulante.numero_identificacion',$dni_descuentos->toArray())
 							 ->whereNotIn('postulante.numero_identificacion',$dni_pagoscolepriv->toArray())
 							 ->whereNotIn('postulante.numero_identificacion',$dni_pagoscolestatal->toArray())
-                            // ->whereNotIn('postulante.id',$documentos->toArray())
+                             ->whereNotIn('postulante.id',$documentos->toArray())
                             ->whereNotIn('postulante.id',$orden_pago->toArray())
                              ->where('c.gestion',$gestion)
                             ->where('postulante.pago',0)
@@ -845,8 +845,8 @@ class Postulante extends Model
                              ->whereIn('u.gestion',$gestion)
                              ->whereIn('postulante.id',$declaracion->toArray())
                              ->whereNotIn('postulante.numero_identificacion',$dni_descuentos->toArray())
-                            // ->whereNotIn('postulante.id',$documentos->toArray())
-                            // ->whereNotIn('postulante.id',$quitar_cartera->toArray())
+                             ->whereNotIn('postulante.id',$documentos->toArray())
+                            ->whereNotIn('postulante.id',$quitar_cartera->toArray())
                             ->whereNotIn('postulante.id',$orden_pago->toArray())
                              ->where('postulante.anulado',0)
                              ->where('postulante.pago',0);
@@ -858,8 +858,8 @@ class Postulante extends Model
                             ->whereIn('postulante.id',$declaracion->toArray())
                             ->whereNotIn('postulante.numero_identificacion',$dni_pagosdiplomado->toArray())
                             ->whereNotIn('postulante.numero_identificacion',$dni_descuentos->toArray())
-                            // ->whereNotIn('postulante.id',$documentos->toArray())
-                            // ->whereNotIn('postulante.id',$quitar_cartera->toArray())
+                             ->whereNotIn('postulante.id',$documentos->toArray())
+                             ->whereNotIn('postulante.id',$quitar_cartera->toArray())
                             ->whereNotIn('postulante.id',$orden_pago->toArray())
                             ->where('postulante.anulado',0)
                             ->where('postulante.pago',0);
@@ -891,8 +891,8 @@ class Postulante extends Model
                             ->whereNotIn('postulante.numero_identificacion',$dnisss->toArray())
                             ->whereIn('postulante.id',$declaracion->toArray())
                             #  ->whereNotIn('postulante.numero_identificacion', $pagos_arqui_nocepre->toArray())
-                            // ->whereNotIn('postulante.id',$documentos->toArray())
-                            // ->whereNotIn('postulante.id',$quitar_cartera->toArray())
+                             ->whereNotIn('postulante.id',$documentos->toArray())
+                             ->whereNotIn('postulante.id',$quitar_cartera->toArray())
                             ->whereNotIn('postulante.id',$orden_pago->toArray())
                             ->where('postulante.anulado',0);
                             #->where('postulante.pago',0);
