@@ -855,7 +855,7 @@ class PagosController extends Controller
             strtoupper(str_clean($postulante->paterno)),';',
             strtoupper(str_clean($postulante->materno)),';',
             '',';',
-            strtoupper(str_clean($postulante->email)),';',
+            strtoupper($postulante->email),';',
             $servicio->descripcion_recortada,';',
             $servicio->partida,';',
             '09253',';',
