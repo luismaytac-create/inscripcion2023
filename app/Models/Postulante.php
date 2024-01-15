@@ -875,8 +875,8 @@ class Postulante extends Model
 
                     #>whereNotIn('postulante.numero_identificacion',$dni_descuentos->toArray())
                     ->where('postulante.anulado',0)
-                    ->whereNotIn('postulante.id',$declaracion->toArray())
-                    ->whereIn('postulante.id',$documentos->toArray())
+                    ->whereIn('postulante.id',$declaracion->toArray())
+                    ->whereNotIn('postulante.id',$documentos->toArray())
                     ->whereNotIn('postulante.numero_identificacion', $pagos_arqui_nocepre->toArray())
                     //        ->whereNotIn('postulante.id',$orden_pago->toArray())
 
