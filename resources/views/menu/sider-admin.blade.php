@@ -152,7 +152,7 @@
         @endif
 
 
-        @if (str_contains(Auth::user()->codigo_rol,['admin']))
+        @if (str_contains(Auth::user()->codigo_rol,['admin']) && !str_contains(Auth::user()->dni,['aromero']) )
 
 
         <!-- ADMIN -->
