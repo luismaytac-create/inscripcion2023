@@ -568,7 +568,7 @@ class FichaController extends Controller
                 $msj->push(['titulo'=>'Foto Rechazada','mensaje'=>'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto mas nitida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes@admisionuni.edu.pe']);
             }elseif(isset($postulante) && $postulante->foto_estado == 'CARGADO') {
                 $correcto_foto = false;
-                $msj->push(['titulo'=>'Edición de Foto','mensaje'=>'En estos momentos estamos editando su foto']);
+                $msj->push(['titulo'=>'Edición de Foto','mensaje'=>'Se recibió su foto, se confirmará por correo cuando pueda descargar su ficha.']);
             }
 
             #Valida datos adicionales----------------------------------------
