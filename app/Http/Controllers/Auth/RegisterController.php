@@ -53,7 +53,7 @@ class RegisterController extends Controller
     {		
 			$sss=$data['tipo_documento'];
 	        return Validator::make($data, [
-                'dni' => 'required|numeric|unique:users,dni|fecha_ins|dni_regis_val|dni_orce|dni_lon_val:'.$sss,
+                'dni' => 'required|numeric|unique:users,dni|fecha_ins|dni_regis_val|dni_lon_val:'.$sss,
                 'password' => 'required|min:6|confirmed',
 				'captcha' => 'required|captcha',
 				'email' => 'required|email|unique:users,email',
