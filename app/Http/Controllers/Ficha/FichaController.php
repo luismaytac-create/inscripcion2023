@@ -171,7 +171,7 @@ class FichaController extends Controller
                     ,'link'=>'datos.foto.foto','boton'=>'VER ESTADO DE FOTO']);
             }elseif(isset($postulante) && $postulante->foto_estado == 'CARGADO') {
                 $correcto_foto = false;
-                $msj->push(['titulo'=>'Edición de Foto','mensaje'=>'En estos momentos estamos editando su foto'
+                $msj->push(['titulo'=>'Edición de Foto','mensaje'=>'Se recibió su foto, se confirmará por correo cuando pueda descargar su ficha.'
                     ,'link'=>'datos.foto.foto','boton'=>'VER ESTADO DE FOTO']);
             }
             ################### FIN VALIDACION FOTO
