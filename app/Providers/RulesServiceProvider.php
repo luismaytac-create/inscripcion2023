@@ -42,7 +42,7 @@ class RulesServiceProvider extends ServiceProvider
 		
 		$this->ValidaNombresString();
 		$this->ValidaDniSegunTipo();
-		$this->ValidaDniSegunOrce();
+		#$this->ValidaDniSegunOrce();
 		$this->ValidaFechaNacimiento();
 		$this->ValidaNombresFamiString();
 		$this->ValidaApoderado();
