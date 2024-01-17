@@ -463,7 +463,7 @@ class RulesServiceProvider extends ServiceProvider
             if (in_array($parameters[0], $restringe_modalidad)) {
 
                 switch ($parameters[0]) {
-                    case 7:
+                   // case 7:
                     case 10:
                     case 5:
                         if (in_array($value, $restringe_especialidad_5)) {
