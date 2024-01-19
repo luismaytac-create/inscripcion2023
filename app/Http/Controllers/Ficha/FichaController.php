@@ -67,11 +67,7 @@ class FichaController extends Controller
             # VALIDA SI ES CEPRE
             if( !is_null($postulante->idmodalidad2) ){
 
-                if($postulante->idmodalidad2==5 || $postulante->idmodalidad2==6 || $postulante->idmodalidad2==7
-                    || $postulante->idmodalidad2==8
-                    || $postulante->idmodalidad2== 11 || $postulante->idmodalidad2==12 || $postulante->idmodalidad2== 13
-                    || $postulante->idmodalidad2== 14 || $postulante->idmodalidad2==18 || $postulante->idmodalidad2==19
-                ){
+                if($postulante->idmodalidad2<>1){
                     $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
                     if($terr>0){
                         $correcto_terro = true;
@@ -88,10 +84,7 @@ class FichaController extends Controller
 
             }else{
 
-                if($postulante->idmodalidad==5 || $postulante->idmodalidad==6 || $postulante->idmodalidad==7 || $postulante->idmodalidad==8
-                    || $postulante->idmodalidad== 11 || $postulante->idmodalidad==12 || $postulante->idmodalidad== 13
-                    || $postulante->idmodalidad== 14 || $postulante->idmodalidad==18 || $postulante->idmodalidad==19
-                ){
+                if($postulante->idmodalidad<>1 and  $postulante->idmodalidad==16  ){
                     $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
                     if($terr>0){
                         $correcto_terro = true;
