@@ -84,7 +84,7 @@ class FichaController extends Controller
 
             }else{
 
-                if($postulante->idmodalidad<>1 and  $postulante->idmodalidad==16  ){
+                if($postulante->idmodalidad<>1 and  $postulante->idmodalidad<>16  ){
                     $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
                     if($terr>0){
                         $correcto_terro = true;
