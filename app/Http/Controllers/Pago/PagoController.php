@@ -54,9 +54,7 @@ class PagoController extends Controller
 
                     if( !is_null($postulante->idmodalidad2) ){
 
-                        if($postulante->idmodalidad2==5 || $postulante->idmodalidad2==6 || $postulante->idmodalidad2==7
-                            || $postulante->idmodalidad2== 11 || $postulante->idmodalidad2==12 || $postulante->idmodalidad2== 13
-                            || $postulante->idmodalidad2== 14 || $postulante->idmodalidad2==18 || $postulante->idmodalidad2==19
+                        if($postulante->idmodalidad2<>1
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -92,9 +90,7 @@ class PagoController extends Controller
 
 
 
-                        if($postulante->idmodalidad==5 || $postulante->idmodalidad==6 || $postulante->idmodalidad==7
-                            || $postulante->idmodalidad== 11 || $postulante->idmodalidad==12 || $postulante->idmodalidad== 13
-                            || $postulante->idmodalidad== 14 || $postulante->idmodalidad==18 || $postulante->idmodalidad==19
+                        if($postulante->idmodalidad<>1
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -185,9 +181,7 @@ class PagoController extends Controller
 
                     if( !is_null($postulante->idmodalidad2) ){
 
-                        if($postulante->idmodalidad2==5 || $postulante->idmodalidad2==6 || $postulante->idmodalidad2==7
-                            || $postulante->idmodalidad2== 11 || $postulante->idmodalidad2==12 || $postulante->idmodalidad2== 13
-                            || $postulante->idmodalidad2== 14 || $postulante->idmodalidad2==18 || $postulante->idmodalidad2==19
+                        if($postulante->idmodalidad2<>1
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -223,9 +217,7 @@ class PagoController extends Controller
 
 
 
-                        if($postulante->idmodalidad==5 || $postulante->idmodalidad==6 || $postulante->idmodalidad==7
-                            || $postulante->idmodalidad== 11 || $postulante->idmodalidad==12 || $postulante->idmodalidad== 13
-                            || $postulante->idmodalidad== 14 || $postulante->idmodalidad==18 || $postulante->idmodalidad==19
+                        if($postulante->idmodalidad<>1 and $postulante->idmodalidad<>16
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
