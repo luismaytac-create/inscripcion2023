@@ -28,19 +28,8 @@ class FotosController extends Controller
 
 
 
-            if( $variduser == 10){
-                $postulante = Postulante::where('foto_estado','CARGADO')->orderBy('fecha_pago','desc')->orderBy('foto_fecha_carga','desc')->first();
-            }else{
-                $postulante = Postulante::where('foto_estado','CARGADO')->orderBy('fecha_pago','asc')->orderBy('foto_fecha_carga','asc')->first();
-            }
+           $postulante = Postulante::where('foto_estado','CARGADO')->where('pago',true)->orderBy('fecha_pago','asc')->orderBy('foto_fecha_carga','asc')->first();
 
-
-           if( $variduser == 1083){
-               $postulante = Postulante::where('foto_estado','CARGADO')->orderBy('fecha_pago','desc')->orderBy('foto_fecha_carga','desc')->first();
-           }
-           if( $variduser == 1084){
-               $postulante = Postulante::where('foto_estado','CARGADO')->orderBy('fecha_pago','asc')->orderBy('foto_fecha_carga','asc')->first();
-           }
 
             $resumen = Postulante::select('foto_estado',DB::raw('count(*) as cantidad'))->Activos()->groupBy('foto_estado')->get();
             if(isset($postulante)){
