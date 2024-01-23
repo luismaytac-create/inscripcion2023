@@ -50,7 +50,9 @@
                                            <a href="{{ route('document.download','guia') }}" class="list-group-item"> Guía de Inscripción </a>
                                            <a href="{{ route('document.download','reglamento') }}" class="list-group-item"> Reglamento de Admisión </a>
                                            <a href="{{ route('document.download','solucionario23_1') }}" class="list-group-item"> Solucionario 2023-1</a>
-                                           <a href="{{ route('document.download','solucionario') }}" class="list-group-item"> Solucionario 2023-2</a>
+
+                                       <!--    <a href="{{ route('document.download','solucionario') }}" class="list-group-item"> Solucionario 2023-2</a> -->
+
                                             @if(false)
 
 
