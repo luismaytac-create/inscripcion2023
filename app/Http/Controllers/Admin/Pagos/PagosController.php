@@ -163,13 +163,13 @@ class PagosController extends Controller
                 return back();
             }
             #Subo todas las columnas como vienen
-
+            Log::info('ESTO ES BANCO'. $banco);
             $this->StorePagos($archivo,$banco,$nombre);
         
             #Preparo la data antes de subir a la DB
             $data = $this->PreparaData($archivo,$banco);
 
-            Log::info(print_r($data, true));
+
             
             #valido pagos
             #Si los datos son correctos ejecuto la subida de datos
@@ -203,7 +203,7 @@ class PagosController extends Controller
             } else {
                 switch ($error['tipo_error']) {
                     case 'Codigo':
-                        Alert::danger('Error de Codigos')->details('Los siguientes codigos no existen')->items($error['data']);
+                        Alert::danger('Error de Codigos')->details('Los siguientes DNI no existen')->items($error['data']);
                         break;
                     case 'Partida':
                         Alert::danger('Error de Partida')
@@ -393,48 +393,58 @@ class PagosController extends Controller
                 break;
             case 'ocef':
                 $servicios = Servicio::Activo()->get();
-                foreach ($archivo as $key => $value) {		
+
+                foreach ($archivo as $key => $value) {
+
                     $separador = (str_contains($value,','))?',':';';
                     $fila=explode($separador,$value);
+                    if( str_contains($fila[0],'codigo')){
 
-                    $codigo = $fila[0];
-                    $nombrecliente = $fila[1];
-                    $servicioc = $fila[2];
-                    $descripcion = $fila[3];
-                    $monto = $fila[4];
-                    $operacion = $fila[5];
-                    $fecha = $fila[6];
-                    $recibo = $fila[7];
-                    $banco = $fila[8];
+                    } else {
+                        $codigo = $fila[0];
+                        $nombrecliente = $fila[1];
+                        $servicioc = $fila[2];
+                        $descripcion = $fila[3];
+                        $monto = $fila[4];
+                        $operacion = $fila[5];
+                        $fecha = $fila[6];
+                        $recibo = $fila[7];
+                        $banco =  str_replace("\r\n", "",  $fila[8]);
+                        $servicio = $servicios->where('codigo', $servicioc);
+
+                        if(!$servicio->isEmpty()){
+                            $key = $servicio->keys()[0];
+                        }else{
+                            $key = 0;
+                            $servicio[$key] = new Servicio(['codigo'=>'No ubicado','descripcion'=>'---']);
+                        }
+
+
+                        $data[$i]['recibo'] =  $recibo;
+                        $data[$i]['servicio'] = $servicio[$key]->codigo;
+                        $data[$i]['descripcion'] = $descripcion;
+                        $data[$i]['monto'] = (float)$monto;
+                        $data[$i]['fecha'] = $fecha;
+                        $data[$i]['codigo'] = $codigo;
+                        $data[$i]['nombrecliente'] = $nombrecliente;
+                        $data[$i]['banco'] = $banco;
+                        $data[$i]['partida'] = $servicio[$key]->partida;
+                        $data[$i]['referencia'] = '';
+                        $data[$i]['operacion'] = $operacion ;
+                        $i++;
 
 
 
-					$servicio = $servicios->where('codigo', $servicioc);
-						
-                    if(!$servicio->isEmpty()){
-                        $key = $servicio->keys()[0];
-                    }else{
-                        $key = 0;
-                        $servicio[$key] = new Servicio(['codigo'=>'No ubicado','descripcion'=>'---']);
+
+
+
+
+
                     }
 
-                    $postulante = Postulante::where('numero_identificacion',$codigo)->first();
-
-                    $data[$i]['recibo'] = $servicio[$key]->codigo.$codigo;
-                    $data[$i]['servicio'] = $servicio[$key]->codigo;
-                    $data[$i]['descripcion'] = $servicio[$key]->descripcion;
-                    $data[$i]['monto'] = (float)$monto;
-                    $data[$i]['fecha'] = $fecha;
-                    $data[$i]['codigo'] = $codigo;
-                    $data[$i]['nombrecliente'] = $postulante->nombre_cliente;
-                    $data[$i]['banco'] = $banco;
-                    $data[$i]['partida'] = $servicio[$key]->partida;
-                    $data[$i]['referencia'] = '';
-                    $data[$i]['operacion'] = $operacion ;
-                    $i++;
-                    
                 }
 
+               # Log::info(print_r($data, true));
                 break;
 
             default:

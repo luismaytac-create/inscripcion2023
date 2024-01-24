@@ -273,6 +273,8 @@ Route::group(['namespace'=>'Fotos','middleware'=>'verificador'], function() {
 	Route::resource('fotos','FotosController',['names'=>'admin.fotos','only'=>['index','store','update']]);
 	Route::get('update/{postulante}/{estado}','FotosController@update')->name('admin.fotos.update');
 	Route::get('cargar-editado','FotosController@cargareditado')->name('admin.fotos.cargar');
+    Route::get('exportar','FotosController@exportar')->name('admin.fotos.exportar');
+    Route::get('importar','FotosController@importar')->name('admin.fotos.importar');
     Route::post('save-editado','FotosController@saveeditado')->name('admin.fotos.save');
 	Route::post('buscar-foto','FotosController@buscar')->name('admin.fotos.buscar');
 	Route::get('fotos-rechazadas','FotosController@fotosrechazadas')->name('admin.fotos.rechazadas');

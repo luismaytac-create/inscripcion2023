@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                   @if(false)
+                   @if(true)
                     {!! Form::open(['route'=>'admin.fotos.buscar','method'=>'POST']) !!}
                     <div class="form-group">
                         <div class="row">
@@ -41,12 +41,12 @@
                         <div class="row">
                         <div class="col-md-12">
                             {!!Form::boton('Cargar',route('admin.fotos.index'),'green-meadow','fa fa-cloud-download')!!}
+                            {!!Form::boton('Exportar',route('admin.fotos.exportar'),'green-meadow','fa fa-cloud-download')!!}
                             @if (isset($postulante))
                                 {!!Form::boton('Aceptar',route('admin.fotos.update',[$postulante->id,1]),'blue','fa fa-check')!!}
 
 
                                 {!!Form::botonmodal('Rechazar','#mdfoto','red','fa fa-times')!!}
-
                                 {!!Form::boton('Editar','#','dark','fa fa-edit','',['id'=>'button'])!!}
                                 {!!Form::boton('Fotos Rechazadas',route('admin.fotos.rechazadas'),'purple','fa fa-pdf-o','')!!}
 

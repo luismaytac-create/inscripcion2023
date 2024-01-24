@@ -16,6 +16,7 @@ use Response;
 use App\Mail\DenegadoEmail;
 use Mail;
 use App\Http\Controllers\Sms\SmsController;
+use Illuminate\Filesystem\Filesystem;
 
 class FotosController extends Controller
 {
@@ -45,6 +46,29 @@ class FotosController extends Controller
        }
     //    return view('admin.fotos.index',compact('resumen'));
 
+    }
+    public function exportar()
+    {
+        $postulantes = Postulante::where('foto_estado','CARGADO')->get();
+
+        foreach ($postulantes as $postulante) {
+
+            $archivo = 'public/'.$postulante->foto;
+            $nuevo_archivo = 'public/fotos_pend_edit/'.$postulante->numero_identificacion.extension($archivo);
+
+            if(Storage::exists($archivo)){
+                if(!Storage::exists($nuevo_archivo))Storage::copy($archivo, $nuevo_archivo);
+            }
+
+        }
+
+        Alert::success('Archivos Copiados');
+        return redirect()->route('admin.fotos.index');
+
+    }
+    public function importar()
+    {
+        $postulante = Postulante::where('foto_estado','CARGADO')->get();
     }
     public function buscar(Request $request)
     {
@@ -91,7 +115,7 @@ class FotosController extends Controller
                 $postulante->save();
                 Mail::to($postulante->email)
                 ->send(new DenegadoEmail('Foto','Su Foto ha sido observada debe subir una nueva'));
-                (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI:Su Fotografia a sido observada revise su correo electronico');
+                // (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI:Su Fotografia a sido observada revise su correo electronico');
 
     			break;
     	}
