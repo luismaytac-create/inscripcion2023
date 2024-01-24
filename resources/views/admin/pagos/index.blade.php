@@ -60,8 +60,12 @@
         {!!Form::botonmodal('Crear Pago','#PagoCreate','blue','fa fa-plus')!!}
         
         {!!Form::boton('Recaudación',route('admin.recaudacion'),'red','fa fa-eye')!!}
+
+         <!--
             {!!Form::boton('Crear Cartera BCP',route('admin.cartera-bcp.create-bcp'),'green-meadow','fa fa-file-image-o')!!}
             {!!Form::boton('Descargar Cartera BCP',route('admin.cartera.downloadbcp'),'green-seagreen','fa fa-cloud-download')!!}
+
+            -->
        
         <p></p>
 

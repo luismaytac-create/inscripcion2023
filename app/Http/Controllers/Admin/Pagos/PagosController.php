@@ -59,7 +59,7 @@ class PagosController extends Controller
         $varyyy=Auth::user()->password;
 
         if( 
-            Auth::user()->dni == 'lmayta'  || Auth::user()->dni == 'scarrill'
+            Auth::user()->dni == 'jcampos'  || Auth::user()->dni == 'juanro' || Auth::user()->dni == 'mbarrera'
         ){
 
         #if(true){
@@ -152,29 +152,8 @@ class PagosController extends Controller
             $nombre = $file->getClientOriginalName();
             $archivo = '';
             $banco = '';
-            if (str_contains($nombre,'bws')) {
+            if (str_contains($nombre,'datos')) {
 
-                $request->file('file')->storeAs('pagos/resumen_scotiabank/',$nombre);
-                $archivo = storage_path('app/pagos/resumen_scotiabank/').$nombre;
-                $archivo = file($archivo);
-                $banco = 'scotiabank';
-
-            }elseif (str_contains($nombre,'ConsMov')) {
-                $request->file('file')->storeAs('pagos/financiero',$nombre);
-                $archivo = storage_path('app/pagos/financiero/').$nombre;
-                $archivo = file($archivo);
-                $banco = 'financiero';
-            }elseif (str_contains($nombre,'CREP4823')) {
-                $request->file('file')->storeAs('pagos/bcp',$nombre);
-                $archivo = storage_path('app/pagos/bcp/').$nombre;
-                $archivo = file($archivo);
-                $banco = 'bcp';
-            }elseif (str_contains($nombre,'P')){
-                $request->file('file')->storeAs('pagos/scotiabank',$nombre);
-                $archivo = storage_path('app/pagos/scotiabank/').$nombre;
-                $archivo = file($archivo);
-                $banco = 'scotiabank';
-            }elseif (str_contains($nombre,'ocef')){
                 $request->file('file')->storeAs('pagos/ocef',$nombre);
                 $archivo = storage_path('app/pagos/ocef/').$nombre;
                 $archivo = file($archivo);
@@ -189,6 +168,8 @@ class PagosController extends Controller
         
             #Preparo la data antes de subir a la DB
             $data = $this->PreparaData($archivo,$banco);
+
+            Log::info(print_r($data, true));
             
             #valido pagos
             #Si los datos son correctos ejecuto la subida de datos
@@ -416,10 +397,19 @@ class PagosController extends Controller
                     $separador = (str_contains($value,','))?',':';';
                     $fila=explode($separador,$value);
 
-                    $partida = $fila[7];
-                    $fecha = str_pad($fila[6], 10, '0', STR_PAD_LEFT);
+                    $codigo = $fila[0];
+                    $nombrecliente = $fila[1];
+                    $servicioc = $fila[2];
+                    $descripcion = $fila[3];
+                    $monto = $fila[4];
+                    $operacion = $fila[5];
+                    $fecha = $fila[6];
+                    $recibo = $fila[7];
+                    $banco = $fila[8];
 
-					$servicio = $servicios->where('partida', $partida);
+
+
+					$servicio = $servicios->where('codigo', $servicioc);
 						
                     if(!$servicio->isEmpty()){
                         $key = $servicio->keys()[0];
@@ -427,19 +417,20 @@ class PagosController extends Controller
                         $key = 0;
                         $servicio[$key] = new Servicio(['codigo'=>'No ubicado','descripcion'=>'---']);
                     }
-                    $codigo = $fila[1];
+
                     $postulante = Postulante::where('numero_identificacion',$codigo)->first();
+
                     $data[$i]['recibo'] = $servicio[$key]->codigo.$codigo;
                     $data[$i]['servicio'] = $servicio[$key]->codigo;
                     $data[$i]['descripcion'] = $servicio[$key]->descripcion;
-                    $data[$i]['monto'] = (float)$fila[11];
-                    $data[$i]['fecha'] = substr($fecha, 0 ,2).'-'.substr($fecha, 3 ,2).'-'.substr($fecha, 6 ,4);
+                    $data[$i]['monto'] = (float)$monto;
+                    $data[$i]['fecha'] = $fecha;
                     $data[$i]['codigo'] = $codigo;
                     $data[$i]['nombrecliente'] = $postulante->nombre_cliente;
-                    $data[$i]['banco'] = $fila[20];
-                    $data[$i]['partida'] = $partida;
-                    $data[$i]['referencia'] = $fila[16];
-                    $data[$i]['operacion'] = $fila[16];
+                    $data[$i]['banco'] = $banco;
+                    $data[$i]['partida'] = $servicio[$key]->partida;
+                    $data[$i]['referencia'] = '';
+                    $data[$i]['operacion'] = $operacion ;
                     $i++;
                     
                 }
@@ -511,7 +502,7 @@ class PagosController extends Controller
                             'cadena'=>$value,
                             'fecha'=>$date,
                             'iduser'=>$varxx,
-                            'banco'=>trim($fila[20]),
+                            'banco'=>'ocef',
                             'archivo'=>$nombre
                         ]);
                         
