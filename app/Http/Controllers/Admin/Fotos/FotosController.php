@@ -79,6 +79,7 @@ class FotosController extends Controller
     {
 
         $archivos = Storage::files('public/fotos_subir_new/');
+        $i=0;
 
         foreach ($archivos as $archivo) {
 
@@ -95,15 +96,16 @@ class FotosController extends Controller
 
 
             if(Storage::exists($archivo)){
-               
+
                 if(!Storage::exists($nuevo_archivo))Storage::copy($archivo, $nuevo_archivo);
             }
 
             $postulante->save();
+            $i++;
 
             $nombresSinExtension[] = $nombreArchivo;
         }
-        Alert::success('Archivos Copiados');
+        Alert::success('CANTIDAD DE ARCHIVOS: '.$i);
         return redirect()->route('admin.fotos.index');
 
     }
