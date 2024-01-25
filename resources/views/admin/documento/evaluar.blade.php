@@ -26,16 +26,21 @@
                             <div class="row">
 
                                 <div class="col-md-12">
-                                    <b>APELLIDOS Y NOMBRES    :</b> {!! $data->paterno !!} {!! $data->materno !!} {!! $data->nombres !!}<br>
-                                    <b>DNI    :</b> {!! $data->numero_identificacion !!}<br>
+
+                                    <div style=" font-size: 20px;">
+                                        <b>APELLIDOS Y NOMBRES    :</b> {!! $data->paterno !!} {!! $data->materno !!} {!! $data->nombres !!}<br>
+                                        <b>DNI    :</b> {!! $data->numero_identificacion !!}<br>
+                                        <b>NÚMEROS DE CONTACTO    :</b> {!! $data->telefono_celular !!} ,{!! $data->telefono_fijo !!} ,{!! $data->telefono_varios !!}   <br>
+                                        <b>EMAIL    :</b> {!! $data->email !!}<br>
 
 
 
 
 
+                                        <b>ESTADO POSTULACIÓN    :</b> {!! $data->solicitanteVictima->estado !!} <br>
 
-                                    <b>ESTADO POSTULACIÓN    :</b> {!! $data->solicitanteVictima->estado !!} <br>
 
+                                    </div>
 
 
 
