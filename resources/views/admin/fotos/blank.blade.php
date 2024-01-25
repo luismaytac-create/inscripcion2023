@@ -38,6 +38,7 @@
                 <div class="col-md-12">
                 {!!Form::boton('Cargar',route('admin.fotos.index'),'green-meadow','fa fa-cloud-download')!!}
                     {!!Form::boton('Exportar',route('admin.fotos.exportar'),'green-meadow','fa fa-cloud-download')!!}
+                    {!!Form::boton('Importar',route('admin.fotos.importar'),'dark','fa fa-cloud-download')!!}
                 {!!Form::boton('Fotos Rechazadas',route('admin.fotos.rechazadas'),'purple','fa fa-pdf-o','')!!}
                 </div>
             </div><!--row-->

@@ -51,6 +51,16 @@ class FotosController extends Controller
     {
         $postulantes = Postulante::where('foto_estado','CARGADO')->get();
 
+
+
+
+        $archivos = Storage::files('public/fotos_pend_edit/');
+
+
+        foreach ($archivos as $archivo) {
+            Storage::delete($archivo);
+        }
+
         foreach ($postulantes as $postulante) {
 
             $archivo = 'public/'.$postulante->foto;
@@ -61,14 +71,41 @@ class FotosController extends Controller
             }
 
         }
-
         Alert::success('Archivos Copiados');
         return redirect()->route('admin.fotos.index');
 
     }
     public function importar()
     {
-        $postulante = Postulante::where('foto_estado','CARGADO')->get();
+
+        $archivos = Storage::files('public/fotos_subir_new/');
+
+        foreach ($archivos as $archivo) {
+
+
+            $nombreArchivo = pathinfo($archivo, PATHINFO_FILENAME);
+            $postulantex  = Postulante::where('numero_identificacion',$nombreArchivo)->first();
+            $postulante = Postulante::find($postulantex->id);
+            $nuevo_archivo = 'public/fotosok/'.$postulante->numero_identificacion.extension($archivo);
+            $postulante->foto_estado = 'ACEPTADO';
+            $postulante->foto_fecha_edicion = Carbon::now();
+            $postulante->foto_fecha_editor = Carbon::now();
+            $nuevo_archivox = str_replace('public/','',$nuevo_archivo);
+            $postulante->foto_editada = $nuevo_archivox;
+
+
+            if(Storage::exists($archivo)){
+               
+                if(!Storage::exists($nuevo_archivo))Storage::copy($archivo, $nuevo_archivo);
+            }
+
+            $postulante->save();
+
+            $nombresSinExtension[] = $nombreArchivo;
+        }
+        Alert::success('Archivos Copiados');
+        return redirect()->route('admin.fotos.index');
+
     }
     public function buscar(Request $request)
     {

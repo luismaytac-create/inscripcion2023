@@ -42,6 +42,7 @@
                         <div class="col-md-12">
                             {!!Form::boton('Cargar',route('admin.fotos.index'),'green-meadow','fa fa-cloud-download')!!}
                             {!!Form::boton('Exportar',route('admin.fotos.exportar'),'green-meadow','fa fa-cloud-download')!!}
+                            {!!Form::boton('Importar',route('admin.fotos.importar'),'dark','fa fa-cloud-download')!!}
                             @if (isset($postulante))
                                 {!!Form::boton('Aceptar',route('admin.fotos.update',[$postulante->id,1]),'blue','fa fa-check')!!}
 
