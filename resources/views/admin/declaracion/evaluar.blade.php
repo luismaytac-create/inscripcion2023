@@ -299,15 +299,16 @@
                 },
                 error: function (data) {
                     $('#dnidatos').val("ERROR");
-                    alert("ERROR EN CARGAR OBSERVACION");
+                    alert("ERROR EN CARGAR ");
                 }
             });
         }
 
         function modalFoto(e) {
-
-
-            obtenerfotos(e);
+            console.log(e);
+            var dni ='';
+            var dnifnial=dni+e;
+            obtenerfotos(dnifnial);
 
         }
 

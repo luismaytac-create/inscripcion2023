@@ -210,6 +210,8 @@
 
                                     @endif
 
+
+
                                     @if($declaracion!= 'PENDIENTE')
                                         <tr>
                                             <td>FECHA DE APROBACIÓN/DENEGACIÓN
@@ -354,6 +356,8 @@
 
 
                         </div>
+                        @if($tiene_postulante)
+
                         <div class="tab-pane" id="m_portlet_base_demo_1_2_tab_content" role="tabpanel">
                            <h1>DNI</h1>
                            @if(count($dnis)>0)
@@ -371,6 +375,8 @@
                             @endif
                            @endif
                         </div>
+                        @endif
+
                         <div class="tab-pane" id="m_portlet_base_demo_1_3_tab_content" role="tabpanel">
                         </div>
                     </div>

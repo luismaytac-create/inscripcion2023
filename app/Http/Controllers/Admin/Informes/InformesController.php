@@ -8,6 +8,7 @@ use App\Models\DeclaracionEva;
 use App\Models\Postulante;
 use App\Models\RegistroDni;
 use App\Models\Proceso;
+use App\Models\SolicitanteVictima;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +26,7 @@ class InformesController extends Controller
 
 
 
-        Log::info($request);
+        // Log::info($request);
 
         $cadena = $request->dni;
         $noexiste=false;
@@ -54,6 +55,10 @@ class InformesController extends Controller
                 $iddeclaracion = Declaracion::where('dni',$postulante->numero_identificacion)->max('id');
                 $declaracion_archivo = Declaracion::where('id',$iddeclaracion)->first();
                 $confirmo_email = $userdata->confirmo;
+                $solicitante = SolicitanteVictima::where ( 'dni' ,$dni)->first();
+
+
+
 
                 $contador_semibeca= DB::table("semibeca_verificador")->where('dni',$postulante->numero_identificacion)->count();
 
@@ -61,7 +66,7 @@ class InformesController extends Controller
 
                 return view('admin.informes.reporte',compact('dni','datos_doc','celular'
                     ,'email','tiene_postulante','fecha_registro','usuario_id'
-                    ,'postulante','proceso','declaracion','declaracion_archivo','confirmo_email','contador_semibeca','dnis'));
+                    ,'postulante','proceso','declaracion','declaracion_archivo','confirmo_email','contador_semibeca','dnis','solicitante'));
             }else {
 
 
