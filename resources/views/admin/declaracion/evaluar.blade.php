@@ -30,13 +30,13 @@
                                     <b>DNI    :</b> {!! $data->numero_identificacion !!}<br>
 
 
-
+                                    <input type="hidden" id="hidni" value="">
 
 
 
                                     <b>ESTADO     :</b> {!! $data->declaracionEva->estado !!} <br>
 
-					<b>DNI: </b><a data-toggle="modal" data-target="#m_modal_4" onclick="modalFoto({!! strval($data->numero_identificacion) !!})" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="DNI"> <i class="flaticon-profile-1"></i> </a>
+					<b>DNI: </b><a data-toggle="modal" data-target="#m_modal_4" onclick="modalFoto({!! strval( "'" .$data->numero_identificacion ."'" ) !!})" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="DNI"> <i class="flaticon-profile-1"></i> </a>
 
 
                                     <p></p>
