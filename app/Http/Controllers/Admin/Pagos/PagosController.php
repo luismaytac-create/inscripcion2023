@@ -163,7 +163,7 @@ class PagosController extends Controller
                 return back();
             }
             #Subo todas las columnas como vienen
-            Log::info('ESTO ES BANCO'. $banco);
+
             $this->StorePagos($archivo,$banco,$nombre);
         
             #Preparo la data antes de subir a la DB
@@ -173,7 +173,11 @@ class PagosController extends Controller
             
             #valido pagos
             #Si los datos son correctos ejecuto la subida de datos
-            $error = $this->ValidoPagos($data);
+            $error = $this->ValidoPagosNew($data);
+
+            Log::info('ESTO ES BANCO'. $error);
+
+
             if ($error['correcto']) {
                 if (count($data)>0) {
                     Alert::success(count($data).' Pagos Nuevos se han registrado');
@@ -229,7 +233,43 @@ class PagosController extends Controller
 
 
     }
-    public function ValidoPagos($data)
+
+    public function ValidoPagosNew($data)
+    {
+        Log::info('ENTRO DATA'. print_r($data,true) );
+        $collection = collect();
+
+        # Obtenego DNI con codigo recaudacion
+        $postulantescru = Postulante::select('numero_identificacion as codigo')
+            ->whereIn('numero_identificacion',array_pluck($data,'codigo'))->IsNull(0)->pluck('codigo')->toArray();
+
+        $diferencia = array_diff(array_pluck($data,'codigo'),$postulantescru);
+        Log::info('ENTRO dif'. print_r($diferencia,true) );
+        $diferencia = implode(",", $diferencia);
+        $datacorrect = array_where($data, function ($value, $key) use($diferencia) {
+            if (str_contains($diferencia,$value['codigo']))
+                return $value;
+        });
+        Log::info('ENTRO DATA CORRECT'. print_r($datacorrect,true) );
+
+        $collection['correcto'] = collect(['data'=>$datacorrect]);
+
+
+        $postulantes = Postulante::select('numero_identificacion as codigo')
+            ->whereIn('numero_identificacion',array_pluck($data,'codigo'))->IsNull(0)->pluck('codigo');
+        $codigo = array_diff(array_pluck($data,'codigo'),$postulantes->toArray());
+
+        if(count($codigo)>0)$collection = collect(['correcto'=>false,'tipo_error'=>'Codigo','data'=>$codigo]);
+        $collection['incorrecto'] = collect(['data'=>$codigo]);
+
+
+
+
+        return $collection;
+    }
+
+
+    public function oldValidoPagos($data)
     {
         #Valido existencia de codigo
         $postulantes = Postulante::select('numero_identificacion as codigo')

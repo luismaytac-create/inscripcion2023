@@ -479,8 +479,14 @@ class FichaController extends Controller
 
                 $postulante->save();
                 Postulante::AsignarCodigo($postulante->id,$postulante->canal,$postulante->codigo_modalidad);
+                if( !isset($postulante->idaula1) ){
+                    Postulante::AsignarAula($postulante->id);
+                }
             }
             return redirect()->route('ficha.index');
+
+
+
             // Postulante::AsignarAula($postulante->id);
           #  Postulante::AsignarClave($postulante->id);
          #   $myEmail = Auth::user()->email;
@@ -682,11 +688,11 @@ class FichaController extends Controller
         if (str_contains($postulante->codigo_modalidad,['E1CABC','E1TE','E1TG','E1PDC','E1VTC'])) {
 
 
-            PDF::Image(asset('assets/pages/img/ficha-23-2.jpg'),0,0+9,210,297,'', '', '', false, 300, '', false, false, 0);
+            PDF::Image(asset('assets/pages/img/ficha_24_x.jpeg'),0,0+9,210,297,'', '', '', false, 300, '', false, false, 0);
 
 
         }else {
-            PDF::Image(asset('assets/pages/img/ficha-23-2.jpg'),0,0+9,210,297,'', '', '', false, 300, '', false, false, 0);
+            PDF::Image(asset('assets/pages/img/ficha_24_x.jpeg'),0,0+9,210,297,'', '', '', false, 300, '', false, false, 0);
         }
 
 
@@ -702,12 +708,12 @@ class FichaController extends Controller
             #PDF::Cell(60,5,$evaluacion->codigo,0,0,'C');
 
 
-            PDF::SetXY(95,50+12);
-            PDF::SetTextColor(250);
+            PDF::SetXY(95,50+12+3);
+            PDF::SetTextColor(255);
             PDF::SetFont('helvetica','',12);
             PDF::Cell(60,5,'DNI:' ,0,0);
 
-            PDF::SetXY(95,50+16);
+            PDF::SetXY(95,50+16+3);
             PDF::SetFont('helvetica','B',20);
             PDF::Cell(60,5,$postulante->numero_identificacion ,0,0);
             PDF::SetXY(60,35);
@@ -722,8 +728,8 @@ class FichaController extends Controller
             PDF::SetXY(29,82);
             PDF::SetTextColor(0);
             PDF::SetFont('helvetica','B',15);
-            $notaAula = 'LAS AULAS APARECERÁN EL VIERNES 11/08 A PARTIR DE LAS 14H00'; #LAS AULAS APARECERÁN EL VIERNES 11/08
-            PDF::MultiCell(160,5,$notaAula,0,0,'C',true);
+            $notaAula = ''; #LAS AULAS APARECERÁN EL VIERNES 11/08
+        #    PDF::MultiCell(160,5,$notaAula,0,0,'C',true);
 
             PDF::SetXY(166+4+3,86+20+70-15);
             PDF::SetTextColor(0);
@@ -737,7 +743,7 @@ class FichaController extends Controller
             PDF::Cell(34,5,'Peso :'.$postulante->peso. ' kg',0,0,'C');
 
             PDF::SetXY(10,87);
-            PDF::SetTextColor(255);
+            PDF::SetTextColor(0,0,0);
             PDF::SetFont('helvetica','B',15);
             #PDF::Cell(110,5,'Presenta esta ficha el día de Examen junto con tu DNI.',0,0,'L');
             PDF::SetTextColor(0);
@@ -748,21 +754,22 @@ class FichaController extends Controller
 
 
             #FICHA DE INSCRIPCION
-            PDF::SetXY(55,27);
-            PDF::SetTextColor(250);
+            PDF::SetXY(45,27);
+            PDF::SetTextColor(255);
             PDF::SetFont('helvetica','B',22);
             PDF::Cell(50,5,'FICHA DE INSCRIPCIÓN',0,0,'L');
 
             #NUMERO DE INSCRIPCION
 
             #
-            PDF::SetXY(45,50+12);
-            PDF::SetTextColor(250);
+
+            PDF::SetXY(45,50+12+3);
+            PDF::SetTextColor(255);
             PDF::SetFont('helvetica','',12);
             PDF::Cell(50,5,'N° DE INSCRIPCIÓN',0,0,'L');
 
 
-            PDF::SetXY(45,50+16);
+            PDF::SetXY(45,50+16+3);
             PDF::SetFont('helvetica','B',20);
             PDF::Cell(110,5,$postulante->codigo,0,0,'L');
 
@@ -771,18 +778,18 @@ class FichaController extends Controller
 
 
             #NOMBRES Y APELLIDOS
-            PDF::SetTextColor(250);
+            PDF::SetTextColor(255);
             PDF::SetXY(45,20+18);
             PDF::SetFont('helvetica','B',13);
             PDF::Cell(30,5,'Apellidos y Nombres:',0,0,'L');
             PDF::SetXY(45,20+24);
             PDF::SetFont('helvetica','B',13);
-            PDF::Cell(30,5,'',0,0,'L');
+           # PDF::Cell(90,5,'',1,0,'L');
 
             PDF::SetXY(45,20+24);
             PDF::SetFont('helvetica','B',16);
-
-            PDF::MultiCell(112,5,$postulante->nombre_completo,1,'L',true);
+            PDF::SetFillColor(255, 235, 235);
+            PDF::MultiCell(90,5,$postulante->nombre_completo,1, 'L', 1, 2, '' ,'', true);
             
             PDF::SetTextColor(0,0,0);
             PDF::SetXY(5,100+16-20+10+3-17);
@@ -926,7 +933,7 @@ class FichaController extends Controller
              PDF::SetFillColor(119,205,238);
              PDF::SetXY(5,91+6);
              PDF::SetFont('helvetica','B',15);
-             PDF::Cell(40,7,'SA 12/08  ',0,0,'C',1,'',1);
+             PDF::Cell(40,7,'SA 10/02  ',0,0,'C',1,'',1);
 
              PDF::SetFont('helvetica','B',35);
              PDF::SetXY(5,97+6);
@@ -940,7 +947,7 @@ class FichaController extends Controller
                  PDF::SetFillColor(119,205,238);
                  PDF::SetXY(5,91+6);
                  PDF::SetFont('helvetica','B',15);
-                 PDF::Cell(40,7,'SA 12/08 ',0,0,'C',1,'',1);
+                 PDF::Cell(40,7,'SA 10/02 ',0,0,'C',1,'',1);
                  PDF::SetFont('helvetica','B',35);
                  PDF::SetXY(5,97+6);
                  PDF::Cell(40,12,$postulante->datos_aula_voca->codigo,0,0,'L',true,'',1,true);
@@ -951,7 +958,7 @@ class FichaController extends Controller
                  PDF::SetFillColor(119,205,238);
                  PDF::SetXY(5,91+6);
                  PDF::SetFont('helvetica','B',15);
-                 PDF::Cell(40,7,'SA 12/08 ',0,0,'C',1,'',1);
+                 PDF::Cell(40,7,'SA 10/02 ',0,0,'C',1,'',1);
                  PDF::SetFont('helvetica','B',35);
                  PDF::SetXY(5,97+6);
                  PDF::Cell(40,12,$postulante->datos_aula_voca->codigo,0,0,'L',true,'',1,true);
@@ -962,7 +969,7 @@ class FichaController extends Controller
                      PDF::SetFillColor(119,205,238);
                      PDF::SetXY(5,91+6);
                      PDF::SetFont('helvetica','B',15);
-                     PDF::Cell(40,7,'SA 12/08 ',0,0,'C',1,'',1);
+                     PDF::Cell(40,7,'SA 10/02 ',0,0,'C',1,'',1);
                      PDF::SetFont('helvetica','B',35);
                      PDF::SetXY(5,97+6);
                      PDF::Cell(40,12,$postulante->datos_aula_voca->codigo,0,0,'L',true,'',1,true);
@@ -1032,7 +1039,7 @@ class FichaController extends Controller
             PDF::SetFont('helvetica','B',15);
             PDF::SetXY(5+$varxx,91+6);
 
-             PDF::Cell(40,7,'LU 14/08 ',0,0,'C',true);
+             PDF::Cell(40,7,'LU 12/02 ',0,0,'C',true);
             PDF::SetXY(5+$varxx,97+6);
             PDF::SetFont('helvetica','B',25);
 
@@ -1042,7 +1049,7 @@ class FichaController extends Controller
             PDF::SetFillColor(243,218,114);
             PDF::SetFont('helvetica','B',15);
             PDF::SetXY(55+$varxx,91+6);
-           PDF::Cell(40,7,'MI 16/08 ',0,0,'C',1,'',1);
+           PDF::Cell(40,7,'MI 14/02 ',0,0,'C',1,'',1);
             PDF::SetXY(55+$varxx,120+9+8-40+6);
             PDF::SetFont('helvetica','B',25);
             PDF::Cell(40,12,$postulante->datos_aula_dos->codigo.' '.$puerta2,0,0,'L',true,'',1,true);
@@ -1050,7 +1057,7 @@ class FichaController extends Controller
             PDF::SetFillColor(247,176,203);
             PDF::SetXY(105+$varxx,88+3+6);
             PDF::SetFont('helvetica','B',15);
-            PDF::Cell(40,7,'VI 18/08 ',0,0,'C',1,'',1);
+            PDF::Cell(40,7,'VI 16/02 ',0,0,'C',1,'',1);
 
             PDF::SetFont('helvetica','B',25);
             PDF::SetXY(105+$varxx,94+3+6);
@@ -1259,7 +1266,8 @@ class FichaController extends Controller
            
             #FOTO
 		if($postulante->mostrar_foto_editada==null){#32
-		}else{PDF::Image($postulante->mostrar_foto_editada,9.4-2,52.8-24,32.2+2.5,43.9+3.7);
+		}else{
+            PDF::Image($postulante->mostrar_foto_editada,9.4-2,52.8-24,32.2+2.5,43.9+3.7);
 		}
             
             #Mapa
@@ -1356,7 +1364,7 @@ class FichaController extends Controller
             PDF::SetTextColor(0);
             PDF::SetFont('helvetica','B',15);
             $notaAula = 'LAS AULAS APARECERÁN EL VIERNES 11/08 A PARTIR DE LAS 14H00'; #LAS AULAS APARECERÁN EL VIERNES 11/08
-            PDF::MultiCell(160,5,$notaAula,0,0,'C',true);
+            #PDF::MultiCell(160,5,$notaAula,0,0,'C',true);
 
             PDF::SetXY(166+4+3,86+20+70-15);
             PDF::SetTextColor(0);

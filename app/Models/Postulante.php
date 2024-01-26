@@ -498,7 +498,7 @@ class Postulante extends Model
     */
     public function getNombreCompletoAttribute()
     {
-        $nombre = $this->paterno.' '.$this->materno.','.$this->nombres;
+        $nombre = $this->paterno.' '.$this->materno.' , '.$this->nombres;
         return $nombre;
     }
 
@@ -1173,21 +1173,13 @@ class Postulante extends Model
                         #   Log::info('AULA OBTENIDA : '.$aula2);
                         if (isset($aula2)) {
 
-                            if($facultad== 4 || $facultad== 5 || $facultad== 6 || $facultad== 7 || $facultad== 9){
+
                                 if (Postulante::where('id',$id)->whereNull('idaula2')->update(['idaula2'=>$aula2->id])) {
                                     Aula::where('id',$aula2->id)->decrement('disponible_02');
                                     Aula::where('id',$aula2->id)->increment('asignado_02');
                                 }
-                            }
 
-                            if($facultad== 1 || $facultad== 2 || $facultad== 3 || $facultad== 8 || $facultad== 10 || $facultad== 11 ){
 
-                                if (Postulante::where('id',$id)->whereNull('idaula2')->update(['idaula2'=>$aula2->id])) {
-                                    Aula::where('id',$aula2->id)->decrement('disponible_02_tarde');
-                                    Aula::where('id',$aula2->id)->increment('asignado_02_tarde');
-                                }
-
-                            }
 
 
                         }
@@ -1200,20 +1192,13 @@ class Postulante extends Model
                         #    Log::info('AULA 1: '.$aula1);
                         if (isset($aula1)) {
 
-                            if( $facultad == 4 || $facultad == 9 || $facultad == 1 || $facultad == 7 || $facultad == 5){
+
                                 if (Postulante::where('id',$id)->whereNull('idaula1')->update(['idaula1'=>$aula1->id])) {
                                     Aula::where('id',$aula1->id)->decrement('disponible_01');
                                     Aula::where('id',$aula1->id)->increment('asignado_01');
                                 }
-                            }
 
-                            if( $facultad == 10 || $facultad == 3 || $facultad== 6 || $facultad == 8 || $facultad == 11 || $facultad == 2){
-                                if (Postulante::where('id',$id)->whereNull('idaula1')->update(['idaula1'=>$aula1->id])) {
-                                    Aula::where('id',$aula1->id)->decrement('disponible_01_tarde');
-                                    Aula::where('id',$aula1->id)->increment('asignado_01_tarde');
-                                }
 
-                            }
 
 
                         }
@@ -1222,20 +1207,12 @@ class Postulante extends Model
                         $aula2 = Aula::ObtenerAula(2,false,$facultad)->first();
                         #    Log::info('AULA 2: '.$aula2);
                         if (isset($aula2)) {
-                            if( $facultad == 4 || $facultad == 9 || $facultad == 1 || $facultad == 7 || $facultad == 5){
+
                                 if (Postulante::where('id',$id)->whereNull('idaula2')->update(['idaula2'=>$aula2->id])) {
                                     Aula::where('id',$aula2->id)->decrement('disponible_02');
                                     Aula::where('id',$aula2->id)->increment('asignado_02');
                                 }
-                            }
 
-                            if( $facultad == 10 || $facultad == 3 || $facultad== 6 || $facultad == 8 || $facultad == 11 || $facultad == 2){
-
-                                if (Postulante::where('id',$id)->whereNull('idaula2')->update(['idaula2'=>$aula2->id])) {
-                                    Aula::where('id',$aula2->id)->decrement('disponible_02_tarde');
-                                    Aula::where('id',$aula2->id)->increment('asignado_02_tarde');
-                                }
-                            }
 
 
 
@@ -1245,20 +1222,14 @@ class Postulante extends Model
                         #   Log::info('AULA 3: '.$aula3);
                         if (isset($aula3)) {
 
-                            if( $facultad == 4 || $facultad == 9 || $facultad == 1 || $facultad == 7 || $facultad == 5){
+
                                 if (Postulante::where('id',$id)->whereNull('idaula3')->update(['idaula3'=>$aula3->id])) {
                                     Aula::where('id',$aula3->id)->decrement('disponible_03');
                                     Aula::where('id',$aula3->id)->increment('asignado_03');
                                 }
-                            }
 
-                            if( $facultad == 10 || $facultad == 3 || $facultad== 6 || $facultad == 8 || $facultad == 11 || $facultad == 2){
 
-                                if (Postulante::where('id',$id)->whereNull('idaula3')->update(['idaula3'=>$aula3->id])) {
-                                    Aula::where('id',$aula3->id)->decrement('disponible_03_tarde');
-                                    Aula::where('id',$aula3->id)->increment('asignado_03_tarde');
-                                }
-                            }
+
 
 
                         }

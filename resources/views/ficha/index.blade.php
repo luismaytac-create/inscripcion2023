@@ -52,7 +52,11 @@
 
             @endif
 
-                <h3>La ficha de inscripción podrá descargarla desde el 25 de enero del 2024.</h3>
+                <h2>FICHA DE INSCRIPCIÓN CONCURSO DE ADMISIÓN</h2>
+
+                <a target="_blank" href="{{ route('ficha.pdf') }}">
+                    <button type="button" class="btn m-btn--pill btn-info btn-lg m-btn m-btn--custom">FICHA CONCURSO DE ADMISIÓN
+                    </button> </a>
 
         </div>
 

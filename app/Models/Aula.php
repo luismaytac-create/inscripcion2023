@@ -58,26 +58,17 @@ class Aula extends Model
 
            # Log::info('ENTRO ESPECI : ');
 
-            if($facultad== 4 || $facultad== 5 || $facultad== 6 || $facultad== 7 || $facultad== 9){
+
                 return $cadenaSQL->select('id')
                     ->where('activo',true)
                     ->where('habilitado',true)
                     ->where('especial',true)
                     ->where('disponible_0'.$dia,'>',0)
                     ->inRandomOrder();
-            }
 
 
-            if($facultad== 1 || $facultad== 2 || $facultad== 3 || $facultad== 8 || $facultad== 10 || $facultad== 11 ){
 
-                return $cadenaSQL->select('id')
-                    ->where('activo',true)
-                    ->where('habilitado',true)
-                    ->where('especial',true)
-                    ->where('disponible_0'.$dia.'_tarde','>',0)
-                    ->inRandomOrder();
 
-            }
 
 
 
@@ -93,23 +84,12 @@ class Aula extends Model
 
 
         #    Log::info($idpermitidas);
-            # TURNO MAÑANA
-            if( $facultad == 4 || $facultad == 9 || $facultad == 1 || $facultad == 7 || $facultad == 5){
 
-            }
-
-            # TURNO TARDE
-            if( $facultad == 10 || $facultad == 3 || $facultad== 6 || $facultad == 8 || $facultad == 11 || $facultad == 2){
-
-                $dia = $dia.'_tarde';
-            }
             return $cadenaSQL->select('id')
                             ->where('activo',true)
                             ->where('habilitado',true)
                             ->where('especial',false)
                             ->where('disponible_0'.$dia,'>',0)
-                            ->whereIn('id',$idpermitidas)
-
                             ->inRandomOrder();
         }
 
