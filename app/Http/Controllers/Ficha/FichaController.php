@@ -942,8 +942,9 @@ class FichaController extends Controller
              $arq = true;
          }else{
             //FECHA VOCACIONAL CEPRE INTENSIVO
-            $validacion = Validacion::where('codigo',$postulante->codigo_verificacion)->first();
-             if($postulante->codigo_especialidad=='A1' && $validacion->intensivo==TRUE){
+         #   $validacion = Validacion::where('codigo',$postulante->codigo_verificacion)->first();
+           if(false){
+            #  if($postulante->codigo_especialidad=='A1' && $validacion->intensivo==TRUE){
                  PDF::SetFillColor(119,205,238);
                  PDF::SetXY(5,91+6);
                  PDF::SetFont('helvetica','B',15);
@@ -954,7 +955,8 @@ class FichaController extends Controller
                  $arq = true;
              }
              else {
-                if ($postulante->codigo_especialidad=='A1' && $validacion->intensivo==FALSE) {
+                 if(false){
+                #if ($postulante->codigo_especialidad=='A1' && $validacion->intensivo==FALSE) {
                  PDF::SetFillColor(119,205,238);
                  PDF::SetXY(5,91+6);
                  PDF::SetFont('helvetica','B',15);
