@@ -146,8 +146,8 @@ class PagosController extends Controller
     {
         #Guardo el archivo
         $varxx=Auth::user()->id;
-        $varyyy=Auth::user()->password;
-        if( true){
+
+        if(   Auth::user()->dni == 'jcampos'  || Auth::user()->dni == 'juanro' || Auth::user()->dni == 'mbarrera'){
             $file = $request->file('file');
             $nombre = $file->getClientOriginalName();
             $archivo = '';
@@ -173,15 +173,16 @@ class PagosController extends Controller
             
             #valido pagos
             #Si los datos son correctos ejecuto la subida de datos
-            $error = $this->ValidoPagosNew($data);
-
-            Log::info('ESTO ES BANCO'. $error);
+            $datafiltrada = $this->ValidoPagosNew($data);
 
 
-            if ($error['correcto']) {
-                if (count($data)>0) {
-                    Alert::success(count($data).' Pagos Nuevos se han registrado');
-                    foreach ($data as $key => $item) {
+          #  Log::info('ENTRO DATA '. print_r($datafiltrada['correcto']['data'],true) );
+
+            if ($datafiltrada['correcto']) {
+
+                if (count($datafiltrada['correcto']['data'])>0) {
+                    Alert::success(count($datafiltrada['correcto']['data']).' Pagos Nuevos se han registrado');
+                    foreach ( $datafiltrada['correcto']['data'] as $key => $item) {
                         Recaudacion::create([
                             'recibo'=>$item['recibo'],
                             'servicio'=>$item['servicio'],
@@ -202,29 +203,23 @@ class PagosController extends Controller
                 } else {
                     Alert::success('No hay Pagos Nuevos');
                 }
-                return back();
+
 
             } else {
-                switch ($error['tipo_error']) {
-                    case 'Codigo':
-                        Alert::danger('Error de Codigos')->details('Los siguientes DNI no existen')->items($error['data']);
-                        break;
-                    case 'Partida':
-                        Alert::danger('Error de Partida')
-                            ->details('El pago contiene una partida que no corresponde al monto pagado')
-                            ->items([
-                                    'codigo postulante: '.$error['codigo'],
-                                    'Servicio: '.$error['servicio'],
-                                    'Partida: '.$error['partida'],
-                                    'Monto: '.$error['monto']
-                                    ]);
-                        break;
 
-                }
-                return back();
+
+
+            }
+
+            if ($datafiltrada['incorrecto']['data']) {
+                $diferencia = array_pluck($datafiltrada['incorrecto']['data'],'codigo') ;
+
+                Alert::danger('Error de Codigos')->details('Los siguientes DNI no existen')->items($diferencia);
+
             }
 
 
+            return back();
         }else{
         Alert::success('No tiene Privilegios para realizar esta accion.');
             return back();
@@ -236,7 +231,7 @@ class PagosController extends Controller
 
     public function ValidoPagosNew($data)
     {
-        Log::info('ENTRO DATA'. print_r($data,true) );
+       # Log::info('ENTRO DATA'. print_r($data,true) );
         $collection = collect();
 
         # Obtenego DNI con codigo recaudacion
@@ -244,26 +239,26 @@ class PagosController extends Controller
             ->whereIn('numero_identificacion',array_pluck($data,'codigo'))->IsNull(0)->pluck('codigo')->toArray();
 
         $diferencia = array_diff(array_pluck($data,'codigo'),$postulantescru);
-        Log::info('ENTRO dif'. print_r($diferencia,true) );
         $diferencia = implode(",", $diferencia);
-        $datacorrect = array_where($data, function ($value, $key) use($diferencia) {
+        $dataincorrect = array_where($data, function ($value, $key) use($diferencia) {
             if (str_contains($diferencia,$value['codigo']))
                 return $value;
         });
-        Log::info('ENTRO DATA CORRECT'. print_r($datacorrect,true) );
-
-        $collection['correcto'] = collect(['data'=>$datacorrect]);
 
 
-        $postulantes = Postulante::select('numero_identificacion as codigo')
-            ->whereIn('numero_identificacion',array_pluck($data,'codigo'))->IsNull(0)->pluck('codigo');
-        $codigo = array_diff(array_pluck($data,'codigo'),$postulantes->toArray());
-
-        if(count($codigo)>0)$collection = collect(['correcto'=>false,'tipo_error'=>'Codigo','data'=>$codigo]);
-        $collection['incorrecto'] = collect(['data'=>$codigo]);
+        $collection['incorrecto'] = collect(['data'=>$dataincorrect]);
 
 
+        $postulantescruce = Postulante::select('numero_identificacion as codigo')
+            ->whereIn('numero_identificacion',array_pluck($data,'codigo'))->IsNull(0)->pluck('codigo')->toArray();
+        $codigosexisten = implode(",", $postulantescruce);
+        $datacorrectas = array_where($data, function ($value, $key) use($codigosexisten) {
+            if (str_contains($codigosexisten,$value['codigo']))
+                return $value;
+        });
 
+
+        $collection['correcto'] = collect(['data'=>$datacorrectas]);
 
         return $collection;
     }
