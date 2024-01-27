@@ -1030,40 +1030,49 @@ class FichaController extends Controller
             $puerta3 = 'PUERTA N°7';
          
          }
-         
 
-         
-          #  PDF::SetTextColor(0);
-            PDF::SetFillColor(143,238,87);
 
-            PDF::SetFont('helvetica','B',15);
-            PDF::SetXY(5+$varxx,91+6);
+        if (str_contains($postulante->codigo_modalidad,['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE'])) {
+            #  PDF::SetTextColor(0);
+            PDF::SetFillColor(143, 238, 87);
 
-             PDF::Cell(40,7,'LU 12/02 ',0,0,'C',true);
-            PDF::SetXY(5+$varxx,97+6);
-            PDF::SetFont('helvetica','B',25);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::SetXY(5 + $varxx, 91 + 6);
 
-            PDF::Cell(40,12,$postulante->datos_aula_uno->codigo.' '.$puerta1,0,0,'L',true,'',1,true);
+            PDF::Cell(40, 7, 'LU 12/02 ', 0, 0, 'C', true);
+            PDF::SetXY(5 + $varxx, 97 + 6);
+            PDF::SetFont('helvetica', 'B', 25);
+
+            PDF::Cell(40, 12, $postulante->datos_aula_uno->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
             #DIA 2
 
-            PDF::SetFillColor(243,218,114);
-            PDF::SetFont('helvetica','B',15);
-            PDF::SetXY(55+$varxx,91+6);
-           PDF::Cell(40,7,'MI 14/02 ',0,0,'C',1,'',1);
-            PDF::SetXY(55+$varxx,120+9+8-40+6);
-            PDF::SetFont('helvetica','B',25);
-            PDF::Cell(40,12,$postulante->datos_aula_dos->codigo.' '.$puerta2,0,0,'L',true,'',1,true);
+            PDF::SetFillColor(243, 218, 114);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::SetXY(55 + $varxx, 91 + 6);
+            PDF::Cell(40, 7, 'MI 14/02 ', 0, 0, 'C', 1, '', 1);
+            PDF::SetXY(55 + $varxx, 120 + 9 + 8 - 40 + 6);
+            PDF::SetFont('helvetica', 'B', 25);
+            PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
             #DIA 3
-            PDF::SetFillColor(247,176,203);
-            PDF::SetXY(105+$varxx,88+3+6);
-            PDF::SetFont('helvetica','B',15);
-            PDF::Cell(40,7,'VI 16/02 ',0,0,'C',1,'',1);
+            PDF::SetFillColor(247, 176, 203);
+            PDF::SetXY(105 + $varxx, 88 + 3 + 6);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::Cell(40, 7, 'VI 16/02 ', 0, 0, 'C', 1, '', 1);
 
-            PDF::SetFont('helvetica','B',25);
-            PDF::SetXY(105+$varxx,94+3+6);
-            PDF::Cell(40,12,$postulante->datos_aula_tres->codigo.' '.$puerta3,0,0,'L',true,'',1,true);
+            PDF::SetFont('helvetica', 'B', 25);
+            PDF::SetXY(105 + $varxx, 94 + 3 + 6);
+            PDF::Cell(40, 12, $postulante->datos_aula_tres->codigo . ' ' . $puerta3, 0, 0, 'L', true, '', 1, true);
 
+        }else{
+            PDF::SetFillColor(243, 218, 114);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::SetXY(5 + $varxx, 91 + 6);
+            PDF::Cell(40, 7, 'MI 14/02 ', 0, 0, 'C', 1, '', 1);
+            PDF::SetXY(5 + $varxx, 97 + 6);
+            PDF::SetFont('helvetica', 'B', 25);
+            PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
 
+        }
             #
 
 
@@ -1132,7 +1141,7 @@ class FichaController extends Controller
              }
              if( $facultad == 4 || $facultad == 9 || $facultad == 10 || $facultad == 3 || $facultad== 6 || $facultad == 8 || $facultad == 11 || $facultad == 2){
 
-                 $texto = 'EL INGRESO AL CAMPUS DE LA UNI ES POR '.$puerta.'  DE 14H00 A 15H00';
+             #    $texto = 'EL INGRESO AL CAMPUS DE LA UNI ES POR '.$puerta.'  DE 14H00 A 15H00';
              }
          }
 
@@ -1295,6 +1304,7 @@ class FichaController extends Controller
 
     }
 
+    /*
     public function pdfMasivo($id = null)
     {
         if (isset($id)) {
@@ -1664,40 +1674,49 @@ class FichaController extends Controller
             $puerta3 = 'PUERTA N°7';
          
          }
-         
 
-         
-          #  PDF::SetTextColor(0);
-            PDF::SetFillColor(143,238,87);
 
-            PDF::SetFont('helvetica','B',15);
-            PDF::SetXY(5+$varxx,91+6);
+        if (str_contains($postulante->codigo_modalidad,['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE'])) {
+            #  PDF::SetTextColor(0);
+            PDF::SetFillColor(143, 238, 87);
 
-             PDF::Cell(40,7,'LU 14/08 ',0,0,'C',true);
-            PDF::SetXY(5+$varxx,97+6);
-            PDF::SetFont('helvetica','B',25);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::SetXY(5 + $varxx, 91 + 6);
 
-            PDF::Cell(40,12,$postulante->datos_aula_uno->codigo.' '.$puerta1,0,0,'L',true,'',1,true);
+            PDF::Cell(40, 7, 'LU 14/08 ', 0, 0, 'C', true);
+            PDF::SetXY(5 + $varxx, 97 + 6);
+            PDF::SetFont('helvetica', 'B', 25);
+
+            PDF::Cell(40, 12, $postulante->datos_aula_uno->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
             #DIA 2
 
-            PDF::SetFillColor(243,218,114);
-            PDF::SetFont('helvetica','B',15);
-            PDF::SetXY(55+$varxx,91+6);
-           PDF::Cell(40,7,'MI 16/08 ',0,0,'C',1,'',1);
-            PDF::SetXY(55+$varxx,120+9+8-40+6);
-            PDF::SetFont('helvetica','B',25);
-            PDF::Cell(40,12,$postulante->datos_aula_dos->codigo.' '.$puerta2,0,0,'L',true,'',1,true);
+            PDF::SetFillColor(243, 218, 114);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::SetXY(55 + $varxx, 91 + 6);
+            PDF::Cell(40, 7, 'MI 16/08 ', 0, 0, 'C', 1, '', 1);
+            PDF::SetXY(55 + $varxx, 120 + 9 + 8 - 40 + 6);
+            PDF::SetFont('helvetica', 'B', 25);
+            PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
             #DIA 3
-            PDF::SetFillColor(247,176,203);
-            PDF::SetXY(105+$varxx,88+3+6);
-            PDF::SetFont('helvetica','B',15);
-            PDF::Cell(40,7,'VI 18/08 ',0,0,'C',1,'',1);
+            PDF::SetFillColor(247, 176, 203);
+            PDF::SetXY(105 + $varxx, 88 + 3 + 6);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::Cell(40, 7, 'VI 18/08 ', 0, 0, 'C', 1, '', 1);
 
-            PDF::SetFont('helvetica','B',25);
-            PDF::SetXY(105+$varxx,94+3+6);
-            PDF::Cell(40,12,$postulante->datos_aula_tres->codigo.' '.$puerta3,0,0,'L',true,'',1,true);
+            PDF::SetFont('helvetica', 'B', 25);
+            PDF::SetXY(105 + $varxx, 94 + 3 + 6);
+            PDF::Cell(40, 12, $postulante->datos_aula_tres->codigo . ' ' . $puerta3, 0, 0, 'L', true, '', 1, true);
 
+        }else {
+            PDF::SetFillColor(243, 218, 114);
+            PDF::SetFont('helvetica', 'B', 15);
+            PDF::SetXY(55 + $varxx, 91 + 6);
+            PDF::Cell(40, 7, 'MI 16/08 ', 0, 0, 'C', 1, '', 1);
+            PDF::SetXY(55 + $varxx, 120 + 9 + 8 - 40 + 6);
+            PDF::SetFont('helvetica', 'B', 25);
+            PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
 
+        }
             #
 
 
@@ -1920,7 +1939,7 @@ class FichaController extends Controller
 			PDF::StartTransform();
             PDF::Rotate(0.3,100,135);
 			PDF::Image(asset('assets/pages/img/aviso.jpg'),-10,0,235);
-			PDF::StopTransform();*/
+			PDF::StopTransform();
 			
 			
             #EXPORTO
@@ -2539,7 +2558,7 @@ class FichaController extends Controller
 			PDF::StartTransform();
             PDF::Rotate(0.3,100,135);
 			PDF::Image(asset('assets/pages/img/aviso.jpg'),-10,0,235);
-			PDF::StopTransform();*/
+			PDF::StopTransform();
 			
 			
             #EXPORTO
@@ -2838,7 +2857,7 @@ class FichaController extends Controller
                     }
                 }
 
-        */
+
 
         PDF::SetFont('helvetica','B',12);
         #MENSAJE
@@ -3020,7 +3039,7 @@ class FichaController extends Controller
         PDF::StartTransform();
         PDF::Rotate(0.3,100,135);
         PDF::Image(asset('assets/pages/img/aviso.jpg'),-10,0,235);
-        PDF::StopTransform();*/
+        PDF::StopTransform();
 
 
         #EXPORTO
@@ -3080,5 +3099,5 @@ class FichaController extends Controller
 
 
     }
-
+*/
 }
