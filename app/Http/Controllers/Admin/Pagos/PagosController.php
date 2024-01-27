@@ -1048,7 +1048,7 @@ class PagosController extends Controller
         $date = Carbon::now()->toDateString();
         $fecha_inicio = Cronograma::FechaInicio('INEX');
         $fecha_fin = Cronograma::FechaFin('INEX');
-        if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo',507);
+       # if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo',507);
 
         return $pagos;
     }
