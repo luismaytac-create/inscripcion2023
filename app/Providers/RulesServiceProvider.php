@@ -453,6 +453,8 @@ class RulesServiceProvider extends ServiceProvider
     {
 
         Validator::extend('valida_tguni', function ($attribute, $value, $parameters, $validator)  {
+            return true;
+            /*
             $restringe_modalidad = [5,6,7,10,14,19];
             $restringe_especialidad_6 = [32,33];
             $restringe_especialidad_5 = [2,32,33];
@@ -496,7 +498,7 @@ class RulesServiceProvider extends ServiceProvider
             } else {
                 return true;
             }
-          
+          */
         },"Usted esta escogiendo una especialidad sin vacantes");
     }
     /**

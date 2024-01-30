@@ -938,7 +938,7 @@ class FichaController extends Controller
              PDF::SetFont('helvetica','B',35);
              PDF::SetXY(5,97+6);
              PDF::Cell(40,12,$postulante->datos_aula_voca->codigo.'',0,0,'L',true,'',1,true);
-
+ 
              $arq = true;
          }else{
             //FECHA VOCACIONAL CEPRE INTENSIVO
