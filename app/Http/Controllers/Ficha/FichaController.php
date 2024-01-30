@@ -416,10 +416,19 @@ class FichaController extends Controller
                         }
 
 
+                        if( !isset($postulante->idaula1) ){
+                            Postulante::AsignarAula($postulante->id);
+                        }
+                         if( !isset($postulante->idaulavoca) ){
+                             Postulante::AsignarAula($postulante->id);
+                         }
 
                     }
 
                     if( !isset($postulante->idaula1) ){
+                        Postulante::AsignarAula($postulante->id);
+                    }
+                    if( !isset($postulante->idaulavoca) ){
                         Postulante::AsignarAula($postulante->id);
                     }
                     
