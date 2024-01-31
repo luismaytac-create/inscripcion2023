@@ -55,8 +55,8 @@
 
 
         <p></p>{{-- asset('/storage/carteras/UNIADMIS.txt') --}}
-        {!!Form::boton('Crear Cartera',route('admin.cartera.create'),'green-meadow','fa fa-file-image-o')!!}
-        {!!Form::boton('Descargar Cartera',route('admin.cartera.download'),'green-seagreen','fa fa-cloud-download')!!}
+        {!!Form::boton('Crear Cartera',route('admin.cartera.create'),'green-meadow','fa fa-file-image-o','',['id'=>'crear_cartera'])!!}
+        {!!Form::boton('Descargar Cartera',route('admin.cartera.download'),'green-seagreen','fa fa-cloud-download','',['id'=>'descargar_cartera'])!!}
         {!!Form::botonmodal('Crear Pago','#PagoCreate','blue','fa fa-plus')!!}
         
         {!!Form::boton('Recaudación',route('admin.recaudacion'),'red','fa fa-eye')!!}
