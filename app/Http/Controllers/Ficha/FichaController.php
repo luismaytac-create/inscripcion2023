@@ -239,7 +239,7 @@ class FichaController extends Controller
                                 $debe = true;
                             }
                         }else {
-                            if($postulante->idespecialidad ==1 && $postulante->idespecialidad4 ==1 && $validacion->intensivo==FALSE){
+                            if($postulante->idespecialidad ==1 && $postulante->idespecialidad4 ==1 ){
                                 if(str_contains($pagos_realizados,$item)){
                                     if(date('Y-m-d')>= env('FINAL_CEPRE')){
                                         $ccc = DB::table("arquitectura_cepre_pagos")->where('codigo',$postulante->numero_identificacion)->count();
