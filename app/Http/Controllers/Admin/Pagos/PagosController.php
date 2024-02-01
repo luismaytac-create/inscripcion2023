@@ -886,7 +886,7 @@ class PagosController extends Controller
 			}
         $detalle = collect([
             '2',';',
-            '0'.ltrim($postulante->numero_identificacion, '0'),';',
+            substr($postulante->numero_identificacion, strlen($postulante->numero_identificacion) - 8),';',
             strtoupper(str_clean($postulante->nombre_cliente)),';',
             strtoupper(str_clean($postulante->paterno)),';',
             strtoupper(str_clean($postulante->materno)),';',
