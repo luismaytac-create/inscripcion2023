@@ -16,6 +16,7 @@ use App\Models\Servicio;
 use App\Models\Proceso;
 use App\Models\Archivo;
 use App\Models\OrdenPago;
+use App\Models\PagosForce;
 use PDF;
 use App\Http\Controllers\Pago\PagoController;
 use Carbon\Carbon;
@@ -58,15 +59,15 @@ class PagosController extends Controller
         $varxx=Auth::user()->id;
         $varyyy=Auth::user()->password;
 
-        if( 
+        if(
             Auth::user()->dni == 'jcampos'  || Auth::user()->dni == 'juanro' || Auth::user()->dni == 'mbarrera'
         ){
 
         #if(true){
             $servicio = Servicio::find($request->servicio);
             $pos = Postulante::Activos()->where('numero_identificacion',$request->input('codigo'))->first();
-            
-            
+
+
             $ser = $servicio->codigo;
             $cod = $request->input('codigo');
             $banco = $request->input('banco');
@@ -98,7 +99,7 @@ class PagosController extends Controller
                                 'idpostulante'=>$pos->id,
                     'usuario'=>$varxx
                                 ]);
-                                
+
             $this->validartodoslospagos($pos->id);
             Alert::success('Pago Registrado con exito');
             return back();
@@ -112,7 +113,7 @@ class PagosController extends Controller
     public function pagochange(Request $request)
     {
 
-	
+
         $varxx=Auth::user()->id;
         $varyyy=Auth::user()->password;
 
@@ -165,12 +166,12 @@ class PagosController extends Controller
             #Subo todas las columnas como vienen
 
             $this->StorePagos($archivo,$banco,$nombre);
-        
+
             #Preparo la data antes de subir a la DB
             $data = $this->PreparaData($archivo,$banco);
 
 
-            
+
             #valido pagos
             #Si los datos son correctos ejecuto la subida de datos
             $datafiltrada = $this->ValidoPagosNew($data);
@@ -196,8 +197,21 @@ class PagosController extends Controller
                             'usuario'=>$varxx,
                             'operacion'=>$item['operacion']
                             ]);
-                            
-                            
+
+
+                            $count = PagosForce::where('dni_ruc',$item['codigo'])->where('monto',$item['monto'])->where('activo',true)->count();
+
+
+                            if($count>0){
+                                PagosForce::where('dni_ruc',$item['codigo'])->where('monto',$item['monto'])->where('activo',true)->update(['activo'=>false]);
+                            }
+
+
+
+
+
+
+
                             $this->validartodarchivo($item['codigo'],$item['fecha']);
                     }
                 } else {
@@ -350,11 +364,11 @@ class PagosController extends Controller
                 $servicios = Servicio::Activo()->get();
                 foreach ($archivo as $key => $value) {
                     if (substr($value, 0 ,1) == 'D' && substr($value, 196 ,1)!= 'E') {
-						
+
                         $partida = (int)substr($value, 27 ,8);
-                        
+
 						$servicio = $servicios->where('partida', $partida);
-						
+
                         if(!$servicio->isEmpty()){
                             $key = $servicio->keys()[0];
                         }else{
@@ -366,50 +380,50 @@ class PagosController extends Controller
 						$poscod1=substr($value, 15 ,12);
 						$valid1 = Postulante::where('numero_identificacion',$poscod1)->count();
 						if($valid1==1){$codigopostul=$poscod1;      }
-						
-						
-						
+
+
+
 						$poscod2=substr($value, 16 ,11);
 						$valid2 = Postulante::where('numero_identificacion',$poscod2)->count();
-						
+
 						if($valid2==1){$codigopostul=$poscod2;}
-						
+
 						$poscod3=substr($value, 17 ,10);
 						$valid3 = Postulante::where('numero_identificacion',$poscod3)->count();
-						
+
 						if($valid3==1){$codigopostul=$poscod3;}
 						$poscod4=substr($value, 18 ,9);
 						$valid4 = Postulante::where('numero_identificacion',$poscod4)->count();
-						
+
 						if($valid4==1){$codigopostul=$poscod4;}
 						$poscod5=substr($value, 19 ,8);
 						$valid5 = Postulante::where('numero_identificacion',$poscod5)->count();
-						
+
 						if($valid5==1){$codigopostul=$poscod5;}
-						
+
 						$sumvalx=$valid1+$valid2+$valid3+$valid4+$valid5;
-						
+
 						if($sumvalx==0){
 							$codigopostul=substr($value, 15 ,12);
-							
+
 						}
-						
-						
+
+
 						if($sumvalx==1){
-	
+
 							$xas = Postulante::where('numero_identificacion',$codigopostul)->first();
 							$nombcl=$xas->nombre_cliente;
-							
+
 						}
-						
+
 						if($sumvalx>1){
-							
+
 							$codigopostul=substr($value, 15 ,12).'COINCIDE EN MAS DE 1 POSTULANTE';
 						}
-						
-						
-						
-						
+
+
+
+
                         $data[$i]['recibo'] = $servicio[$key]->codigo.$codigopostul.substr($value, 225 ,8);
                         $data[$i]['servicio'] = $servicio[$key]->codigo;
                         $data[$i]['descripcion'] = $servicio[$key]->descripcion;
@@ -540,7 +554,7 @@ class PagosController extends Controller
                     foreach ($archivo as $key => $value) {
                         $separador = (str_contains($value,','))?',':';';
                         $fila=explode($separador,$value);
-                        
+
                         $date = Carbon::now();
                         $varxx=Auth::user()->id;
                         Archivo::create([
@@ -550,9 +564,9 @@ class PagosController extends Controller
                             'banco'=>'ocef',
                             'archivo'=>$nombre
                         ]);
-                        
+
                     }
-    
+
                     break;
 
             default:
@@ -584,7 +598,7 @@ class PagosController extends Controller
         //CREP0001-IVAN
     	$name = 'CARTERA_TOTAL'.'.txt';
         Storage::disk('carteras')->delete($name);
-        Log::info('info: cartera scrota');
+
 
         $servicios = Servicio::where('activo',1)->get();
         foreach ($servicios->chunk(5) as $key => $items) {
@@ -594,7 +608,7 @@ class PagosController extends Controller
                 if($postulantes->count()>0){
                     $codigo_servicio = $servicio->codigo;
                     $codigo_cronograma = ($servicio->codigo=='507') ? 'INEX' : 'INSC' ;
-					
+
                     // $param = $this->Parametros($postulantes,$codigo_servicio,$codigo_cronograma);
                     $header='CC19302437633CUNIVERSIDAD NACIONAL DE INGENIERIA      '.date('Ymd').'000000296000000008443000A';
 
@@ -602,11 +616,27 @@ class PagosController extends Controller
                    foreach ($postulantes->chunk(500) as $key => $Lista) {
                         foreach ($Lista as $key => $postulante) {
                             $detalle = $this->ParametrosDetalle($postulante,$codigo_servicio,$codigo_cronograma);
-                            Storage::disk('carteras')->append($name, $detalle);
+                            if(strlen($detalle)>0){
+                                Storage::disk('carteras')->append($name, $detalle);
+                            }
+
                         }
                      }
                 }//end if
             }//end foreach
+        }
+
+        $pagosForce = PagosForce::where('activo',true)->get();
+
+        //    Log::info( print_r($pagosForce,true));
+        foreach ($pagosForce as $key => $pago) {
+
+            $detalle = collect([
+                $pago->bol_fac.';'. $pago->dni_ruc.';'. $pago->nombres_raz_social.';'. $pago->paterno.';'. $pago->materno.';'. $pago->direcccion.';'.
+                $pago->correo.';'. $pago->descripcion.';'. $pago->partida.';'. $pago->proyecto.';'. $pago->monto
+                ]);
+               Storage::disk('carteras')->append($name, $detalle->implode(''));
+
         }
 
         Alert::success('Cartera Creada con exito');
@@ -645,10 +675,19 @@ class PagosController extends Controller
 
                         }
                     }
+
+
+
+
+
+
                     Storage::disk('carteras')->append($name, $param['footer']);
                 }//end if
             }//end foreach
         }
+
+
+
 
         Alert::success('Cartera Creada con exito');
         return back();
@@ -763,8 +802,8 @@ class PagosController extends Controller
     }
     public function PostulantesAPagar($codigo)
     {
-		
-		
+
+
         switch ($codigo) {
 
        /*    case '517':
@@ -777,10 +816,10 @@ class PagosController extends Controller
 
 			 case '518':
                 $postulantes = Postulante::Traslados()->IsNull(0)->Alfabetico()->get();
-                break;	
+                break;
 				case '519':
                 $postulantes = Postulante::Titulados()->IsNull(0)->Alfabetico()->get();
-                break;	
+                break;
 */
 
 
@@ -878,27 +917,35 @@ class PagosController extends Controller
     }
     public function ParametrosDetalle($postulante,$servicio,$cronograma)
     {
-    	$servicio = Servicio::where('codigo',$servicio)->first();
-        $cronograma = Cronograma::where('codigo',$cronograma)->first();
-		if($servicio->codigo ==521){
-				
-				$cronograma = Cronograma::where('codigo','INBE')->first();
-			}
-        $detalle = collect([
-            '2',';',
-            substr($postulante->numero_identificacion, strlen($postulante->numero_identificacion) - 8),';',
-            strtoupper(str_clean($postulante->nombre_cliente)),';',
-            strtoupper(str_clean($postulante->paterno)),';',
-            strtoupper(str_clean($postulante->materno)),';',
-            '',';',
-            strtoupper($postulante->email),';',
-            $servicio->descripcion_recortada,';',
-            $servicio->partida,';',
-            '09253',';',
-            $servicio->monto
+        $servicio = Servicio::where('codigo',$servicio)->first();
+        $pagosForce = PagosForce::where('dni_ruc',$postulante->numero_identificacion)->where('partida',$servicio->partida)->where('activo',true)->count();
+        if($pagosForce > 0) {
+            $detalle = collect([]);
+        }else {
+            $cronograma = Cronograma::where('codigo',$cronograma)->first();
+            if($servicio->codigo ==521){
+
+                $cronograma = Cronograma::where('codigo','INBE')->first();
+            }
+            $detalle = collect([
+                '2',';',
+                substr($postulante->numero_identificacion, strlen($postulante->numero_identificacion) - 8),';',
+                strtoupper(str_clean($postulante->nombre_cliente)),';',
+                strtoupper(str_clean($postulante->paterno)),';',
+                strtoupper(str_clean($postulante->materno)),';',
+                '',';',
+                strtoupper($postulante->email),';',
+                $servicio->descripcion_recortada,';',
+                $servicio->partida,';',
+                '09253',';',
+                $servicio->monto
 
 
-        ]);
+            ]);
+        }
+
+
+
         /*
     	$detalle = collect([
 	    	$TipoDetalle = 'D',
@@ -928,10 +975,10 @@ class PagosController extends Controller
 			$PorcentajeMinimo = pad('0',8,'0','L'),
 			$OrdenCronologico = '1',
 			$FechaEnvio = Carbon::now()->format('Ymd'),
-			
-			
-				
-			
+
+
+
+
 			$FechaVigencia = str_replace('-', '', $cronograma->fecha_fin),
 			$DiasProrroga = '000',
 			$FillerFinDetalle = pad(' ',15,' ','L'),
@@ -963,7 +1010,7 @@ class PagosController extends Controller
 	public function tttt($id = null)
     {
     	$existe = Postulante::where('id',$id)->count();
-	
+
         if($existe==0){
             Alert::warning('No registro su preinscripcion')
                     ->details('Debes ingresar a la opcion Datos y llenar el formularo de preinscripcion')
@@ -971,7 +1018,7 @@ class PagosController extends Controller
             return back();
         }else{
             $pagos = $this->CalculoServiciosAd($id);
-		
+
             return view('admin.pagos.listaadmin',compact('id','pagos'));
         }
     }
@@ -979,7 +1026,7 @@ class PagosController extends Controller
     public function CalculoServicios($id = null)
     {
         $postulante = Postulante::where('id',$id)->first();
-	
+
         #Pago de Prospecto-----------------------------------------------------------------------------------------------
         $pagos = collect(['prospecto'=>475]);
         #Pago por derecho de examen---------------------------------------------------------------------------------------
@@ -1058,7 +1105,7 @@ class PagosController extends Controller
         #Pago de Prospecto-----------------------------------------------------------------------------------------------
         $pagos = collect(['prospecto'=>475]);
         #Pago por derecho de examen---------------------------------------------------------------------------------------
-	
+
         #Modalidad Ordinario, Dos primeros alumnos, Deportisca calificado (Iniciar),Cepre Uni
         if (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
             && str_contains($postulante->gestion_ie,'Pública'))
@@ -1127,38 +1174,38 @@ class PagosController extends Controller
 
         return $pagos;
     }
-	
+
     public function validartodoslospagos($id)
     {
         $correcto_pagos = false;
         $msj = collect([]);
         $debe = false;
         #Valida Pagos-------------------------------------------------------
-            
+
              $postulante = Postulante::where('id',$id)->first();
             $pagos = $this->CalculoServicios($id);
-			
-			
+
+
             $recaudacion = Recaudacion::select('servicio','monto')->where('idpostulante',$postulante->id)->get();
-			
+
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
-			
+
             $debe = false;
             foreach ($pagos as $key => $item) {
                 if(str_contains($pagos_realizados,$item)){
-					
+
 				$correcto_pagos = true;
-				
-				
+
+
 				}else{
                     $correcto_pagos = false;
                     $servicio = Servicio::where('codigo',$item)->first();
                     $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 12 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
                     $debe = true;
-					
+
                 }
             }
-			
+
             $correcto_pagos = ($debe) ? false : true ;
 
             if( $postulante->idmodalidad==16 ){
@@ -1187,7 +1234,7 @@ class PagosController extends Controller
                     $varpagg=  Recaudacion::where('idpostulante',$postulante->id)->where('servicio',474)->count();
                     if( $varpagg == 1){
                         if ($correcto_pagos && !$postulante->pago) {
- 
+
                             Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
                         }
                     }
@@ -1198,7 +1245,7 @@ class PagosController extends Controller
                     $varpagg=  Recaudacion::where('idpostulante',$postulante->id)->where('servicio',474)->count();
                     if( $varpagg == 2){
                         if ($correcto_pagos && !$postulante->pago) {
- 
+
                             Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
                         }
                     }
@@ -1218,41 +1265,41 @@ class PagosController extends Controller
         $msj = collect([]);
         $debe = false;
         #Valida Pagos-------------------------------------------------------
-            
+
              $postulante = Postulante::where('numero_identificacion',$codigo)->first();
             $pagos = $this->CalculoServicios($postulante->id);
-			
-			
+
+
             $recaudacion = Recaudacion::select('servicio','monto')->where('idpostulante',$postulante->id)->get();
-			
+
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
-			
+
             $debe = false;
             foreach ($pagos as $key => $item) {
                 if(str_contains($pagos_realizados,$item)){
-					
+
 				$correcto_pagos = true;
-				
-				
+
+
 				}else{
                     $correcto_pagos = false;
                     $servicio = Servicio::where('codigo',$item)->first();
                     $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 12 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
                     $debe = true;
-					
+
                 }
             }
-			
+
             $correcto_pagos = ($debe) ? false : true ;
-			
+
             if ($correcto_pagos && !$postulante->pago) {
-				
+
                 Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>$fecha]);
 				Proceso::where('idpostulante',$postulante->id)->update(['pago_examen'=>true]);
             }
-			
-			
-    }   
+
+
+    }
     public function test(PagosRequest $request)
     {
         #Guardo el archivo

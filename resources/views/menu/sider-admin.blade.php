@@ -26,7 +26,7 @@
 
 
             {!!Form::menu('Descuento',route('admin.descuentos.index'),'fa fa-cut')!!}
-
+            {!!Form::menu('Cartera',route('admin.carteras.index'),'fa fa-users')!!}
             {!!Form::menu('Pagos',route('admin.pagos.index'),'fa fa-money')!!}
             {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
             {!!Form::menu('Buscar Postulante',route('admin.pos.index'),'fa fa-book')!!}
@@ -39,6 +39,8 @@
 
 
             {!!Form::menu('Padron Verificador',route('admin.padron.verificador'),'fa fa-database')!!}
+
+
 
 
             <li class="m-menu__section ">

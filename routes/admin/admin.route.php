@@ -380,6 +380,12 @@ Route::group(['namespace'=>'Sorteo','middleware'=>'informes'], function() {
 
 });
 
+Route::group(['namespace'=>'Cartera','middleware'=>'sistemas'], function() {
+    Route::resource('carteras','CarteraController',['names'=>'admin.carteras','only'=>['index','store','edit','update']]);
+    Route::get('activar-carteras/{id}','CarteraController@activate')->name('admin.carteras.activate');
+
+});
+
 
 /**
  * Postulantes
