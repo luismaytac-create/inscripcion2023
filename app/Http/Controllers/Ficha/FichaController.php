@@ -244,7 +244,7 @@ class FichaController extends Controller
                                     if(date('Y-m-d')>= env('FINAL_CEPRE')){
                                         $ccc = DB::table("arquitectura_cepre_pagos")->where('codigo',$postulante->numero_identificacion)->count();
     
-                                        if($ccc>0){
+                                        if($ccc>1){
                                             $correcto_pagos = true;
                                         }else{
     
