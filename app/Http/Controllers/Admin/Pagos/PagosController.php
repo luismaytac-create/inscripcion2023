@@ -617,7 +617,7 @@ class PagosController extends Controller
                         foreach ($Lista as $key => $postulante) {
                             $detalle = $this->ParametrosDetalle($postulante,$codigo_servicio,$codigo_cronograma);
                             if(strlen($detalle)>0){
-                                Storage::disk('carteras')->append($name, $detalle);
+                           //     Storage::disk('carteras')->append($name, $detalle);
                             }
 
                         }
