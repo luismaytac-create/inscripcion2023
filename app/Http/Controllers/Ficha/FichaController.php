@@ -416,7 +416,7 @@ class FichaController extends Controller
                         }
 
 
-                        if( !isset($postulante->idaula1) ){
+                        if( !isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
                             Postulante::AsignarAula($postulante->id);
                         }
                          if( !isset($postulante->idaulavoca) ){
@@ -425,7 +425,7 @@ class FichaController extends Controller
 
                     }
 
-                    if( !isset($postulante->idaula1) ){
+                    if( !isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
                         Postulante::AsignarAula($postulante->id);
                     }
                     if( !isset($postulante->idaulavoca) ){

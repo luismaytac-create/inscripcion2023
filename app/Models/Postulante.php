@@ -1155,7 +1155,7 @@ class Postulante extends Model
 
 
 
-            if(!isset($postulante->idaula1)  ){
+            if(!isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
 
                 //SI ES NO TIT. GRADUADO UNO O TRASLADO INTERNO
                 if(!str_contains($postulante->codigo_modalidad,['E1TGU','E1TI'])){
@@ -1190,7 +1190,7 @@ class Postulante extends Model
                         #    Log::info('MODALIDAD INICIAR : ');
                         $aula1 = Aula::ObtenerAula(1,false,$facultad)->first();
                         #    Log::info('AULA 1: '.$aula1);
-                        if (isset($aula1)) {
+                        if (isset($aula1) and !isset($postulante->idaula1)) {
 
 
                                 if (Postulante::where('id',$id)->whereNull('idaula1')->update(['idaula1'=>$aula1->id])) {
@@ -1206,7 +1206,7 @@ class Postulante extends Model
 
                         $aula2 = Aula::ObtenerAula(2,false,$facultad)->first();
                         #    Log::info('AULA 2: '.$aula2);
-                        if (isset($aula2)) {
+                        if (isset($aula2) and !isset($postulante->idaula2)) {
 
                                 if (Postulante::where('id',$id)->whereNull('idaula2')->update(['idaula2'=>$aula2->id])) {
                                     Aula::where('id',$aula2->id)->decrement('disponible_02');
@@ -1220,7 +1220,7 @@ class Postulante extends Model
                         }
                         $aula3 = Aula::ObtenerAula(3,false,$facultad)->first();
                         #   Log::info('AULA 3: '.$aula3);
-                        if (isset($aula3)) {
+                        if (isset($aula3) and !isset($postulante->idaula3) ) {
 
 
                                 if (Postulante::where('id',$id)->whereNull('idaula3')->update(['idaula3'=>$aula3->id])) {
