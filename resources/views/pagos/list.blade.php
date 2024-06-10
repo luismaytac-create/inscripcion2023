@@ -31,7 +31,7 @@
                 <h4><b>Estos son los pagos que se deben realizar, 
                     debe imprimir todos los formatos de pago para que pueda ir a cancelar en el banco BCP o en el banco ScotiaBank.</b></h4>
                 <p>
-                    Si desea solicitar una factura, le invitamos a comunicarse al correo <strong>miriam.napan.p@admisionuni.edu.pe</strong>, proporcionando los detalles de su razón social, número de ruc y dirección. Estaremos encantados de atender su solicitud y brindarle la información necesaria.</p>
+                    Si desea solicitar una factura, le invitamos a comunicarse al correo <strong>informes.admision@uni.edu.pe</strong>, proporcionando los detalles de su razón social, número de ruc y dirección. Estaremos encantados de atender su solicitud y brindarle la información necesaria.</p>
 
             <h3>Puedes pagar a partir del 18 de junio.</h3>
                <!-- <div class="list-group">
