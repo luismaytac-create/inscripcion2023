@@ -82,7 +82,7 @@
                     </li>
                     <hr>
                     <li>
-                        Descarga la guía de inscripción  <a data-link="http://bit.ly/2WcXxnb" target="_blank" href="http://admision.uni.edu.pe/wp-content/uploads/2023/06/guia-uni-2023-2-1.pdf" class="btn btn-outline-success m-btn  m-btn--icon">
+                        Descarga la guía de inscripción  <a data-link="http://bit.ly/2WcXxnb" target="_blank" href="https://admision.uni.edu.pe/wp-content/uploads/2024/06/GUIA_UNI_2024-2.pdf" class="btn btn-outline-success m-btn  m-btn--icon">
                         <span>
                             <i class="fa flaticon-book"></i>
                             <span>GUÍA DE INSCRIPCIÓN</span>
