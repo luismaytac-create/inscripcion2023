@@ -19,9 +19,13 @@
                         <h2 class="lead">
                             <span class="caption-subject theme-font bold uppercase">FORMATOS DE PAGO AL NOMBRE DEL POSTULANTE</span>
                         </h2>
+
                         <div class="actions">
                             {!!Form::back(route('home.index'))!!}
                         </div>
+
+
+
                         <h2 class="m-portlet__head-label m-portlet__head-label--danger">
                             <span>FORMATO DE PAGOS</span>
                         </h2>
@@ -43,7 +47,12 @@
                                 </h1>
                             </div>
                             <p></p>
+
+                            <!--
                             <iframe src="{{route('pagos.pdf',$servicio)}}" width="100%" height="600px" scrolling="auto"></iframe>
+                            -->
+                            <h3>Puedes pagar a partir del 18 de junio.</h3>
+
                         </div>
 
 

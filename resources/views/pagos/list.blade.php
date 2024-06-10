@@ -32,7 +32,9 @@
                     debe imprimir todos los formatos de pago para que pueda ir a cancelar en el banco BCP o en el banco ScotiaBank.</b></h4>
                 <p>
                     Si desea solicitar una factura, le invitamos a comunicarse al correo <strong>miriam.napan.p@admisionuni.edu.pe</strong>, proporcionando los detalles de su razón social, número de ruc y dirección. Estaremos encantados de atender su solicitud y brindarle la información necesaria.</p>
-                <div class="list-group">
+
+            <h3>Puedes pagar a partir del 18 de junio.</h3>
+               <!-- <div class="list-group">
                     <a href="{{ route('pagos.formato',$pagos['prospecto']) }}" class="list-group-item active">
                         <h4 class="list-group-item-heading">Prospecto de Admisión virtual</h4>
                         <p class="list-group-item-text"> El prospecto de admisión virtual comprende los siguientes documentos (Reglamento, Solucionario del Examen de Admisión,Catálogo de Carreras, Guía de Inscripción). </p>
@@ -68,6 +70,7 @@
                         </a>
                     @endif
                 </div>
+                -->
 
 
         </div>
