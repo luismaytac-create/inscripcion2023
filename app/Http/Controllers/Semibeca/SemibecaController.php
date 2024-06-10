@@ -40,7 +40,7 @@ class SemibecaController extends Controller
        if($hoy<$fechaInicio || $hoy>$fechaFin){ #false
 
             # Alert::info('Debe completar sus datos personales.');
-            Alert::info('Inscripciones cerradas, los resultados se publicarán según el cronograma.');
+            Alert::info('Inscripciones cerradas, verifica el cronograma.');
             #Alert::info('Los resultados serán publicados el día 10 de Julio.');
             return redirect()->route('home.index');
 
@@ -118,7 +118,7 @@ class SemibecaController extends Controller
         $datt->otorga = 'PENDIENTE';
         $datt->cepreuni = 0;
         $datt->promedio = null;
-        $datt->proceso = '2024-1';
+        $datt->proceso = '2024-2';
         $datt->dni = Auth::user()->dni;
         $datt->gestion = $postulante->datos_colegio->gestion;
         $datt->save();
