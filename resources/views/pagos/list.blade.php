@@ -33,8 +33,8 @@
                 <p>
                     Si desea solicitar una factura, le invitamos a comunicarse al correo <strong>informes.admision@uni.edu.pe</strong>, proporcionando los detalles de su razón social, número de ruc y dirección. Estaremos encantados de atender su solicitud y brindarle la información necesaria.</p>
 
-            <h3>Puedes pagar a partir del 18 de junio.</h3>
-               <!-- <div class="list-group">
+
+                <div class="list-group">
                     <a href="{{ route('pagos.formato',$pagos['prospecto']) }}" class="list-group-item active">
                         <h4 class="list-group-item-heading">Prospecto de Admisión virtual</h4>
                         <p class="list-group-item-text"> El prospecto de admisión virtual comprende los siguientes documentos (Reglamento, Solucionario del Examen de Admisión,Catálogo de Carreras, Guía de Inscripción). </p>
@@ -70,7 +70,7 @@
                         </a>
                     @endif
                 </div>
-                -->
+
 
 
         </div>
