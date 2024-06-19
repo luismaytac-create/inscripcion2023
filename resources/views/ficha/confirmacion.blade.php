@@ -30,9 +30,9 @@
             <div class="m-portlet__body lead">
 
 
+                <h1>Ficha de inscripción disponible desde el 25 de junio.</h1>
 
-
-                <div class="col-md-12">
+                <div class="col-md-12" style="display:none;">
                     <!-- BEGIN PORTLET-->
                     <div class="portlet light tasks-widget widget-comments">
                         <div class="portlet-title ">
