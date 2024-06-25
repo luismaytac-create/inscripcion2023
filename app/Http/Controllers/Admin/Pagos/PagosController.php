@@ -184,19 +184,24 @@ class PagosController extends Controller
                 if (count($datafiltrada['correcto']['data'])>0) {
                     Alert::success(count($datafiltrada['correcto']['data']).' Pagos Nuevos se han registrado');
                     foreach ( $datafiltrada['correcto']['data'] as $key => $item) {
-                        Recaudacion::create([
-                            'recibo'=>$item['recibo'],
-                            'servicio'=>$item['servicio'],
-                            'descripcion'=>$item['descripcion'],
-                            'monto'=>$item['monto'],
-                            'fecha'=>$item['fecha'],
-                            'codigo'=>$item['codigo'],
-                            'nombrecliente'=>$item['nombrecliente'],
-                            'banco'=>$item['banco'],
-                            'referencia'=>$item['referencia'],
-                            'usuario'=>$varxx,
-                            'operacion'=>$item['operacion']
+
+                        if($item['servicio'] !='No ubicado') {
+                            Recaudacion::create([
+                                'recibo'=>$item['recibo'],
+                                'servicio'=>$item['servicio'],
+                                'descripcion'=>$item['descripcion'],
+                                'monto'=>$item['monto'],
+                                'fecha'=>$item['fecha'],
+                                'codigo'=>$item['codigo'],
+                                'nombrecliente'=>$item['nombrecliente'],
+                                'banco'=>$item['banco'],
+                                'referencia'=>$item['referencia'],
+                                'usuario'=>$varxx,
+                                'operacion'=>$item['operacion']
                             ]);
+                        }
+
+
 
 
                             $count = PagosForce::where('dni_ruc',$item['codigo'])->where('monto',$item['monto'])->where('activo',true)->count();
