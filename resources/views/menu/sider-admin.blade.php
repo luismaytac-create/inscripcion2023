@@ -194,7 +194,7 @@
         @if (str_contains(Auth::user()->codigo_rol,['foto']))
 
             {!!Form::menu('Editar Fotos',route('admin.fotos.index'),'fa fa-file-image-o')!!}
-            {!!Form::menu('Listados',route('admin.listados.index'),'fa fa-file-image-o')!!}
+          <!--  {!!Form::menu('Listados',route('admin.listados.index'),'fa fa-file-image-o')!!} -->
             {!!Form::menu('Buscar Postulante',route('admin.pos.index'),'fa fa-book')!!}
             {!!Form::menu('Padron Verificador',route('admin.padron.verificador'),'fa fa-database')!!}
         @endif
@@ -232,6 +232,7 @@
      {!!Form::menu('Declaracion',route('admin.declaracion.index'),'fa fa-database')!!}
 {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
         @endif
+
 
 
 
@@ -275,7 +276,11 @@
 
         @endif
 
-        @if(str_contains(Auth::user()->dni,['aromero']))
+        @if(str_contains(Auth::user()->dni,['uni001']))
+
+            {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
+        @endif
+        @if(str_contains(Auth::user()->dni,['uni002']))
 
             {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
         @endif
