@@ -62,10 +62,10 @@
 
                 <p> Documento 3: Certificado de Estudios  o Constancia de Logros de Aprendizaje. </p>
 
-                <p> Documento 4: Boletas de pago o recibos por honorarios de tu padre y de tu madre, correspondiente a los dos últimos meses (Octubre - Noviembre 2023). </p>
+                <p> Documento 4: Boletas de pago o recibos por honorarios de tu padre y de tu madre, correspondiente a los dos últimos meses (Marzo- Mayo 2024). </p>
 
                 <p>Documento 5: Autovalúo (PU-HR) o título de propiedad. Si vives en casa alquilada, recibo de pago o el contrato de alquiler. En caso de vivir alojado presentar la constancia de alojamiento simple.</p>
-                <p>Documento 6: Recibo de agua, energía eléctrica y teléfono de la vivienda que ocupas en la ciudad de Lima, correspondiente a los dos últimos meses (Octubre - Noviembre 2023).</p>
+                <p>Documento 6: Recibo de agua, energía eléctrica y teléfono de la vivienda que ocupas en la ciudad de Lima, correspondiente a los dos últimos meses (Marzo- Mayo 2024).</p>
                 <p>Documento 7: Descarga, completa y escanea los siguiente documentos .</p>
 
 
@@ -274,7 +274,7 @@
                                         {!! Form::open(['id' => 'Frm4', 'class' => 'form-horizontal form-bordered']) !!}
                                         <div class="col-md-12">
                                             <div class="form-group m-form__group">
-                                                <strong>4. Boletas de pago o recibos por honorarios de tu padre y de tu madre, correspondiente a los dos últimos meses (Octubre - Noviembre 2023).</strong>
+                                                <strong>4. Boletas de pago o recibos por honorarios de tu padre y de tu madre, correspondiente a los dos últimos meses (Marzo- Mayo 2024).</strong>
 
                                                 <div class="file-loading">
                                                     <input id="carga4" name="carga4" type="file" />
@@ -335,7 +335,7 @@
                                         {!! Form::open(['id' => 'Frm6', 'class' => 'form-horizontal form-bordered']) !!}
                                         <div class="col-md-12">
                                             <div class="form-group m-form__group">
-                                                <strong>6. Recibo de agua, energía eléctrica y teléfono de la vivienda que ocupa el postulante en la ciudad de Lima, correspondiente a los dos últimos meses (Octubre - Noviembre 2023).</strong>
+                                                <strong>6. Recibo de agua, energía eléctrica y teléfono de la vivienda que ocupa el postulante en la ciudad de Lima, correspondiente a los dos últimos meses (Marzo- Mayo 2024).</strong>
 
                                                 <div class="file-loading">
                                                     <input id="carga6" name="carga6" type="file" />
