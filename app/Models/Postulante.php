@@ -498,7 +498,7 @@ class Postulante extends Model
     */
     public function getNombreCompletoAttribute()
     {
-        $nombre = $this->paterno.' '.$this->materno.' , '.$this->nombres;
+        $nombre = $this->paterno.' '.$this->materno.', '.$this->nombres;
         return $nombre;
     }
 

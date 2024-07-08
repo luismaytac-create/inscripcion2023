@@ -30,7 +30,7 @@
             <div class="m-portlet__body lead">
 
 
-                <h1>Ficha de inscripción disponible desde el 25 de junio.</h1>
+                <h1>Ficha de inscripción disponible desde el 4 de julio.</h1>
 
                 <div class="col-md-12" style="display:none;">
                     <!-- BEGIN PORTLET-->
