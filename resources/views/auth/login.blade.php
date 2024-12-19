@@ -11,7 +11,7 @@
                 </div>
                 <div class="m-login__signin">
                     <div class="m-login__head">
-                        <h1 class="m-login__title ">CONCURSO DE ADMISIÓN 2024-2</h1>
+                        <h1 class="m-login__title ">CONCURSO DE ADMISIÓN 2025-1</h1>
                         <h3 class="m-login__title ">INGRESA A TU CUENTA</h3>
                     </div>
                     @include('alerts.errors')

@@ -118,7 +118,7 @@ class SemibecaController extends Controller
         $datt->otorga = 'PENDIENTE';
         $datt->cepreuni = 0;
         $datt->promedio = null;
-        $datt->proceso = '2024-2';
+        $datt->proceso = '2025-1';
         $datt->dni = Auth::user()->dni;
         $datt->gestion = $postulante->datos_colegio->gestion;
         $datt->save();
