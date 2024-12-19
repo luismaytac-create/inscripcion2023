@@ -69,7 +69,8 @@ class HomeController extends Controller
                     return redirect()->to('/');
 
                 }else {
-                    if (env('INGRESANTE')) {
+                    #if (env('INGRESANTE')) {
+                    if(false){
                         $esingresante = Ingresante::where('idpostulante',$postulante->id)->first();
                         //Restriccion Ingresante
                         if( $esingresante == 0 ) {
