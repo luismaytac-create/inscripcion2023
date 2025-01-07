@@ -60,7 +60,7 @@ class PagosController extends Controller
         $varyyy=Auth::user()->password;
 
         if(
-            Auth::user()->dni == 'jcampos'  || Auth::user()->dni == 'juanro' || Auth::user()->dni == 'mbarrera'
+            Auth::user()->dni == 'jcampos'  || Auth::user()->dni == 'juanro' || Auth::user()->dni == 'mbarrera' || Auth::user()->dni == 'ctucto'
         ){
 
         #if(true){

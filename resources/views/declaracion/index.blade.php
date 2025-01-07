@@ -48,9 +48,9 @@
                    <h2>1. Descarga la declaración jurada:</h2>
                        <a target="_blank"
                           @if($postulante->idmodalidad == 16 )
-                          href="{{ asset("DECLARACION JURADA_24-2.pdf")  }}"
+                          href="{{ asset("DECLARACION_JURADA_25-1.pdf")  }}"
                           @else
-                          href="{{ asset("DECLARACION JURADA_24-2.pdf")  }}"
+                          href="{{ asset("DECLARACION_JURADA_25-1.pdf")  }}"
                                   @endif
 
                           class="btn btn-success m-btn  m-btn--icon">

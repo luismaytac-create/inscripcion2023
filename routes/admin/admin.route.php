@@ -293,7 +293,7 @@ Route::group(['namespace'=>'Pagos','middleware'=>'administrador'], function() {
 	Route::get('recaudacion','PagosController@show')->name('admin.recaudacion');
 });
 
-Route::group(['namespace'=>'Usuarios','middleware'=>'informes'], function() {
+Route::group(['namespace'=>'Usuarios','middleware'=>'sistemas'], function() {
     Route::get('editar-usuarios/{id}','UsuariosController@editar')->name('admin.usuarios.editar');
     Route::put('actualizar-usuarios/{id}','UsuariosController@update')->name('admin.usuarios.actualizar');
 });

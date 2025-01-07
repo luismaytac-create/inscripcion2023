@@ -35,7 +35,7 @@ class DeclaracionController extends Controller
         $variduser=Auth::user()->id;
         if($variduser==1 || $variduser==7 || $varrole=='root' || $varrole=='Sistemas' || $variduser==19 
         || $variduser==2172 || $variduser==13 || $variduser==12 || $variduser==14 || $variduser==6205
-        || $variduser==6535 || $varrole=='verificador' ||  $varrole=='Verificador'
+        || $variduser==6535 || $varrole=='verificador' ||  $varrole=='Verificador' || $varrole='informes'
         ){
             $Lista = DB::table("vista_solicitantes_declaracion")->get();
             $cnt_pendientes = DB::table("vista_solicitantes_declaracion")->where('estado','PENDIENTE')->count();
