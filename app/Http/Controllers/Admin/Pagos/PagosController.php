@@ -594,11 +594,49 @@ class PagosController extends Controller
 
 
     }
-    /**
-     * Crea el archivo que se envia al banco
-     * @return [type] [description]
-     */
+
+
+
+
     public function create()
+    {
+        $name = 'CARTERA_TOTAL'.'.txt';
+        Storage::disk('carteras')->delete($name);
+        DB::select('call crear_cartera()');
+
+
+        $data = DB::table("enviar_ocef_actua")
+            ->select('bol', 'numero_identificacion', 'nombres', 'paterno', 'materno', 'direccion', 'email', 'descripcion', 'partida', 'proyecto', 'monto')
+            ->orderBy('monto', 'asc')
+            ->get()
+            ->toArray();
+        $dataArray = [];
+        foreach ($data as $item) {
+            $item = (array)$item;
+            // Convertir monto a número
+            $item['monto'] = (float)$item['monto'];
+            $dataArray[] = $item;
+        }
+        $columns = ['BOL_FAC', 'DNI_RUC', 'NOMBRES_RAZ_SOCIAL', 'PATERNO', 'MATERNO', 'DIRECCION', 'CORREO', 'DESCRIPCION', 'PARTIDA', 'PROYECTO', 'MONTO'];
+        // Guardar el archivo Excel en el servidor
+        $filePath = storage_path('app/carteras/reporteocef.xls');
+        Excel::create('reporteocef', function($excel) use ($dataArray, $columns) {
+            $excel->sheet('Hoja1', function($sheet) use ($dataArray, $columns) {
+                $sheet->row(1, $columns);
+                $sheet->fromArray($dataArray, null, 'A2', false, false);
+                $sheet->setColumnFormat(array(
+                    'A:J' => '@',
+                    'K' => '0',
+                ));
+            });
+        })->store('xls', storage_path('app/carteras'));
+
+        return response()->download($filePath)->deleteFileAfterSend(true);
+    }
+
+
+
+    public function createoldd()
     {
         //CREP0001-IVAN
     	$name = 'CARTERA_TOTAL'.'.txt';

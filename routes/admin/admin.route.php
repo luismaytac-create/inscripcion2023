@@ -121,7 +121,7 @@ Route::group(['namespace'=>'Pagos','middleware'=>'sistemas'], function() {
 
     Route::get('cartera-bcp','PagosController@createbcp')->name('admin.cartera-bcp.create-bcp');
 
-
+    Route::get('bot','PagosController@bot')->name('admin.cartera.bot');
 	Route::get('download','PagosController@descarga')->name('admin.cartera.download');
     Route::get('download-bcp','PagosController@descargabcp')->name('admin.cartera.downloadbcp');
 	Route::get('pagos-lista','PagosController@lista')->name('admin.pagos.list');

@@ -55,13 +55,21 @@
 
 
         <p></p>{{-- asset('/storage/carteras/UNIADMIS.txt') --}}
-        {!!Form::boton('Crear Cartera',route('admin.cartera.create'),'green-meadow','fa fa-file-image-o','',['id'=>'crear_cartera'])!!}
-        {!!Form::boton('Descargar Cartera',route('admin.cartera.download'),'green-seagreen','fa fa-cloud-download','',['id'=>'descargar_cartera'])!!}
-        {!!Form::botonmodal('Crear Pago','#PagoCreate','blue','fa fa-plus')!!}
-        
+            {!!Form::botonmodal('Crear Pago','#PagoCreate','blue','fa fa-plus')!!}
         {!!Form::boton('Recaudación',route('admin.recaudacion'),'red','fa fa-eye')!!}
 
+            {!!Form::boton('Crear Cartera',route('admin.cartera.create'),'green-meadow','fa fa-file-image-o','',['id'=>'crear_cartera_nueva'])!!}
+            {!!Form::boton('Descargar Cartera',route('admin.cartera.download'),'green-seagreen','fa fa-cloud-download','',['id'=>'descargar_cartera'])!!}
+
+
+            {!!Form::boton('Confirmar Cartera',route('admin.cartera.bot'),'red','fa fa-eye','',['id'=>'confirmar_cartera'])!!}
+
          <!--
+           {!!Form::boton('Crear Cartera',route('admin.cartera.create'),'green-meadow','fa fa-file-image-o','',['id'=>'crear_cartera'])!!}
+
+
+            {!!Form::boton('Descargar Cartera',route('admin.cartera.download'),'green-seagreen','fa fa-cloud-download','',['id'=>'descargar_cartera'])!!}
+
             {!!Form::boton('Crear Cartera BCP',route('admin.cartera-bcp.create-bcp'),'green-meadow','fa fa-file-image-o')!!}
             {!!Form::boton('Descargar Cartera BCP',route('admin.cartera.downloadbcp'),'green-seagreen','fa fa-cloud-download')!!}
 

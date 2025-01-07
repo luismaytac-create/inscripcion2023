@@ -193,10 +193,10 @@
 
         @if (str_contains(Auth::user()->codigo_rol,['foto']))
 
-        <!--    {!!Form::menu('Editar Fotos',route('admin.fotos.index'),'fa fa-file-image-o')!!} -->
+          {!!Form::menu('Editar Fotos',route('admin.fotos.index'),'fa fa-file-image-o')!!}
           <!--  {!!Form::menu('Listados',route('admin.listados.index'),'fa fa-file-image-o')!!} -->
         <!--    {!!Form::menu('Buscar Postulante',route('admin.pos.index'),'fa fa-book')!!} -->
-    <!--            {!!Form::menu('Padron Verificador',route('admin.padron.verificador'),'fa fa-database')!!} -->
+           {!!Form::menu('Padron Verificador',route('admin.padron.verificador'),'fa fa-database')!!}
         @endif
 
 
