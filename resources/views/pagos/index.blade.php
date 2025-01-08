@@ -51,7 +51,7 @@
 
                             <iframe src="{{route('pagos.pdf',$servicio)}}" width="100%" height="600px" scrolling="auto"></iframe>
 
-                            <h3>Puedes pagar a partir del 18 de junio.</h3>
+
 
                         </div>
 
