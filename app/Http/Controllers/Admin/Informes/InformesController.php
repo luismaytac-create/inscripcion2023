@@ -56,7 +56,7 @@ class InformesController extends Controller
                 $declaracion_archivo = Declaracion::where('id',$iddeclaracion)->first();
                 $confirmo_email = $userdata->confirmo;
                 $solicitante = SolicitanteVictima::where ( 'dni' ,$dni)->first();
-
+                $celular = $postulante->telefono_celular.'-'. $postulante->telefono_fijo.'-'. $postulante->telefono_varios;
 
 
 
