@@ -8,6 +8,7 @@ use App\Models\Colegio;
 use Illuminate\Http\Request;
 use Styde\Html\Facades\Alert;
 use App\Models\UbigeoNuevo;
+use DB;
 use Illuminate\Support\Facades\Log;
 class ColegioController extends Controller
 {
@@ -23,7 +24,11 @@ class ColegioController extends Controller
     }
     public function lista()
     {
-        $Lista = Colegio::with(['Distrito','Paises'])->orderBy('nombre')->get();
+
+
+        $Lista = DB::table("view_colegio_ins")->get();
+       // $Lista = Colegio::with(['Distrito','Paises'])->orderBy('nombre')->get();
+
         $res['data'] = $Lista;
         return $res;
     }
