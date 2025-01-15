@@ -229,7 +229,7 @@
         @if (str_contains(Auth::user()->codigo_rol,['verificador']))
 
 
-     {!!Form::menu('Declaracion',route('admin.declaracion.index'),'fa fa-database')!!}
+            {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
 {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
         @endif
 
