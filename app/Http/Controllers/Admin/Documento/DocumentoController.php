@@ -30,7 +30,7 @@ class DocumentoController extends Controller
     public function lista() {
         $varrole=Auth::user()->role->nombre;
         $variduser=Auth::user()->id;
-        if($variduser == 44530 ||  $varrole=='Editor Foto' || $varrole=='root' 
+        if($variduser == 44530 ||  $varrole=='Verificador' || $varrole=='root'
         || $varrole=='Sistemas' || $varrole=='Administrador' || $variduser == 19 ){
             $Lista = DB::table("vista_solicitantes_documentos") ->get();
             return view('admin.documento.lista',compact('Lista'));
