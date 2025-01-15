@@ -27,6 +27,7 @@ class AdministradorMiddleware
 			case 'Administrador':
             case 'Informes':
             case 'Editor Foto':
+            case 'Verificador':
             case 'Jefatura':
 
                 return $next($request);
