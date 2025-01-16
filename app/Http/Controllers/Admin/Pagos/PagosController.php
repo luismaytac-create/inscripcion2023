@@ -598,14 +598,23 @@ class PagosController extends Controller
 
 
 
+
+
+
+    public function bot()
+    {
+        DB::select('call confirmar_cartera()');
+        Alert::success('CARTERA CONFIRMADA');
+        return back();
+    }
     public function create()
     {
         $name = 'CARTERA_TOTAL'.'.txt';
         Storage::disk('carteras')->delete($name);
-        DB::select('call crear_cartera()');
+        DB::select('call procesar_lista_pagos()');
 
 
-        $data = DB::table("enviar_ocef_actua")
+        $data = DB::table("pagos_cartera_postulante_ocef")
             ->select('bol', 'numero_identificacion', 'nombres', 'paterno', 'materno', 'direccion', 'email', 'descripcion', 'partida', 'proyecto', 'monto')
             ->orderBy('monto', 'asc')
             ->get()
