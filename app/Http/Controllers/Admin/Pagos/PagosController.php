@@ -615,7 +615,7 @@ class PagosController extends Controller
 
 
         $data = DB::table("pagos_cartera_postulante_ocef")
-            ->select('bol', 'numero_identificacion', 'nombres', 'paterno', 'materno', 'direccion', 'email', 'descripcion', 'partida', 'proyecto', 'monto')
+            ->select('bol_fac', 'dni_ruc', 'nombres_raz_social', 'paterno', 'materno', 'direccion', 'correo', 'descripcion', 'partida', 'proyecto', 'monto')
             ->orderBy('monto', 'asc')
             ->get()
             ->toArray();
