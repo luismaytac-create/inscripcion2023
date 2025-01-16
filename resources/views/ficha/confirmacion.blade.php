@@ -30,7 +30,18 @@
             <div class="m-portlet__body lead">
 
 
-                <h1>Ficha de inscripción disponible desde el 18 de enero</h1>
+
+
+                @if($postulante->idmodalidad==16)
+                    <h1>Estimado postulante, en caso de haber ingresado por la MODALIDAD INGRESO DIRECTO CEPRE usted quedará exonerado del pago por derecho de inscripción.
+                    </h1>
+                        <h1>En caso de no haber logrado una vacante, tendrá la opción de postular en el examen general, realizando el pago de inscripción de acuerdo a la modalidad seleccionada.
+
+                        El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
+
+                @else
+                    <h1>Ficha de inscripción disponible desde el 18 de enero</h1>
+                @endif
 
                 <div class="col-md-12" style="display:none;">
                     <!-- BEGIN PORTLET-->
