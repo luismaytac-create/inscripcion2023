@@ -27,6 +27,7 @@ use DB;
 use App\User;
 use Auth;
 use Validator;
+use Excel;
 use Illuminate\Support\Facades\Log;
 class PagosController extends Controller
 {
