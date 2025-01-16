@@ -621,15 +621,18 @@ class PagosController extends Controller
             ->get()
             ->toArray();
         $dataArray = [];
+        Log::info('DESPUES DE SELECT');
         foreach ($data as $item) {
             $item = (array)$item;
             // Convertir monto a número
             $item['monto'] = (float)$item['monto'];
             $dataArray[] = $item;
         }
+
         $columns = ['BOL_FAC', 'DNI_RUC', 'NOMBRES_RAZ_SOCIAL', 'PATERNO', 'MATERNO', 'DIRECCION', 'CORREO', 'DESCRIPCION', 'PARTIDA', 'PROYECTO', 'MONTO'];
         // Guardar el archivo Excel en el servidor
         $filePath = storage_path('app/carteras/reporteocef.xls');
+        Log::info('ANTES DE EXCEL');
         Excel::create('reporteocef', function($excel) use ($dataArray, $columns) {
             $excel->sheet('Hoja1', function($sheet) use ($dataArray, $columns) {
                 $sheet->row(1, $columns);
@@ -640,7 +643,7 @@ class PagosController extends Controller
                 ));
             });
         })->store('xls', storage_path('app/carteras'));
-
+        Log::info('DESPUES DE EXCEL');
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
 
