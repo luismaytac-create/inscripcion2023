@@ -259,7 +259,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 		  'Captcha' => Hamog\Captcha\Facades\Captcha::class,
 	'Helper' => 'App\Helpers\App::class',
-	'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Zip' => ZanySoft\Zip\ZipFacade::class,
     ],
 
