@@ -610,11 +610,11 @@ class PagosController extends Controller
     }
     public function create()
     {
-        $name = 'CARTERA_TOTAL'.'.txt';
-        Storage::disk('carteras')->delete($name);
+       # $name = 'CARTERA_TOTAL'.'.txt';
+      #  Storage::disk('carteras')->delete($name);
         DB::select('call procesar_lista_pagos()');
 
-
+        Log::info('DESPUES DE PROCEDURE');
         $data = DB::table("pagos_cartera_postulante_ocef")
             ->select('bol_fac', 'dni_ruc', 'nombres_raz_social', 'paterno', 'materno', 'direccion', 'correo', 'descripcion', 'partida', 'proyecto', 'monto')
             ->orderBy('monto', 'asc')
@@ -1496,7 +1496,7 @@ class PagosController extends Controller
 
             $postulante = Postulante::find($array[$i]);
 
-            Log::info('FICHA '.$array[$i]);
+
 
             Log::info('PASO TRUE');
             PDF::SetTitle('FICHA DE INSCRIPCION');
