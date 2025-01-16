@@ -29,7 +29,7 @@ class FotosController extends Controller
 
 
 
-           $postulante = Postulante::where('foto_estado','CARGADO')->orderBy('fecha_pago','asc')->orderBy('foto_fecha_carga','asc')->first();
+           $postulante = Postulante::where('foto_estado','CARGADO')->inRandomOrder()->first();
 
 
             $resumen = Postulante::select('foto_estado',DB::raw('count(*) as cantidad'))->Activos()->groupBy('foto_estado')->get();
