@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Log;
 
 use PHPExcel;
 use PHPExcel_IOFactory;
+use PHPExcel_Style_NumberFormat;
 
 
 class PagosController extends Controller
