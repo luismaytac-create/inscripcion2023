@@ -258,7 +258,7 @@ return [
         'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
 		  'Captcha' => Hamog\Captcha\Facades\Captcha::class,
-	'Helper' => 'App\Helpers\App::class',
+	  'Helper' => 'App\Helpers\App::class',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Zip' => ZanySoft\Zip\ZipFacade::class,
     ],

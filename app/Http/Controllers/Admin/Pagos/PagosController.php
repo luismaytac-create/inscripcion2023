@@ -27,8 +27,13 @@ use DB;
 use App\User;
 use Auth;
 use Validator;
-use Excel;
+
 use Illuminate\Support\Facades\Log;
+
+use PHPExcel;
+use PHPExcel_IOFactory;
+
+
 class PagosController extends Controller
 {
 	private $cuentaUNI;
@@ -629,22 +634,53 @@ class PagosController extends Controller
             $dataArray[] = $item;
         }
 
+
+
         $columns = ['BOL_FAC', 'DNI_RUC', 'NOMBRES_RAZ_SOCIAL', 'PATERNO', 'MATERNO', 'DIRECCION', 'CORREO', 'DESCRIPCION', 'PARTIDA', 'PROYECTO', 'MONTO'];
-        // Guardar el archivo Excel en el servidor
+
+// Crear el objeto PHPExcel
+        $excel = new PHPExcel();
+
+// Configuración inicial
+        $excel->getProperties()->setCreator("Laravel App")
+            ->setLastModifiedBy("Laravel App")
+            ->setTitle("Reporte OCEF")
+            ->setSubject("Reporte OCEF")
+            ->setDescription("Reporte generado desde el sistema.");
+
+// Seleccionar la primera hoja
+        $sheet = $excel->setActiveSheetIndex(0);
+
+// Agregar los encabezados (fila 1)
+        $sheet->fromArray($columns, null, 'A1');
+
+// Agregar los datos desde $dataArray (comenzando en A2)
+        $startRow = 2; // La fila 2 es donde empiezan los datos
+        foreach ($dataArray as $row) {
+            $sheet->fromArray($row, null, "A$startRow");
+            $startRow++;
+        }
+
+// Establecer el formato de las columnas
+        $sheet->getStyle('A:J')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        $sheet->getStyle('K')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
+
+// Configurar el nombre de la hoja
+        $sheet->setTitle('Hoja1');
+
+// Guardar el archivo Excel en el servidor
         $filePath = storage_path('app/carteras/reporteocef.xls');
-        Log::info('ANTES DE EXCEL');
-        Excel::create('reporteocef', function($excel) use ($dataArray, $columns) {
-            $excel->sheet('Hoja1', function($sheet) use ($dataArray, $columns) {
-                $sheet->row(1, $columns);
-                $sheet->fromArray($dataArray, null, 'A2', false, false);
-                $sheet->setColumnFormat(array(
-                    'A:J' => '@',
-                    'K' => '0',
-                ));
-            });
-        })->store('xls', storage_path('app/carteras'));
-        Log::info('DESPUES DE EXCEL');
+        $writer = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
+        $writer->save($filePath);
+
+        Log::info('ANTES DE DESCARGAR');
+
+// Descargar el archivo al cliente y eliminarlo después
         return response()->download($filePath)->deleteFileAfterSend(true);
+
+
+
+
     }
 
 
