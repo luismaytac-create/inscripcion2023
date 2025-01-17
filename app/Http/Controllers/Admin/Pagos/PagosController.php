@@ -636,7 +636,6 @@ class PagosController extends Controller
         }
 
 
-
         $columns = ['BOL_FAC', 'DNI_RUC', 'NOMBRES_RAZ_SOCIAL', 'PATERNO', 'MATERNO', 'DIRECCION', 'CORREO', 'DESCRIPCION', 'PARTIDA', 'PROYECTO', 'MONTO'];
 
 // Crear el objeto PHPExcel
@@ -655,15 +654,24 @@ class PagosController extends Controller
 // Agregar los encabezados (fila 1)
         $sheet->fromArray($columns, null, 'A1');
 
+// Aplicar formato de texto a las columnas A:J antes de agregar datos
+        foreach (range('A', 'J') as $columnID) {
+            $sheet->getStyle($columnID)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+        }
+
 // Agregar los datos desde $dataArray (comenzando en A2)
         $startRow = 2; // La fila 2 es donde empiezan los datos
         foreach ($dataArray as $row) {
             $sheet->fromArray($row, null, "A$startRow");
+
+            // Forzar que las celdas en A:J sean texto incluso después de agregar datos
+            foreach (range('A', 'J') as $columnID) {
+                $sheet->getCell("$columnID$startRow")->setDataType(PHPExcel_Cell_DataType::TYPE_STRING);
+            }
             $startRow++;
         }
 
-// Establecer el formato de las columnas
-        $sheet->getStyle('A:J')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
+// Establecer el formato de la columna K como número
         $sheet->getStyle('K')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER);
 
 // Configurar el nombre de la hoja
@@ -678,9 +686,6 @@ class PagosController extends Controller
 
 // Descargar el archivo al cliente y eliminarlo después
         return response()->download($filePath)->deleteFileAfterSend(true);
-
-
-
 
     }
 
