@@ -40,7 +40,7 @@
                         El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
 
                 @else
-                    <h1>Ficha de inscripción disponible desde el 21 de enero</h1>
+                    <h1>Ficha de inscripción disponible desde el 20 de enero 18:00</h1>
                 @endif
 
                 <div class="col-md-12" style="display:none;">
