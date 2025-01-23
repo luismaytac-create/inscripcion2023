@@ -42,12 +42,7 @@
             -->
                 <hr>
 
-                <h2>FICHA DE INSCRIPCIÓN CONCURSO DE ADMISIÓN</h2>
-                <h3>El concurso de Admisión 2023-2 será en la modalidad presencial. En caso de no alcanzar vacante en la modalidad de CEPRE-UNI, deberá presentar esta ficha los días del concurso de Admisión 2023-2.</h3>
-                <a target="_blank" href="{{ route('ficha.pdf') }}">
-                    <button type="button" class="btn m-btn--pill btn-info btn-lg m-btn m-btn--custom">FICHA CONCURSO DE ADMISIÓN
-                    </button> </a>
-                <iframe src="{{route('ficha.pdf',$id)}}" width="100%" height="700px" scrolling="auto"></iframe>
+
             @else
 
             @endif

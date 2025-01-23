@@ -271,12 +271,12 @@
                     <div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
                         <ul class="m-footer__nav m-nav m-nav--inline m--pull-right">
                             <li class="m-nav__item">
-                                <a target="_blank" href="http://www.admision.uni.edu.pe/admision2023-2" class="m-nav__link">
+                                <a target="_blank" href="http://www.admision.uni.edu.pe/" class="m-nav__link">
                                     <span class="m-nav__link-text">ADMISIÓN UNI</span>
                                 </a>
                             </li>
                             <li class="m-nav__item">
-                                <a target="_blank" href="http://admision.uni.edu.pe/admision2023-2/#tarifa" class="m-nav__link">
+                                <a target="_blank" href="http://admision.uni.edu.pe/" class="m-nav__link">
                                     <span class="m-nav__link-text">Tarifario</span>
                                 </a>
                             </li>
