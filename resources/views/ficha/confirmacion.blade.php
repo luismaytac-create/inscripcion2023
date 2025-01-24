@@ -37,13 +37,12 @@
                     </h1>
                         <h1>En caso de no haber logrado una vacante, tendrá la opción de postular en el examen general, realizando el pago de inscripción de acuerdo a la modalidad seleccionada.
 
-                        El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
+                        El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
 
                 @else
-                    <h1>Ficha de inscripción disponible desde el 20 de enero 18:00</h1>
-                @endif
 
-                <div class="col-md-12" style="display:none;">
+
+                <div class="col-md-12" >
                     <!-- BEGIN PORTLET-->
                     <div class="portlet light tasks-widget widget-comments">
                         <div class="portlet-title ">
@@ -93,6 +92,24 @@
                                                             <h2 class="invoice-title uppercase">DNI</h2>
                                                             <p class="invoice-desc inv-address">{{ $postulante->identificacion}}</p>
                                                         </div>
+
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h2 class="invoice-title uppercase">CUARTA DISPOSICIÓN</h2>
+
+                                                            @if($postulante->cuarta_df =='postulante')
+                                                                <p class="invoice-desc m--font-bold">POSTULANTE CON DERECHO A VACANTE</p>
+                                                            @endif
+
+                                                            @if($postulante->cuarta_df =='participante_sin_derecho')
+                                                                <p class="invoice-desc text-danger m--font-bold">Participante sin derecho a vacante</p>
+                                                            @endif
+
+                                                        </div>
+
 
 
                                                     </div>
@@ -405,6 +422,8 @@
                     </div>
                     <!-- END PORTLET-->
                 </div>
+
+                @endif
             </div>
         </div>
     </div>

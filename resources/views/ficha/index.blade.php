@@ -29,29 +29,23 @@
         </div>
 
         <div class="m-portlet__body lead">
-            @if( false )
-            <!--
-                <h2>EXAMEN FINAL CEPRE-UNI</h2>
-            <h3>El Examen Final CEPRE-UNI 2022-1 será en la modalidad virtual. Debe tener la ficha de Inscripción CEPRE-UNI.</h3>
+            @if($postulante->idmodalidad==16)
+                <h1>Estimado postulante, en caso de haber ingresado por la MODALIDAD INGRESO DIRECTO CEPRE usted quedará exonerado del pago por derecho de inscripción.
+                </h1>
+                <h1>En caso de no haber logrado una vacante, tendrá la opción de postular en el examen general, realizando el pago de inscripción de acuerdo a la modalidad seleccionada.
 
-
-                <a target="_blank" href="{{ route('ficha.pdfcepre') }}">
-                    <button type="button" class="btn m-btn--pill btn-success btn-lg m-btn m-btn--custom">FICHA PARA EL EXAMEN FINAL CEPRE-UNI
-                        </button> </a>
-
-            -->
-                <hr>
-
+                    El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
 
             @else
-
-            @endif
 
                 <h2>FICHA DE INSCRIPCIÓN CONCURSO DE ADMISIÓN</h2>
 
                 <a target="_blank" href="{{ route('ficha.pdf') }}">
                     <button type="button" class="btn m-btn--pill btn-info btn-lg m-btn m-btn--custom">FICHA CONCURSO DE ADMISIÓN
                     </button> </a>
+            @endif
+
+
 
         </div>
 

@@ -48,7 +48,7 @@ class FichaController extends Controller
         $postulante = Postulante::Usuario()->first();
         $idus = Auth::user()->id;
         $user = User::find($idus);
-        $validacion = Validacion::where('codigo',$postulante->codigo_verificacion)->first();
+      // $validacion = Validacion::where('codigo',$postulante->codigo_verificacion)->first();
 
         if (isset($postulante)) {
             $correcto_foto = false;
@@ -385,7 +385,7 @@ class FichaController extends Controller
                                 if( $counn > 0) {
 
                                     #SE DEBE ASIGNAR AULA VOCA
-                                    Postulante::AsignarAula($postulante->id);
+                                  ##  Postulante::AsignarAula($postulante->id);
                                 }
 
                             }
@@ -415,26 +415,28 @@ class FichaController extends Controller
 
 
                         if( !isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
-                            Postulante::AsignarAula($postulante->id);
+                         #   Postulante::AsignarAula($postulante->id);
                         }
                          if( !isset($postulante->idaulavoca) ){
-                             Postulante::AsignarAula($postulante->id);
+                         #    Postulante::AsignarAula($postulante->id);
                          }
 
+                    }else {
+                        if( !isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
+                            Postulante::AsignarAula($postulante->id);
+                        }
+                        if( !isset($postulante->idaulavoca) ){
+                            Postulante::AsignarAula($postulante->id);
+                        }
                     }
 
-                    if( !isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
-                        Postulante::AsignarAula($postulante->id);
-                    }
-                    if( !isset($postulante->idaulavoca) ){
-                        Postulante::AsignarAula($postulante->id);
-                    }
+
                     
                     return view('ficha.index',compact('id','postulante'));
 
                 }
                 else {
-                    $turnospiloto = CapacidadPiloto::where('libre','>',0)->orderBy('id','asc')->get();
+                   $turnospiloto = CapacidadPiloto::where('libre','>',0)->orderBy('id','asc')->get();
                     //return view('ficha.index',compact('id','postulante'));
                     return view('ficha.confirmacion',compact('id','postulante','turnospiloto'));
 
