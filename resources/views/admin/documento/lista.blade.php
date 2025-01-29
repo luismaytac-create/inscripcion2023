@@ -37,6 +37,7 @@
                     <th> DNI </th>
                     <th> Modalidad</th>
                     <th> ACTIVO </th>
+                    <th> ULT HORA</th>
                     <th>Opciones </th>
                 </tr>
                 </thead>
@@ -58,6 +59,7 @@
                                 <span class="m-badge m-badge--success"> APROBADO </span>
                             @endif
                         </td>
+                        <td> {{ $item->fecha }}</td>
                         <td>
 
                             <a href="evaluar-postulante/{!! $item->dni !!}" class="btn btn-outline-info m-btn m-btn--custom m-btn--outline-2x" >
