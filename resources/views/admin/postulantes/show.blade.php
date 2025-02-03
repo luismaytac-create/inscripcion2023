@@ -118,7 +118,9 @@
                     <a href="#tab_5" data-toggle="tab" aria-expanded="true"> Editar Datos Personales </a>
                 </li>
 
-
+                <li>
+                    <a href="#tab_8" data-toggle="tab" aria-expanded="true"> 4TA DISPOSICIÓN </a>
+                </li>
 
                 <li>
                     <a href="#tab_2" data-toggle="tab" aria-expanded="true"> Ficha </a>
@@ -241,6 +243,36 @@
                 <!--tab-pane-->
                 <div class="tab-pane" id="tab_2">
                 <iframe src="{{route('ficha.pdf',$postulante->id)}}" width="100%" height="900px" scrolling="auto"></iframe>
+                </div>
+
+                <div class="tab-pane" id="tab_8">
+                    <div class="tab-pane active" id="tab_1_1_1">
+                        {!! Form::open(['route'=>'admin.pos.cuarta','method'=>'POST']) !!}
+                        <div class="col-md-6">
+
+                            {!! Field::text('dni',$postulante->numero_identificacion,['label'=>'DNI ACTUAL','readonly'=>'readonly','class'=>'form-control']) !!}
+
+                        </div>
+                        <div class="col-md-12">
+
+                            {!!Field::select('cuarta_df', [
+                                'participante_sin_derecho'=>'Participante sin derecho a vacante',
+                                'postulante'=>'Postulante con derecho a vacante',
+                                ], $postulante->cuarta_df, ['label'=>'Deseo inscribirme como:  (*)','empty'=>'Seleccionar']);!!}
+                        </div>
+
+                        <div class="col-md-4">
+                            {!!Form::hidden('idpostulante', $postulante->id );!!}
+
+
+
+
+
+
+                            {!!Form::enviar('Actualizar')!!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
                 </div>
 
                 <div class="tab-pane" id="tab_4">

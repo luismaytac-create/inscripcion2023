@@ -166,6 +166,7 @@ Route::group(['namespace'=>'Postulantes','middleware'=>'ingreso'], function() {
 	Route::post('postulante','PostulantesController@store')->name('admin.pos.store');
 
     Route::post('postulante-dni','PostulantesController@cambiardni')->name('admin.pos.cambiardni');
+    Route::post('postulante-cuarta','PostulantesController@cuarta')->name('admin.pos.cuarta');
     Route::post('postulante-email','PostulantesController@cambiaremail')->name('admin.pos.cambiaremail');
 
 
