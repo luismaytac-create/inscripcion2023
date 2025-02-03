@@ -31,6 +31,7 @@
 
                 <thead>
                 <tr>
+                    <th>ORDEN</th>
                     <th> PATERNO </th>
                     <th>  MATERNO </th>
                     <th> NOMBRES </th>
@@ -44,7 +45,7 @@
 
                 @foreach ($Lista as $item)
                     <tr>
-
+                        <td>{{ $item->orden }}</td>
                         <td> {{ $item->paterno }} </td>
                         <td> {{ $item->materno }} </td>
                         <td> {{ $item->nombres }} </td>
@@ -129,7 +130,10 @@
             ],
             @endif
             //== Order settings
-            order: [[5, 'desc']],
+            order: [[0, 'asc']],
+            columnDefs: [
+                { orderable: false, targets: 7 } // 6 es el índice de la columna "ULT HORA"
+            ]
 
 
 
