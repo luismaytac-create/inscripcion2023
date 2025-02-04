@@ -294,6 +294,24 @@ class FichaController extends Controller
                         $debe = true;
                     }
 
+                    // INICIO SEGUNDO PAGO CEPRE
+                    $debeceprecount= DB::table("deden_voca_25")->where('dni', $postulante->numero_identificacion)->count();
+                    $debecepre= DB::table("deden_voca_25")->where('dni', $postulante->numero_identificacion)->first();
+
+
+                    if( $postulante->idespecialidad==1 and $debeceprecount>0){
+
+                        if($debecepre->pago_voca_ordi <2 ){
+                            $correcto_pagos = false;
+                            $servicio = Servicio::where('codigo','474')->first();
+                            $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                            $debe = true;
+                        }
+
+                    }
+
+                    // FIN SEGUNDO PAGO CEPRE
+
 
                 }
 
