@@ -127,7 +127,7 @@ class DocumentoController extends Controller
 
             $countarch=DocumentVictima::where('dni',Auth::user()->dni)->where('activo',true)->count();
             $countarchtwo=DocumentVictima::where('dni',Auth::user()->dni)->where('activo',false)->count();
-            if( $countarch <= 40 && $countarchtwo<=40) {
+            if( $countarch <= 100 && $countarchtwo<=100) {
                 $nombre=$request->file('carga')->store('doc','public');
                 $data = new DocumentVictima();
                 $data->dni = Auth::user()->dni;
