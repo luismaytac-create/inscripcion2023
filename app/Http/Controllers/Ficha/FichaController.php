@@ -81,38 +81,56 @@ class FichaController extends Controller
 
             if( !is_null($postulante->idmodalidad2) ){
 
-                if($postulante->idmodalidad2<>1){
-                    $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
-                    if($terr>0){
-                        $correcto_terro = true;
-                    }else{
-                        $msj->push(['titulo'=>'Falta Presentar o Aprobar Documentos',
-                            'mensaje'=>'Debes escanear tus documentos y subirlo en el siguiente enlace, si ya los subiste espera la aprobación para continuar con tu inscripción.'
-                            ,'link'=>'documentos.index','boton'=>'VER DOCUMENTOS']);
+                if(isset($postulante->idmodalidad)){
+                    if($postulante->idmodalidad2<>1){
+                        $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
+                        if($terr>0){
+                            $correcto_terro = true;
+                        }else{
+                            $msj->push(['titulo'=>'Falta Presentar o Aprobar Documentos',
+                                'mensaje'=>'Debes escanear tus documentos y subirlo en el siguiente enlace, si ya los subiste espera la aprobación para continuar con tu inscripción.'
+                                ,'link'=>'documentos.index','boton'=>'VER DOCUMENTOS']);
 
+                        }
+                    }else {
+                        $correcto_terro = true;
                     }
-                }else {
+
+                }else{
                     $correcto_terro = true;
                 }
+
+
 
 
             }else{
 
-                if($postulante->idmodalidad<>1 and  $postulante->idmodalidad<>16  ){
-                    $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
-                    if($terr>0){
+
+                if(isset($postulante->idmodalidad)){
+                    if($postulante->idmodalidad<>1 and  $postulante->idmodalidad<>16  ){
+                        $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
+                        if($terr>0){
+                            $correcto_terro = true;
+                        }else{
+
+                            $msj->push(['titulo'=>'Falta Presentar o Aprobar Documentos',
+                                'mensaje'=>'Debes escanear tus documentos y subirlo en el siguiente enlace, si ya los subiste espera la aprobación para continuar con tu inscripción.'
+                                ,'link'=>'documentos.index','boton'=>'VER DOCUMENTOS']);
+
+                        }
+                    }else {
+
                         $correcto_terro = true;
-                    }else{
-
-                        $msj->push(['titulo'=>'Falta Presentar o Aprobar Documentos',
-                            'mensaje'=>'Debes escanear tus documentos y subirlo en el siguiente enlace, si ya los subiste espera la aprobación para continuar con tu inscripción.'
-                            ,'link'=>'documentos.index','boton'=>'VER DOCUMENTOS']);
-
                     }
-                }else {
 
+                }else{
                     $correcto_terro = true;
+
+
                 }
+
+
+
 
 
             }
