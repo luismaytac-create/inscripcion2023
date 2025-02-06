@@ -19,7 +19,8 @@
         "zanysoft/laravel-zip": "^1.0",
         "rguedes/pdfmerger": "^1.0",
         "kylekatarnls/update-helper": "^1.2.1",
-        "setasign/fpdi": "^2.3"		},
+        "setasign/fpdi": "^2.3",
+        "phpoffice/phpexcel": "^1.8"		},
         "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
