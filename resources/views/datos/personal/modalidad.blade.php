@@ -17,14 +17,12 @@
 												<span class="m-portlet__head-icon m--hide">
 													<i class="flaticon-statistics"></i>
 												</span>
-                        <h2 class="lead">
-                            Ingresa  <u><strong>los datos del postulante</strong></u> (NO EL DE TU APODERADO).
-                        </h2>
+
                         <div class="actions">
                             {!!Form::back(route('datos.index'))!!}
                         </div>
                         <h2 class="m-portlet__head-label m-portlet__head-label--danger">
-                            <span>DATOS PERSONALES</span>
+                            <span>CONFIRMAR DATOS</span>
                         </h2>
                     </div>
                 </div>
@@ -34,32 +32,20 @@
             <div class="m-portlet__body lead">
                 {!! Alert::render() !!}
                 @include('alerts.errors')
-                {!! Form::model($postulante,['route'=>['datos.postulante.update',$postulante],'method'=>'PUT']) !!}
+                {!! Form::model($postulante,['route'=>['datos.confirmamoda'],'method'=>'POST']) !!}
 
-                <dl>
-                    <dt>Observación</dt>
-                    <dd>Los nombres y apellidos deben coincidir de tu DNI, <strong>todos los campos con (*) son obligatorios.</strong></dd>
-                </dl>
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             {!!Form::hidden('idtipoidentificacion', IdTCCodigo('IDENTIFICACION','DNI') );!!}
                             {!!Form::hidden('numero_identificacion',Auth::user()->dni, ['class'=> 'dni'] );!!}
-                            {!!Field::text('paterno', null , ['label'=>'Apellido Paterno del postulante (*)','placeholder'=>'Apellido Paterno del postulante','maxlength'=>'50']);!!}
+
                         </div>
                     </div><!--span-->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!!Field::text('materno', null , ['label'=>'Apellido Materno del postulante (*)','placeholder'=>'Apellido Materno del postulante','maxlength'=>'50']);!!}
-                        </div>
-                    </div><!--span-->
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            {!!Field::text('nombres', null , ['label'=>'Nombres del postulante (*)','placeholder'=>'Nombres del postulante','maxlength'=>'60']);!!}
-                        </div>
-                    </div><!--span-->
+
                 </div><!--row-->
-                <h3>Modalidad de Postulación según el reglamento</h3>
+                <h3>Confirmar Modalidad de Postulación según el reglamento</h3>
                 <div class="row">
                     <div class="col-md-6">
                         {!!Field::select('idmodalidad',$modalidad,['label'=>'Escoger Modalidad (*)','empty'=>'Escoger modalidad de postulación']);!!}
@@ -69,7 +55,7 @@
 
 
 
-                <h3 class="div0">Facultad a la que postulas</h3>
+                <h3 class="div0">Confirmar Facultad a la que postulas</h3>
 
                 <div class="row m--margin-top-15 m--margin-bottom-15 div0">
                     <div class="col-md-6 ">
@@ -81,7 +67,7 @@
                     </div>
 
                 </div>
-                <h3 class="div1" style="display: none;">Especialidad a la que postulas</h3>
+                <h3 class="div1" style="display: none;">Confirmar Especialidad a la que postulas</h3>
                 <dl class="div1" style="display: none;">
                     <dt>Observación</dt>
                     <dd>Puedes seleccionar hasta 3 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
@@ -271,84 +257,9 @@
                 </div>
 
 
-                <h3>Institución Educativa donde culminó la secundaria</h3>
-                <dl>
-                    <dt>Observación</dt>
-                    <dd>Es tu responsabilidad seleccionar correctamente la Institución Educativa de donde procede. <strong>El cambio de gestión de las instituciones Educativas (pública o privada) implica realizar el pago correspondiente.</strong></dd>
-                </dl>
-
-
-                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
-                    <div class="m-demo__preview">
-                        <blockquote class="blockquote">
-                            <p class="mb-0"><strong></strong> Los pagos realizados a favor de la Universidad por los conceptos establecidos en el Concurso de Admisión, se realizan en las entidades financieras que la Universidad autorice. Los pagos efectuados no serán reembolsados.</p>
-                            <footer class="blockquote-footer"><cite title="Source Title">Reglamento del  Concurso de Admisión</cite></footer>
-                        </blockquote>
-
-                    </div>
-                </div>
-
-                <div class="row">
 
 
 
-                    <div class="col-md-12 Colegio">
-                        <div id="depacoldiv" class="col-md-12">
-
-                            {!!Field::select('iddepacolegio',$depas,ColegioDepartamento($postulante->idcolegio) ,['label'=>'Escoger Departamento del colegio(*)','empty'=>'Escoger departamento del colegio']);!!}
-
-
-
-                        </div>
-
-                        <div id="colediv" class="col-md-12">
-
-
-                            @if(Request::old('idcolegio') == NULL)
-
-
-                                {!!Field::select('idcolegio',ColegioPersonal($postulante->idcolegio),['style'=>'width: 100%','label'=>'Escoger el colegio(*)']);!!}
-                            @endif
-
-                            @if(Request::old('idcolegio') != NULL)
-
-
-                                {!!Field::select('idcolegio',ColegioPersonal(Request::old('idcolegio')),['style'=>'width: 100%','label'=>'Escoger el colegio']);!!}
-                            @endif
-
-
-
-
-
-
-
-
-
-                        </div>
-
-
-                    </div><!--span-->
-                    <div class="col-md-6 Universidad">
-
-
-
-                        @if(Request::old('iduniversidad') == NULL)
-
-
-                            {!!Field::select('iduniversidad',UniversidadPersonal($postulante->iduniversidad),['style'=>'width: 100%','label'=>'Escoger Universidad(*)']);!!}
-                        @endif
-
-                        @if(Request::old('iduniversidad') != NULL)
-
-
-                            {!!Field::select('iduniversidad',UniversidadPersonal(Request::old('iduniversidad')),['style'=>'width: 100%','label'=>'Escoger Universidad']);!!}
-                        @endif
-
-
-
-
-                    </div><!--span-->
-                </div><!--row-->
 
                 <button id="guardar" type="button" class="btn btn-success m-btn 	m-btn m-btn--icon m-btn--pill">
 															<span>
@@ -1669,21 +1580,9 @@
 
         function validarFormulario(){
 
-            if (  !$('#paterno').val() ){
-                swal("INGRESA EL APELLIDO PATERNO", "Debes ingresar tu apellido paterno.", "error");
-                return false;
 
-            }
-            if (  !$('#materno').val() ){
-                swal("INGRESA EL APELLIDO MATERNO", "Debes ingresar tu apellido materno.", "error");
-                return false;
 
-            }
-            if (  !$('#nombres').val() ){
-                swal("INGRESA TU NOMBRE", "Debes ingresar tus nombres.", "error");
-                return false;
 
-            }
             if (  !$('#idmodalidad').val() ){
                 swal("SELECCIONA LA MODALIDAD", "Debes seleccionar tu modalidad.", "error");
                 return false;
@@ -1736,17 +1635,7 @@
                 }
 
 
-                if(  $('#idmodalidad2').val() == 15 || $('#idmodalidad2').val() == 14 || $('#idmodalidad2').val() == 12 ||  $('#idmodalidad2').val() == 10 || $('#idmodalidad2').val() == 7 || $('#idmodalidad2').val() == 6 || $('#idmodalidad2').val() == 5 ){
 
-
-
-                }else {
-                    if (  !$('#idcolegio').val() ){
-                        swal("SELECCIONA EL COLEGIO", "Debes seleccionar tu colegio.", "error");
-                        return false;
-
-                    }
-                }
 
 
 
@@ -1773,21 +1662,7 @@
 
                 }
 
-                if( $('#idmodalidad').val() == 19 || $('#idmodalidad').val() == 20 ||  $('#idmodalidad').val() == 15 || $('#idmodalidad').val() == 14 || $('#idmodalidad').val() == 12 ||  $('#idmodalidad').val() == 10 || $('#idmodalidad').val() == 7 || $('#idmodalidad').val() == 6 || $('#idmodalidad').val() == 5 ){
 
-                    if (  !$("#iduniversidad").val() ){
-                        swal("SELECCIONA LA UNIVERSIDAD", "Debes seleccionar tu universidad.", "error");
-                        return false;
-
-                    }
-
-                }else {
-                    if (  !$('#idcolegio').val() ){
-                        swal("SELECCIONA EL COLEGIO", "Debes seleccionar tu colegio.", "error");
-                        return false;
-
-                    }
-                }
             }
 
 
@@ -1811,8 +1686,7 @@
                     backdrop: 'static'
                 });
 
-                var nomm ='APELLIDO Y NOMBRES: '+  $('#paterno').val().toUpperCase() + ' ' + $('#materno').val().toUpperCase() + ' '+ $('#nombres').val().toUpperCase();
-                $('#txtdatos').text(nomm);
+
                 $('#txtdni').text('NÚMERO DE DNI: ' + $('.dni').val() );
 
 

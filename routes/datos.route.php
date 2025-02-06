@@ -5,7 +5,9 @@ Route::group(['middleware'=>['auth','datosok'],'namespace'=>'Datos'], function()
 	Route::post('datos','DatosController@store')->name('datos.store');
 	Route::put('datos/{postulante}','DatosController@update')->name('datos.update');
 
+    Route::post('confirmamoda','DatosPersonalesController@confirmamoda')->name('datos.confirmamoda');
 	Route::resource('datos-personales','DatosPersonalesController',['names'=>'datos.postulante','only'=>['index','store','update']]);
+
 	Route::resource('datos-secundarios','DatosSecundariosController',['names'=>'datos.secundarios','only'=>['index','update']]);
 	Route::resource('datos-familiar','DatosFamiliaresController',['names'=>'datos.familiares','only'=>['index','store']]);
 	Route::post('datos-familiar-update','DatosFamiliaresController@update')->name('datos.familiares.update');
