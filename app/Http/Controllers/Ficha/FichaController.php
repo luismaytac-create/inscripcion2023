@@ -450,13 +450,13 @@ class FichaController extends Controller
 
 
                     
-                    return view('ficha.index',compact('id','postulante'));
+                    return view('ficha.falso',compact('id','postulante'));
 
                 }
                 else {
                    $turnospiloto = CapacidadPiloto::where('libre','>',0)->orderBy('id','asc')->get();
                     //return view('ficha.index',compact('id','postulante'));
-                    return view('ficha.confirmacion',compact('id','postulante','turnospiloto'));
+                    return view('ficha.falso',compact('id','postulante','turnospiloto'));
 
                 }
 
