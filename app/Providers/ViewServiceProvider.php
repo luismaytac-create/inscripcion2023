@@ -72,7 +72,7 @@ class ViewServiceProvider extends ServiceProvider
             );
 
         $this->app->make('view')->composer(
-            ['datos.index','datos.personal.index','datos.personal.edit','datos.secundarios.index','datos.familiar.index','datos.familiar.edit',
+            ['ficha.falso','datos.personal.modalidad','datos.index','datos.personal.index','datos.personal.edit','datos.secundarios.index','datos.familiar.index','datos.familiar.edit',
                 'datos.complementarios.index','datos.complementarios.edit','pagos.index','pagos.list','pagos.bloqueo','reglamento.index',
                 'contacto.index','ficha.index','ficha.bloqueo','ficha.confirmacion','semibeca.index','datos.email.index','datos.email.ok','datos.foto.foto'], function ($view)
         {
