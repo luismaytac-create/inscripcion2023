@@ -66,6 +66,8 @@ class FichaController extends Controller
 	         #Valida si esta aprobado victima
             # VALIDA SI ES CEPRE
             $swp = !is_null($postulante);
+
+
             if( !isset($postulante->idmodalidad) ){
                 return view('ficha.falso',compact('id','postulante','swp'));
             }
