@@ -266,48 +266,51 @@
                                         </td>
                                     </tr>
                                     @endif
+                                    @if(isset($postulante->idmodalidad))
+                                        @if($postulante->idmodalidad == 16)
+                                            <tr>
+                                                <td>Modalidad</td>
+                                                <td>{{$postulante->nombre_modalidad}}</td>
 
-                                    @if($postulante->idmodalidad == 16)
-                                        <tr>
-                                            <td>Modalidad</td>
-                                            <td>{{$postulante->nombre_modalidad}}</td>
+                                            </tr>
 
-                                        </tr>
-
-                                        <tr>
-                                            <td>Especialidad</td>
-                                            <td>{{$postulante->nombre_especialidad}} - {{ $postulante->nombre_especialidad2 }} - {{$postulante->nombre_especialidad3}}</td>
-
-
-                                        </tr>
-
-                                        <tr>
-                                            <td>Segunda Modalidad</td>
-                                            <td>{{$postulante->nombre_modalidad2}}</td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td>Especialidad Segunda Modalidad</td>
-                                            <td>{{$postulante->nombre_especialidad4}} - {{ $postulante->nombre_especialidad5 }} - {{$postulante->nombre_especialidad6}}</td>
+                                            <tr>
+                                                <td>Especialidad</td>
+                                                <td>{{$postulante->nombre_especialidad}} - {{ $postulante->nombre_especialidad2 }} - {{$postulante->nombre_especialidad3}}</td>
 
 
-                                        </tr>
-                                    @else
-                                        <tr>
-                                            <td>Modalidad</td>
-                                            <td>{{$postulante->nombre_modalidad}}</td>
+                                            </tr>
 
-                                        </tr>
+                                            <tr>
+                                                <td>Segunda Modalidad</td>
+                                                <td>{{$postulante->nombre_modalidad2}}</td>
 
-                                        <tr>
-                                            <td>Especialidad</td>
-                                            <td>{{$postulante->nombre_especialidad}} - {{ $postulante->nombre_especialidad2 }} - {{$postulante->nombre_especialidad3}}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Especialidad Segunda Modalidad</td>
+                                                <td>{{$postulante->nombre_especialidad4}} - {{ $postulante->nombre_especialidad5 }} - {{$postulante->nombre_especialidad6}}</td>
 
 
-                                        </tr>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>Modalidad</td>
+                                                <td>{{$postulante->nombre_modalidad}}</td>
 
+                                            </tr>
+
+                                            <tr>
+                                                <td>Especialidad</td>
+                                                <td>{{$postulante->nombre_especialidad}} - {{ $postulante->nombre_especialidad2 }} - {{$postulante->nombre_especialidad3}}</td>
+
+
+                                            </tr>
+
+                                        @endif
                                     @endif
+
+
 
 
 
