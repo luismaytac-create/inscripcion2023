@@ -65,6 +65,15 @@ class FichaController extends Controller
             ################### INICIO VALIDACION DOCUMENTOS
 	         #Valida si esta aprobado victima
             # VALIDA SI ES CEPRE
+            $swp = !is_null($postulante);
+
+
+            if( !isset($postulante->idmodalidad) ){
+                return view('ficha.falso',compact('id','postulante','swp'));
+            }
+
+
+
             if( !is_null($postulante->idmodalidad2) ){
 
                 if($postulante->idmodalidad2<>1){

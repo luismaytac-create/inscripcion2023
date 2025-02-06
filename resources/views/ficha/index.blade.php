@@ -40,9 +40,10 @@
 
                 <h2>FICHA DE INSCRIPCIÓN CONCURSO DE ADMISIÓN</h2>
 
-                <a target="_blank" href="{{ route('ficha.pdf') }}">
+                <a style="display: none" target="_blank" href="{{ route('ficha.pdf') }}">
                     <button type="button" class="btn m-btn--pill btn-info btn-lg m-btn m-btn--custom">FICHA CONCURSO DE ADMISIÓN
                     </button> </a>
+                <h3>Disponible en 07 de enero</h3>
             @endif
 
 
