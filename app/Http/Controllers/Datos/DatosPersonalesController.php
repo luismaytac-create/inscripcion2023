@@ -222,6 +222,78 @@ class DatosPersonalesController extends Controller
         Alert::success('se actualizo sus datos con exito');
         return redirect()->route('datos.index');
     }
+
+    public function confirmamoda(Request $request)
+    {
+        $data = $this->AnulaModalidad2($request);
+        $modalidad = Modalidad::find($data['idmodalidad']);
+
+        #Log::info('ENTRO DATA'. print_r($request,true) );
+
+        $postulante = Postulante::Usuario()->first();
+
+        $idmoda =$request->idmodalidad;
+        if($idmoda == 16) {
+
+            $data['idespecialidad'] = $request->especialidad;
+            if( $request->especialidad2 != '') {
+                $data['idespecialidad2'] = $request->especialidad2;
+            }else {
+                $data['idespecialidad2'] = null;
+            }
+            if( $request->especialidad3 != '') {
+                $data['idespecialidad3'] = $request->especialidad3;
+            }else {
+                $data['idespecialidad3'] = null;
+
+            }
+            $data['idfacultad'] = $request->facultades;
+
+
+            $data['idespecialidad4'] = $request->especialidad4;
+            if( $request->especialidad5 != '') {
+                $data['idespecialidad5'] = $request->especialidad5;
+            }else {
+                $data['idespecialidad5'] = null;
+            }
+            if( $request->especialidad6 != '') {
+                $data['idespecialidad6'] = $request->especialidad6;
+            }else {
+                $data['idespecialidad6'] = null;
+
+            }
+            $data['idfacultad2'] = $request->facultades2;
+
+        }else {
+            $data['idespecialidad'] = $request->especialidad;
+            if( $request->especialidad2 != '') {
+                $data['idespecialidad2'] = $request->especialidad2;
+            }else {
+                $data['idespecialidad2'] = null;
+            }
+            if( $request->especialidad3 != '') {
+                $data['idespecialidad3'] = $request->especialidad3;
+            }else {
+                $data['idespecialidad3'] = null;
+
+            }
+            $data['idfacultad'] = $request->facultades;
+
+        }
+        $postulante->fill($data);
+        $postulante->save();
+        Alert::success('Datos confirmados');
+        return redirect()->route('ficha.index');
+    }
+
+
+
+
+
+
+
+
+
     /**
      * Quita la modalidad 2 y sus derivados cuando solo se escoge una modalidad
      * @param [type] $request [description]

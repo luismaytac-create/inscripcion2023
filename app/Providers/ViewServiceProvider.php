@@ -27,7 +27,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->make('view')->composer(
-            ['datos.personal.index','datos.personal.edit'],
+            ['datos.personal.index','datos.personal.edit','datos.personal.modalidad'],
             ModalidadSelectData::class
             );
         $this->app->make('view')->composer(
@@ -66,7 +66,7 @@ class ViewServiceProvider extends ServiceProvider
             ServicioSelectData::class
             );
 		$this->app->make('view')->composer(
-            ['datos.personal.index','datos.personal.edit',
+            ['datos.personal.index','datos.personal.edit','datos.personal.modalidad',
                 'admin.postulantes.show', 'admin.ubigeo.modals.create'],
             DepartamentoSelectData::class
             );
