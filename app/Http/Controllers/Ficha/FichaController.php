@@ -74,6 +74,8 @@ class FichaController extends Controller
 
 
 
+
+
             if( !isset($postulante->idmodalidad) ){
                 return view('ficha.falso',compact('id','postulante','swp'));
             }
