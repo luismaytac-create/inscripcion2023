@@ -69,7 +69,15 @@ class FichaController extends Controller
 
 
             if( !isset($postulante->idespecialidad) ){
+
+                if(isset($postulante->ficha_fecha)){
+                    return view('ficha.falso',compact('id','postulante','swp'));
+                }
+
+
               return view('datos.personal.modalidad',compact('id','postulante','swp'));
+
+
             }
 
 
