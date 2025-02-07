@@ -43,7 +43,7 @@
                 <a style="display: none" target="_blank" href="{{ route('ficha.pdf') }}">
                     <button type="button" class="btn m-btn--pill btn-info btn-lg m-btn m-btn--custom">FICHA CONCURSO DE ADMISIÓN
                     </button> </a>
-                <h3>Disponible en 07 de febrero</h3>
+                <h3>Disponible el 08 de febrero</h3>
             @endif
 
 

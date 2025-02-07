@@ -40,11 +40,11 @@
                         El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
 
                 @else
-                    <h1>FIcha disponible 07 de febrero </h1>
-        @if(false)
+
+        @if(true)
 
 
-    <div class="col-md-12" style="display: none" >
+    <div class="col-md-12" >
         <!-- BEGIN PORTLET-->
         <div class="portlet light tasks-widget widget-comments">
             <div class="portlet-title ">

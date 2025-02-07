@@ -145,7 +145,7 @@
 
                 </div>
 
-                <div class="widget-thumb bordered bg-green cepreuni">
+                <div class="widget-thumb bordered bg-green cepreuni" style="display: none">
                     <hr>
                     <h3>Segunda Modalidad</h3>
                     <div class="row">
@@ -304,13 +304,7 @@
                                                     </td>
 
                                                 </tr>
-                                                <tr>
-                                                    <td>
 
-                                                        <h3 id="txtdatos">Apellidos y Nombres : </h3>
-                                                    </td>
-
-                                                </tr>
 
                                                 <tr>
                                                     <td>
