@@ -299,6 +299,9 @@ class Postulante extends Model
     public function getCodigoEspecialidadAttribute()
     {
         $especialidad = Especialidad::find($this->idespecialidad);
+        if(!isset($especialidad)){
+            $especialidad = new Especialidad(['nombre'=>'-','codigo'=>'x']);
+        }
         return $especialidad->codigo;
     }
     /**
