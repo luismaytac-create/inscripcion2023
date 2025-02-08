@@ -93,27 +93,6 @@ class PostulantesController extends Controller
         $postulante->fill($request->all());
         $data = $request->all();
 
-        if(!$request->has('idmodalidad2')){
-
-            $data['idmodalidad2']=null;
-        }
-        if(!$request->has('idespecialidad2')){
-
-            $data['idespecialidad2']=null;
-        }
-        if(!$request->has('idespecialidad3')){
-
-            $data['idespecialidad3']=null;
-        }
-        if(!$request->has('idespecialidad4')){
-            $data['idespecialidad4']=null;
-        }
-        if(!$request->has('idespecialidad5')){
-            $data['idespecialidad5']=null;
-        }
-        if(!$request->has('idespecialidad6')){
-            $data['idespecialidad6']=null;
-        }
 
 
         $postulante->fill($data);
