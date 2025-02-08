@@ -266,7 +266,7 @@
                                         </td>
                                     </tr>
                                     @endif
-                                    @if(isset($postulante->idmodalidad))
+                                    @if(isset($postulante->idespecialidad))
                                         @if($postulante->idmodalidad == 16)
                                             <tr>
                                                 <td>Modalidad</td>
