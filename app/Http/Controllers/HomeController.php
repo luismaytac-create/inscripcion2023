@@ -121,14 +121,8 @@ class HomeController extends Controller
                             return view('index',compact('swp','victima','meet','datosmeet'));
                         }
                     }
-                    $fichacon = DB::table("vista_confirma_ficha")->where('numero_identificacion',$postulante->numero_identificacion)->count();
 
-                    if($fichacon>0){
-                        return view('indexficha',compact('swp','victima','meet'));
-                    }else {
-                        return view('index',compact('swp','victima','meet'));
-                    }
-
+                    return view('index',compact('swp','victima','meet'));
 
 
                 }
