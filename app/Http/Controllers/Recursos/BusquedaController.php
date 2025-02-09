@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Postulante;
 use Illuminate\Http\Request;
 use Alert;
+use Illuminate\Support\Facades\Log;
 class BusquedaController extends Controller
 {
     public function buscar(Request $request)
@@ -22,4 +23,9 @@ class BusquedaController extends Controller
     	}
 
     }
+
+
+
+
+
 }

@@ -2,6 +2,7 @@
 
 Route::group(['middleware'=>'auth','namespace'=>'Ficha'], function() {
 
+    Route::post('confirmardatos','FichaController@confirmardatos')->name('ficha.confirmardatos');
 	Route::get('ficha/{id?}','FichaController@index')->name('ficha.index');
 	Route::get('ficha-pdf/{id?}','FichaController@pdf')->name('ficha.pdf');
 	Route::get('ficha-pdf-prev/{id?}','FichaController@pdfprev')->name('ficha.pdfprev');
