@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Ficha;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Pago\PagoController;
+use App\Models\Confirmacion;
 use App\Models\DeclaracionEva;
 use App\Models\Evaluacion;
 use App\Models\CapacidadPiloto;
 use App\Models\ClavesCepre;
+use App\Models\FichaFecha;
 use App\Models\MensajeTexto;
 use App\Models\Postulante;
 use App\Models\Proceso;
@@ -492,10 +494,16 @@ class FichaController extends Controller
                             Postulante::AsignarAula($postulante->id);
                         }
                     }
+                    $cuentaconfima=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->count();
+                    if( $cuentaconfima >0 ){
+                        return view('ficha.index',compact('id','postulante'));
+                    }else {
+                        return redirect()->to('/');
+                    }
 
 
 
-                    return view('ficha.index',compact('id','postulante'));
+
 
                 }
                 else {
@@ -740,7 +748,7 @@ class FichaController extends Controller
 
         //inicio
 
-        if(false){
+        if(true){
 
         if (isset($id)) {
             $postulante = Postulante::find($id);
@@ -755,7 +763,21 @@ class FichaController extends Controller
         PDF::SetTitle('FICHA DE INSCRIPCION');
         PDF::AddPage('U', 'A4');
         PDF::SetAutoPageBreak(false);
-        # PDF::Rect(15,15, 180,170);
+        $date = Carbon::now();
+        FichaFecha::create([
+                'idpostulante'=>$postulante->id,
+                'dni'=>$postulante->numero_identificacion,
+                'fecha'=>$date,
+                'iduser'=>$postulante->idusuario,
+                'idmodalidad'=>$postulante->idmodalidad,
+                'idespecialidad'=>$postulante->idespecialidad,
+                'idespecialidad2'=>$postulante->idespecialidad2,
+                'idespecialidad3'=>$postulante->idespecialidad3,
+
+            ]);
+
+
+            # PDF::Rect(15,15, 180,170);
         #FONDO
         //
 
@@ -3142,4 +3164,31 @@ class FichaController extends Controller
 
     }
 */
+
+    public function confirmardatos(Request $request){
+
+        $postulante = Postulante::Usuario()->first();
+        $mensaje = $request->input('mensaje');
+        $resulta = $request->input('resultado');
+        $date = Carbon::now();
+        Confirmacion::create([
+            'idpostulante'=>$postulante->id,
+            'dni'=>$postulante->numero_identificacion,
+            'fecha'=>$date,
+            'iduser'=>$postulante->idusuario,
+            'idmodalidad'=>$postulante->idmodalidad,
+            'idespecialidad'=>$postulante->idespecialidad,
+            'idespecialidad2'=>$postulante->idespecialidad2,
+            'idespecialidad3'=>$postulante->idespecialidad3,
+            'comentario'=>$mensaje,
+            'acepto'=>$resulta
+        ]);
+
+
+        return redirect()->to('/');
+
+
+    }
+
+
 }

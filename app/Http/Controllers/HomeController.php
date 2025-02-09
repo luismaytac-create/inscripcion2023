@@ -10,6 +10,7 @@ use Alert;
 use App\Models\ReglasIp;
 use DB;
 use App\Models\Catalogo;
+use App\Models\Confirmacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 class HomeController extends Controller
@@ -122,7 +123,56 @@ class HomeController extends Controller
                         }
                     }
 
-                    return view('index',compact('swp','victima','meet'));
+
+                    if(!isset($postulante->idespecialidad)){
+                        return redirect()->route('ficha.index');
+                    }
+
+                    if($postulante->pago and !$postulante->datos_ok){
+                        return redirect()->route('ficha.index');
+                    }
+
+
+
+
+
+
+                   $cuentaconfima=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->count();
+                    $noacepto=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->where('acepto','NO')->count();
+                    if($cuentaconfima>0){
+                        $muestraficha = true;
+                        $mens=false;
+                        if($noacepto>0){
+                            $mens=true;
+                        }
+
+
+
+                        return view('indexficha',compact('swp','victima','meet','postulante','muestraficha','mens'));
+
+                    }else {
+                        $fichacon = DB::table("vista_confirma_ficha")->where('numero_identificacion',$postulante->numero_identificacion)->count();
+
+                        if($fichacon>0){
+                            $muestraficha = false;
+                            $mens=false;
+                            return view('indexficha',compact('swp','victima','meet','postulante','muestraficha','mens'));
+                        }else {
+                            return view('index',compact('swp','victima','meet'));
+                        }
+
+
+
+
+
+                    }
+
+
+
+
+
+
+
 
 
                 }
@@ -274,4 +324,6 @@ class HomeController extends Controller
                 break;
         }
     }
+
+
 }
