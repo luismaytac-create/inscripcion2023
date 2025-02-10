@@ -757,6 +757,24 @@ class FichaController extends Controller
             $postulante = Postulante::Usuario()->first();
         }
 
+        if($postulante->datos_ok){
+            if($postulante->idmodalidad==16){
+
+
+            }else{
+                if( !isset($postulante->idaula1) || !isset($postulante->idaula2) || !isset($postulante->idaula3)  ){
+                    Postulante::AsignarAula($postulante->id);
+                }
+                if( !isset($postulante->idaulavoca) ){
+                    Postulante::AsignarAula($postulante->id);
+                }
+
+            }
+
+        }
+
+        $postulante = Postulante::Usuario()->first();
+
         $evaluacion = Evaluacion::Activo()->first();
 
         $muestraficha = DB::table("vista_muestra_ficha")->where('numero_identificacion', $postulante->numero_identificacion)->where('ficha','MUESTRA')->count();
@@ -1069,7 +1087,7 @@ class FichaController extends Controller
             $puerta1 = 'PUERTA N°3';
         } elseif (str_contains($postulante->datos_aula_uno->codigo, ['G', 'H'])) {
             $puerta1 = 'PUERTA N°4';
-        } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M','R1'])) {
+        } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M','R1','J3'])) {
             $puerta1 = 'PUERTA N°5';
         } elseif (str_contains($postulante->datos_aula_uno->codigo, ['S', 'R5'])) {
             $puerta1 = 'PUERTA N°6';
@@ -1083,7 +1101,7 @@ class FichaController extends Controller
             $puerta2 = 'PUERTA N°3';
         } elseif (str_contains($postulante->datos_aula_dos->codigo, ['G', 'H'])) {
             $puerta2 = 'PUERTA N°4';
-        } elseif (str_contains($postulante->datos_aula_dos->codigo, ['I', 'Q', 'M','R1'])) {
+        } elseif (str_contains($postulante->datos_aula_dos->codigo, ['I', 'Q', 'M','R1','J3'])) {
             $puerta2 = 'PUERTA N°5';
         } elseif (str_contains($postulante->datos_aula_dos->codigo, ['S', 'R5'])) {
             $puerta2 = 'PUERTA N°6';
@@ -1098,7 +1116,7 @@ class FichaController extends Controller
             $puerta3 = 'PUERTA N°3';
         } elseif (str_contains($postulante->datos_aula_tres->codigo, ['G', 'H'])) {
             $puerta3 = 'PUERTA N°4';
-        } elseif (str_contains($postulante->datos_aula_tres->codigo, ['I', 'Q', 'M','R1'])) {
+        } elseif (str_contains($postulante->datos_aula_tres->codigo, ['I', 'Q', 'M','R1','J3'])) {
             $puerta3 = 'PUERTA N°5';
         } elseif (str_contains($postulante->datos_aula_tres->codigo, ['S', 'R5'])) {
             $puerta3 = 'PUERTA N°6';
