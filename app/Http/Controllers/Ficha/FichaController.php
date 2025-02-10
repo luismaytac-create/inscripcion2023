@@ -746,7 +746,8 @@ class FichaController extends Controller
     public function pdf($id = null)
     {
 
-        //inicio
+
+
 
         if(true){
 
@@ -757,7 +758,14 @@ class FichaController extends Controller
         }
 
         $evaluacion = Evaluacion::Activo()->first();
-        #if(isset($postulante) && $postulante->foto_estado=='ACEPTADO'){
+
+        $muestraficha = DB::table("vista_muestra_ficha")->where('numero_identificacion', $postulante->numero_identificacion)->where('ficha','MUESTRA')->count();
+        if( $muestraficha >0){
+
+        }else {
+            return view('ficha.falso',compact('postulante'));
+        }
+
 
 
         PDF::SetTitle('FICHA DE INSCRIPCION');
@@ -1061,9 +1069,9 @@ class FichaController extends Controller
             $puerta1 = 'PUERTA N°3';
         } elseif (str_contains($postulante->datos_aula_uno->codigo, ['G', 'H'])) {
             $puerta1 = 'PUERTA N°4';
-        } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M'])) {
+        } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M','R1'])) {
             $puerta1 = 'PUERTA N°5';
-        } elseif (str_contains($postulante->datos_aula_uno->codigo, ['S', 'R'])) {
+        } elseif (str_contains($postulante->datos_aula_uno->codigo, ['S', 'R5'])) {
             $puerta1 = 'PUERTA N°6';
         } elseif (str_contains($postulante->datos_aula_uno->codigo, ['T'])) {
             $puerta1 = 'PUERTA N°7';
@@ -1075,9 +1083,9 @@ class FichaController extends Controller
             $puerta2 = 'PUERTA N°3';
         } elseif (str_contains($postulante->datos_aula_dos->codigo, ['G', 'H'])) {
             $puerta2 = 'PUERTA N°4';
-        } elseif (str_contains($postulante->datos_aula_dos->codigo, ['I', 'Q', 'M'])) {
+        } elseif (str_contains($postulante->datos_aula_dos->codigo, ['I', 'Q', 'M','R1'])) {
             $puerta2 = 'PUERTA N°5';
-        } elseif (str_contains($postulante->datos_aula_dos->codigo, ['S', 'R'])) {
+        } elseif (str_contains($postulante->datos_aula_dos->codigo, ['S', 'R5'])) {
             $puerta2 = 'PUERTA N°6';
         } elseif (str_contains($postulante->datos_aula_dos->codigo, ['T'])) {
             $puerta2 = 'PUERTA N°7';
@@ -1090,9 +1098,9 @@ class FichaController extends Controller
             $puerta3 = 'PUERTA N°3';
         } elseif (str_contains($postulante->datos_aula_tres->codigo, ['G', 'H'])) {
             $puerta3 = 'PUERTA N°4';
-        } elseif (str_contains($postulante->datos_aula_tres->codigo, ['I', 'Q', 'M'])) {
+        } elseif (str_contains($postulante->datos_aula_tres->codigo, ['I', 'Q', 'M','R1'])) {
             $puerta3 = 'PUERTA N°5';
-        } elseif (str_contains($postulante->datos_aula_tres->codigo, ['S', 'R'])) {
+        } elseif (str_contains($postulante->datos_aula_tres->codigo, ['S', 'R5'])) {
             $puerta3 = 'PUERTA N°6';
         } elseif (str_contains($postulante->datos_aula_tres->codigo, ['T'])) {
             $puerta3 = 'PUERTA N°7';
