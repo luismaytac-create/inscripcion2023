@@ -290,6 +290,9 @@ class Postulante extends Model
     public function getCanalAttribute()
     {
         $especialidad = Especialidad::find($this->idespecialidad);
+        if( !isset($this->idespecialidad)){
+            $especialidad = Especialidad::find(26);
+        }
 
         return $especialidad->canal;
     }
