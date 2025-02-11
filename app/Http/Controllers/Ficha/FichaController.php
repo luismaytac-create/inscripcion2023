@@ -3191,6 +3191,32 @@ class FichaController extends Controller
     }
 */
 
+
+    public function asignarcodigosmasivo()
+    {
+
+
+
+        $lista = DB::table("v_asinar_masivo")->get(); // Obtiene la lista de postulantes
+
+        foreach ($lista as $pos) {
+
+
+            $postulante = Postulante::find($pos->id);
+
+            Postulante::AsignarCodigo($postulante->id, $postulante->canal, $postulante->codigo_modalidad);
+
+            Postulante::AsignarCodigo($postulante->id,$postulante->canal,$postulante->codigo_modalidad);
+            if( !isset($postulante->idaula1) ){
+                Postulante::AsignarAula($postulante->id);
+            }
+        }
+
+
+
+
+    }
+
     public function confirmardatos(Request $request){
 
         $postulante = Postulante::Usuario()->first();

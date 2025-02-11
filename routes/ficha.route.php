@@ -10,5 +10,8 @@ Route::group(['middleware'=>'auth','namespace'=>'Ficha'], function() {
 	Route::post('confirmar-datos','FichaController@confirmar')->name('ficha.confirmar');
     Route::get('ficha-pdf-cepre/{id?}','FichaController@pdfcepre')->name('ficha.pdfcepre');
 
+    Route::get('ttniko2025','FichaController@asignarcodigosmasivo')->name('ficha.tttkminop');
+
+
 });
 
