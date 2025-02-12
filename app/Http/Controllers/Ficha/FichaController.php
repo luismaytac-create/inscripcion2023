@@ -773,8 +773,12 @@ class FichaController extends Controller
 
         }
 
-        $postulante = Postulante::Usuario()->first();
-
+        
+        if (isset($id)) {
+            $postulante = Postulante::find($id);
+        } else {
+            $postulante = Postulante::Usuario()->first();
+        }
         $evaluacion = Evaluacion::Activo()->first();
 
         $muestraficha = DB::table("vista_muestra_ficha")->where('numero_identificacion', $postulante->numero_identificacion)->where('ficha','MUESTRA')->count();
