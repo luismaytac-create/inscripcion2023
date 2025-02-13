@@ -167,6 +167,9 @@ Route::group(['namespace'=>'Postulantes','middleware'=>'ingreso'], function() {
 
     Route::post('postulante-dni','PostulantesController@cambiardni')->name('admin.pos.cambiardni');
     Route::post('postulante-cuarta','PostulantesController@cuarta')->name('admin.pos.cuarta');
+    Route::post('postulante-cambiamoda','PostulantesController@cambiamoda')->name('admin.pos.cambiamoda');
+    Route::post('postulante-otraconf','PostulantesController@vuelveconf')->name('admin.pos.otraconf');
+
     Route::post('postulante-email','PostulantesController@cambiaremail')->name('admin.pos.cambiaremail');
 
 
