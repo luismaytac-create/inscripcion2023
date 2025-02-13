@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Postulante;
 use App\Models\Recaudacion;
 use App\User;
-
+use DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
@@ -179,6 +179,59 @@ class PostulantesController extends Controller
 
         Postulante::where('id',$postulante->id)->update(['cuarta_df'=>$cuarta]);
         Alert::success('Datos Actualizados con exito');
+        return back();
+
+    }
+
+    public function vuelveconf(Request $request)
+    {
+        $postulante = Postulante::find($request->idpostulante);
+
+
+        DB::insert("INSERT INTO confirmacion_bk SELECT * FROM confirmacion WHERE dni = ?", [$postulante->numero_identificacion]);
+
+        DB::table("confirmacion")
+            ->where('dni', $postulante->numero_identificacion)
+            ->delete();
+
+        Alert::success('Datos Actualizados con exito');
+        return back();
+
+    }
+
+    public function cambiamoda(Request $request){
+        $postulante = Postulante::find($request->idpostulante);
+
+        $postulante->fill($request->all());
+        $data = $request->all();
+
+        if(!$request->has('idmodalidad2')){
+
+            $data['idmodalidad2']=null;
+        }
+        if(!$request->has('idespecialidad2')){
+
+            $data['idespecialidad2']=null;
+        }
+        if(!$request->has('idespecialidad3')){
+
+            $data['idespecialidad3']=null;
+        }
+        if(!$request->has('idespecialidad4')){
+            $data['idespecialidad4']=null;
+        }
+        if(!$request->has('idespecialidad5')){
+            $data['idespecialidad5']=null;
+        }
+        if(!$request->has('idespecialidad6')){
+            $data['idespecialidad6']=null;
+        }
+
+
+        $postulante->fill($data);
+        $postulante->save();
+        Alert::success('Datos Actualizados con exito');
+
         return back();
 
     }

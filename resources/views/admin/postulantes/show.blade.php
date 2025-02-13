@@ -121,6 +121,9 @@
                 <li>
                     <a href="#tab_8" data-toggle="tab" aria-expanded="true"> 4TA DISPOSICIÓN </a>
                 </li>
+                <li>
+                    <a href="#tab_20" data-toggle="tab" aria-expanded="true"> SEGUNDA CONFIRMACIÓN </a>
+                </li>
 
                 <li>
                     <a href="#tab_2" data-toggle="tab" aria-expanded="true"> Ficha </a>
@@ -275,6 +278,35 @@
                     </div>
                 </div>
 
+
+
+                <div class="tab-pane" id="tab_20">
+                    <div class="tab-pane active" id="tab_1_1_1">
+                        {!! Form::open(['route'=>'admin.pos.otraconf','method'=>'POST']) !!}
+                        <div class="col-md-6">
+
+                            {!! Field::text('dni',$postulante->numero_identificacion,['label'=>'DNI ACTUAL','readonly'=>'readonly','class'=>'form-control']) !!}
+
+                        </div>
+                        <div class="col-md-12">
+
+
+                        </div>
+
+                        <div class="col-md-4">
+                            {!!Form::hidden('idpostulante', $postulante->id );!!}
+
+
+
+
+
+
+                            {!!Form::enviar('Actualizar')!!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
                 <div class="tab-pane" id="tab_4">
                     <div class="tab-pane active" id="tab_1_1_1">
                     {!! Form::open(['route'=>'admin.pos.cambiardni','method'=>'POST']) !!}
@@ -304,8 +336,8 @@
                 </div>
 
                 <div class="tab-pane" id="tab_7">
-                    {!! Form::model($postulante,['route'=>['admin.pos.update',$postulante],'method'=>'PUT']) !!}
-
+                    {!! Form::model($postulante,['route'=>['admin.pos.cambiamoda'],'method'=>'POST']) !!}
+                    {!!Form::hidden('idpostulante', $postulante->id );!!}
                     <h3>Modalidad de Postulación según el reglamento</h3>
                     <div class="row">
                         <div class="col-md-6">
