@@ -164,6 +164,25 @@
                                                 <span class="m-badge m-badge--danger"> NO </span>
                                             @endif</td>
                                     </tr>
+
+
+                                    <tr>
+
+                                        @if (str_contains(Auth::user()->dni,['ficha']))
+                                            <td><h1>VER FICHA</h1></td>
+                                        <td> @if($postulante->pago)
+                                              <a href="{{route('ficha.pdf',$postulante->id)}}" target="_blank"><h1>VER FICHA</h1>
+                                            @else
+                                                <span class="m-badge m-badge--danger"> NO </span>
+                                            @endif</td>
+                                        @endif
+
+                                    </tr>
+
+
+
+
+
                                     <tr>
                                         <td>FECHA DE CONFIRMACIÓN FICHA
                                         </td>

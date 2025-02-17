@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\RegistroUser;
 use Carbon\Carbon;
 use App\User;
+use Auth;
+use Illuminate\Support\Facades\Log;
 class LoginController extends Controller
 {
     /*
@@ -78,7 +80,17 @@ class LoginController extends Controller
         $data['ip'] =  $ip;
 
 
+        Log::info('autenticado '.$user->idrole);
+        if(isset($user->idrole)){
 
+            if($user->idrole==13){
+
+
+            }
+
+        }else{
+            Auth::logout();
+        }
 
         $data['idusuario'] =  $user->id;
 
