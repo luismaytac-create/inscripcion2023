@@ -105,7 +105,7 @@ class SemibecaController extends Controller
         $id = Auth::user()->id;
         $postulante = Postulante::where('idusuario',$id)->first();
 
-        Log::info('Showing user profile for user: '.$postulante);
+
 
         $monst=0;
 
