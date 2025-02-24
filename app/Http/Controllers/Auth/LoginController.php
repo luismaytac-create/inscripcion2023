@@ -87,10 +87,13 @@ class LoginController extends Controller
             if($user->idrole==13){
                 $cuentaconfima=  DB::table("view_ingresante_25_1")->where('numero_identificacion',$user->dni)->count();
                     if($cuentaconfima>0){
+
+
+
+                    }else {
                         Alert::danger('Ingresantes')
                             ->details('Tienes que ser ingresante .');
                         return redirect()->to('/');
-                    }else {
                         Auth::logout();
                     }
 
