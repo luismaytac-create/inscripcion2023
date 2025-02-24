@@ -9,6 +9,7 @@ use App\Models\RegistroUser;
 use Carbon\Carbon;
 use App\User;
 use Auth;
+use Alert;
 use DB;
 use Illuminate\Support\Facades\Log;
 class LoginController extends Controller
