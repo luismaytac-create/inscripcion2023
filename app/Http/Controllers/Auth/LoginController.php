@@ -94,8 +94,9 @@ class LoginController extends Controller
                     }else {
                         Alert::danger('Ingresantes')
                             ->details('Tienes que ser ingresante .');
-                        return redirect()->to('/');
                         Auth::logout();
+                        return redirect()->to('/');
+
                     }
 
 
