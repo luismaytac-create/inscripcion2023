@@ -9,6 +9,7 @@ use App\Models\RegistroUser;
 use Carbon\Carbon;
 use App\User;
 use Auth;
+use DB;
 use Illuminate\Support\Facades\Log;
 class LoginController extends Controller
 {
@@ -80,10 +81,18 @@ class LoginController extends Controller
         $data['ip'] =  $ip;
 
 
-        Log::info('autenticado '.$user->idrole);
+
         if(isset($user->idrole)){
 
             if($user->idrole==13){
+                $cuentaconfima=  DB::table("view_ingresante_25_1")->where('numero_identificacion',$user->dni)->count();
+                    if($cuentaconfima>0){
+                        Alert::danger('Ingresantes')
+                            ->details('Tienes que ser ingresante .');
+                        return redirect()->to('/');
+                    }else {
+                        Auth::logout();
+                    }
 
 
             }
