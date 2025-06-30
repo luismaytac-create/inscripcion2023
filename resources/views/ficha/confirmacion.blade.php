@@ -37,7 +37,7 @@
                     </h1>
                         <h1>En caso de no haber logrado una vacante, tendrá la opción de postular en el examen general, realizando el pago de inscripción de acuerdo a la modalidad seleccionada.
 
-                        El pago lo podrá realizar a partir del 03 de febrero al 07 de febrero de 2025</h1>
+                        </h1>
 
                 @else
 

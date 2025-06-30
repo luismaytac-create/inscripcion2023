@@ -125,11 +125,11 @@ class HomeController extends Controller
 
 
                     if(!isset($postulante->idespecialidad)){
-                        return redirect()->route('ficha.index');
+                    //    return redirect()->route('ficha.index');
                     }
 
                     if($postulante->pago and !$postulante->datos_ok){
-                        return redirect()->route('ficha.index');
+                    //    return redirect()->route('ficha.index');
                     }
 
 
