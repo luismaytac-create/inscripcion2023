@@ -2,6 +2,8 @@
 
 /*PERMISOS DE ROOT */
 
+#	Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 Route::group(['middleware'=>'root'], function() {
 
 Route::resource('users', 'UsersController',['names'=>'admin.users']);
@@ -42,6 +44,8 @@ Route::group(['middleware'=>'semibecassave','namespace'=>'Semibeca'], function()
 
 /*permisos de sistemas*/
 Route::group(['middleware'=>'sistemas'], function() {
+	Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 
     Route::resource('aulas', 'Aulas\AulasController',['names'=>'admin.aulas']);
 

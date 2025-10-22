@@ -37,12 +37,12 @@ class SemibecaController extends Controller
             Alert::info('No realizo su preinscripción');
             return redirect()->route('home.index');
         }
-      // if($hoy<$fechaInicio || $hoy>$fechaFin){ #false
-           if ( true) {
+       if($hoy<$fechaInicio || $hoy>$fechaFin){ #false
+//           if ( true) {
 
             # Alert::info('Debe completar sus datos personales.');
-            Alert::info('Inscripciones cerradas, verifica el cronograma.');
-            #Alert::info('Los resultados serán publicados el día 10 de Julio.');
+           # Alert::info('Inscripciones de Semibeca disponible desde el 07 de julio, verifica el cronograma.');
+            Alert::info('Los resultados serán publicados segun el cronograma.');
             return redirect()->route('home.index');
 
 

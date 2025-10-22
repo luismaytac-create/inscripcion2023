@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Postulante;
 use App\Models\RegistroDni;
 use App\Models\Verficador;
+use App\Models\Verficadorlog;
 use Illuminate\Http\Request;
 use Styde\Html\Facades\Alert;
 use DB;
 use Response;
 use Illuminate\Support\Facades\Log;
 use Yajra\Datatables\Datatables;
+use Carbon\Carbon;
+use Auth;
 class PadronController extends Controller
 {
     public function index()
@@ -142,6 +145,19 @@ class PadronController extends Controller
             $nuevo->save();
         }
 
+
+        $nuevolog = new Verficadorlog();
+        $nuevolog->dni = $request->dnidatos;
+        $nuevolog->observacion = $request->observacion;
+        $nuevolog->correcto = $xxx;
+        $nuevolog->estados= $request->otorga;
+        $nuevolog->paterno=$paterno;
+        $nuevolog->materno=$materno;
+        $nuevolog->nombres=$nombres;
+        $nuevolog->usuario=Auth::user()->id;
+        $nuevolog->fecha=Carbon::now();
+        $nuevolog->fecha_nacimiento=$fecha;
+        $nuevolog->save();
 
 
         return redirect('admin/padronverificador');

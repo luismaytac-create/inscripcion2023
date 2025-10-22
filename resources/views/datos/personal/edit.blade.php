@@ -84,7 +84,7 @@
                 <h3 class="div1" style="display: none;">Especialidad a la que postulas</h3>
                 <dl class="div1" style="display: none;">
                     <dt>Observación</dt>
-                    <dd>Puedes seleccionar hasta 3 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
+                    <dd>Puedes seleccionar hasta 2 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
                 </dl>
 
 
@@ -119,15 +119,7 @@
                         </select>
 
                     </div>
-                    <div style="display: none;" class="col-md-3" id="pregunta2">
-                        <h4>¿ Deseas agregar la tercera prioridad?</h4>
-                        <button id="agregar2" type="button" class="btn btn-info m-btn 	m-btn m-btn--icon m-btn--pill">
-															<span>
-																<i class="la la-plus"></i>
-																<span>AGREGAR</span>
-															</span>
-                        </button>
-                    </div>
+
                     <div style="display: none;" class="col-md-3" id="quitarpregunta2">
                         <h4>¿ Deseas quitar la segunda prioridad?</h4>
                         <button id="quitar2" type="button" class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
@@ -139,25 +131,7 @@
                     </div>
 
                 </div>
-                <div id="div3" class="row m--margin-top-15 m--margin-bottom-15" style="display: none;">
-                    <div class="col-md-6">
-                        <select class="form-control"  id="especialidad3"  name="especialidad3">
-                            <option value="">Escoger la tercera prioridad de postulación</option>
 
-                        </select>
-
-                    </div>
-                    <div style="display: none;" class="col-md-6" id="quitarpregunta3">
-                        <h4>¿ Deseas quitar la tercera prioridad?</h4>
-                        <button id="quitar3" type="button" class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
-															<span>
-																<i class="la la-trash"></i>
-																<span>QUITAR</span>
-															</span>
-                        </button>
-                    </div>
-
-                </div>
 
                 <div class="widget-thumb bordered bg-green cepreuni">
                     <hr>
@@ -192,7 +166,7 @@
                     <h3 class="div1cepre" style="display: none;">Especialidad a la que postulas</h3>
                     <dl class="div1cepre" style="display: none;">
                         <dt>Observación</dt>
-                        <dd>Puedes seleccionar hasta 3 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
+                        <dd>Puedes seleccionar hasta 2 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
                     </dl>
 
 
@@ -227,15 +201,7 @@
                             </select>
 
                         </div>
-                        <div style="display: none;" class="col-md-3" id="pregunta2cepre">
-                            <h4>¿ Deseas agregar la tercera prioridad?</h4>
-                            <button id="agregar2cepre" type="button" class="btn btn-info m-btn 	m-btn m-btn--icon m-btn--pill">
-															<span>
-																<i class="la la-plus"></i>
-																<span>AGREGAR</span>
-															</span>
-                            </button>
-                        </div>
+
                         <div style="display: none;" class="col-md-3" id="quitarpregunta2cepre">
                             <h4>¿ Deseas quitar la segunda prioridad?</h4>
                             <button id="quitar2cepre" type="button" class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
@@ -247,25 +213,7 @@
                         </div>
 
                     </div>
-                    <div id="div3cepre" class="row m--margin-top-15 m--margin-bottom-15" style="display: none;">
-                        <div class="col-md-6">
-                            <select class="form-control"  id="especialidad6"  name="especialidad6">
-                                <option value="">Escoger la tercera prioridad de postulación</option>
 
-                            </select>
-
-                        </div>
-                        <div style="display: none;" class="col-md-6" id="quitarpregunta3cepre">
-                            <h4>¿ Deseas quitar la tercera prioridad?</h4>
-                            <button id="quitar3cepre" type="button" class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
-															<span>
-																<i class="la la-trash"></i>
-																<span>QUITAR</span>
-															</span>
-                            </button>
-                        </div>
-
-                    </div>
 
 
                 </div>
@@ -427,13 +375,7 @@
                                                     </td>
 
                                                 </tr>
-                                                <tr id="trop3" style="display: none;" class="m--font-success">
-                                                    <td>
 
-                                                        <h3 id="txtop3"> </h3>
-                                                    </td>
-
-                                                </tr>
 
 
                                                 <tr id="trmoda2" style="display: none;" class="m--font-info">
@@ -455,13 +397,7 @@
                                                     </td>
 
                                                 </tr>
-                                                <tr id="trop6" style="display: none;" class="m--font-info">
-                                                    <td>
 
-                                                        <h3 id="txtop6"> </h3>
-                                                    </td>
-
-                                                </tr>
 
 
 

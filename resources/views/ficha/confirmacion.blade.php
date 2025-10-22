@@ -32,7 +32,7 @@
 
 
 
-                @if($postulante->idmodalidad==16)
+                @if(false)
                     <h1>Estimado postulante, en caso de haber ingresado por la MODALIDAD INGRESO DIRECTO CEPRE usted quedará exonerado del pago por derecho de inscripción.
                     </h1>
                         <h1>En caso de no haber logrado una vacante, tendrá la opción de postular en el examen general, realizando el pago de inscripción de acuerdo a la modalidad seleccionada.

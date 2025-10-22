@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Fotos;
 
 use App\Http\Controllers\Controller;
+use App\Models\Editorlog;
 use App\Models\FotoObservacion;
 use App\Models\Postulante;
 use Carbon\Carbon;
@@ -41,7 +42,7 @@ class FotosController extends Controller
             }
         }else {
 
-           Alert::info('No tiene privilegios para realizar esta acciÃ³n');
+           Alert::info('No tiene privilegios para realizar esta acción');
            return redirect()->route('home.index');
        }
     //    return view('admin.fotos.index',compact('resumen'));
@@ -117,7 +118,7 @@ class FotosController extends Controller
     }
     public function update($id,$estado)
     {
-
+        /*
         $idusuarioeditor=Auth::user()->id;
     	$postulante = Postulante::find($id);
     	$archivo = 'public/'.$postulante->foto;
@@ -158,6 +159,7 @@ class FotosController extends Controller
 
     			break;
     	}
+        */
     	return redirect()->route('admin.fotos.index');
     }
     public function saveeditado(Request  $request){
@@ -174,7 +176,27 @@ class FotosController extends Controller
         $postulante->save();
 
 
+
+        $nuevolog = new Editorlog();
+        $nuevolog->dni = $postulante->numero_identificacion;
+        $nuevolog->idpostulante = $postulante->id;
+        $nuevolog->estado = 'ACEPTADO';
+        $nuevolog->foto_ruta= $nuevo_archivo;
+        $nuevolog->usuario=$idusuarioeditor;
+        $nuevolog->fecha=Carbon::now();
+        $nuevolog->save();
+
+
+
+
         return Response::json(['data' => 'OK']);
+
+
+
+
+
+
+
     }
     public function cargareditado(Request $request)
     {
@@ -238,6 +260,19 @@ class FotosController extends Controller
         $postulante->idusuarioeditor= $idusuarioeditor;
         $postulante->foto_fecha_editor = Carbon::now();
         $postulante->save();
+        Mail::to($postulante->email)
+            ->send(new DenegadoEmail('Foto',$motivo));
+
+        $nuevolog = new Editorlog();
+        $nuevolog->dni = $postulante->numero_identificacion;
+        $nuevolog->idpostulante = $postulante->id;
+        $nuevolog->estado = 'RECHAZADO';
+        $nuevolog->observacion=$motivo;
+        $nuevolog->foto_ruta= $postulante->foto_rechazada;
+        $nuevolog->usuario=$idusuarioeditor;
+        $nuevolog->fecha=Carbon::now();
+        $nuevolog->save();
+
 
 
         return redirect()->route('admin.fotos.index');

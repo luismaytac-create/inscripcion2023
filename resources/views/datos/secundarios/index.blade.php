@@ -140,7 +140,7 @@
                                     </div><!--row-->
                                     <div class="row">
                                         <div class="col-md-6">
-                                            {!!Field::date('fecha_nacimiento', $postulante->fecha_nacimiento, ['class'=>'Fecha','label'=>'Fecha de nacimiento del postulante (día-mes-año)(*)','placeholder'=>'fecha de nacimiento del postulante','min'=>'1920-01-01',"max "=>'2010-01-01']);!!}
+                                            {!!Field::date('fecha_nacimiento', $postulante->fecha_nacimiento, ['class'=>'Fecha','label'=>'Fecha de nacimiento del postulante (día-mes-año)(*)','placeholder'=>'fecha de nacimiento del postulante','min'=>'1920-01-01',"max "=>'2011-01-01']);!!}
 
 
 

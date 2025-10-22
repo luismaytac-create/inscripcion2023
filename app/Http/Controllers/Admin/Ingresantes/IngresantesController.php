@@ -646,7 +646,7 @@ class IngresantesController extends Controller
                 PDF::Cell(150, 5, 'UNIVERSIDAD NACIONAL DE INGENIERÍA', 0, 2, 'L');
                 PDF::SetXY(29, 13);
                 PDF::SetFont('helvetica', 'B', 9);
-                PDF::Cell(150, 5, 'OFICINA CENTRAL DE ADMISIÓN', 0, 2, 'L');
+                PDF::Cell(150, 5, 'DIRECCIÓN DE ADMISIÓN', 0, 2, 'L');
                 PDF::SetXY(29, 17);
                 PDF::SetFont('helvetica', 'B', 9);
                 PDF::Cell(150, 5, $evaluacion->nombre, 0, 2, 'L');
@@ -747,8 +747,8 @@ class IngresantesController extends Controller
                 }
 
                 #
-                PDF::MultiCell(100, 5, 'Dr. Páuyac Huamán José Aníbal', 0, 'C', 0, 0, 175, 92, true);
-                PDF::MultiCell(100, 5, 'Jefe , Oficina Central de Admisión', 0, 'C', 0, 0, 175, 95.5, true);
+                PDF::MultiCell(100, 5, 'Dr. Lastra Espinoza Luis Antonio', 0, 'C', 0, 0, 175, 92, true);
+                PDF::MultiCell(100, 5, 'Director de admisión', 0, 'C', 0, 0, 175, 95.5, true);
                 #CUADRO DE CREDITOS
                 PDF::MultiCell(20, 7, 'CICLO', 1, 'C', 0, 0, 15, 105, true, 0, false, true, 7, 'M');
                 PDF::MultiCell(20, 7, 'CÓDIGO', 1, 'C', 0, 0, 35, 105, true, 0, false, true, 7, 'M');
@@ -957,7 +957,7 @@ class IngresantesController extends Controller
 
 
         foreach ($postulantes as $key => $postulante) {
-            ReportConvalidacion($postulante,'XX');
+            	
         }
 
 

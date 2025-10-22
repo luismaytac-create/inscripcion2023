@@ -46,6 +46,9 @@ class InformesController extends Controller
             $tipodoc_nombre = Catalogo::where('id',$idtipodoc)->first();
             $datos_doc = $tipodoc_nombre->nombre;
             $usuario_id = $userdata->id;
+	     $foto_obs='';
+		$countfoto=0;
+	
 
             if($count_postulante > 0 ){
                 $tiene_postulante = true;
@@ -57,7 +60,11 @@ class InformesController extends Controller
                 $confirmo_email = $userdata->confirmo;
                 $solicitante = SolicitanteVictima::where ( 'dni' ,$dni)->first();
                 $celular = $userdata->celular.'-'.$postulante->telefono_celular.'-'. $postulante->telefono_fijo.'-'. $postulante->telefono_varios;
+		$countfoto=DB::table("foto_observacion")->where('idpostulante',$postulante->id)->count();
+		if($countfoto>0){
+		$foto_obs= DB::table("foto_observacion")->where('idpostulante',$postulante->id)->first();
 
+		}
 
 
                 $contador_semibeca= DB::table("semibeca_verificador")->where('dni',$postulante->numero_identificacion)->count();
@@ -66,7 +73,7 @@ class InformesController extends Controller
 
                 return view('admin.informes.reporte',compact('dni','datos_doc','celular'
                     ,'email','tiene_postulante','fecha_registro','usuario_id'
-                    ,'postulante','proceso','declaracion','declaracion_archivo','confirmo_email','contador_semibeca','dnis','solicitante'));
+                    ,'postulante','proceso','declaracion','declaracion_archivo','confirmo_email','contador_semibeca','dnis','solicitante','countfoto','foto_obs'));
             }else {
 
 

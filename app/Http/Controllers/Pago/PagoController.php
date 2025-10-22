@@ -312,10 +312,8 @@ class PagoController extends Controller
         if(isset($postulante)){
         $servicio = Servicio::where('codigo',$servicio)->first();
       # comentar la siguiente línea para deshabilitar formato pago Scotiabank
-        $this->FormatoScotiabank($servicio,$postulante,'Scotiabank');
+        #$this->FormatoScotiabank($servicio,$postulante,'Scotiabank');
         $this->FormatoScotiabank($servicio,$postulante,'Bcp');
-        
-
 
         PDF::Output(public_path('storage/tmp/').'FormatoPago_'.$servicio->codigo.'_'.$postulante->numero_identificacion.'.pdf','FI');
         }//fin if
@@ -354,7 +352,15 @@ class PagoController extends Controller
         elseif (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
             && str_contains($postulante->gestion_ie,'Privada')) {
             $pagos->put('examen',465);
-         }
+	}
+	elseif (str_contains($postulante->codigo_modalidad, ['IEN-UNI','TALBE','INTR','SBEC'])
+            && str_contains($postulante->gestion_ie,'Pública')) {
+            $pagos->put('examen',526);
+        }
+        elseif (str_contains($postulante->codigo_modalidad, ['IEN-UNI','TALBE','INTR','SBEC'])
+            && str_contains($postulante->gestion_ie,'Privada')) {
+            $pagos->put('examen',526);
+        }
 
         #Diplomado con bachillerato, Andres bello (Continuar), convenio diplomatico
         if (str_contains($postulante->codigo_modalidad, ['E1DB','E1CABC','E1CABI','E1CD']))
@@ -657,8 +663,6 @@ public function CalculoServiciosAd($postulante)
         PDF::SetFont('helvetica','',11);
         PDF::Cell(110,5,"S/. $servicio->monto ",1,0,'L');
         $pagodatime=$this->CalculoPago($postulante);
-
-
 
 		#ADVERTENCIA
 		PDF::SetXY(18,65);

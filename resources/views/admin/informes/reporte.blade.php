@@ -285,6 +285,19 @@
                                         </td>
                                     </tr>
                                     @endif
+ @if( $countfoto >0)
+
+ <tr>
+                                        <td>FOTO OBSERVACION
+                                        </td>
+                                        <td>
+                                                                                       {{ $foto_obs->observacion}}
+                                                                                 </td>
+                                    </tr>
+
+@endif
+
+
                                     @if(isset($postulante->idespecialidad))
                                         @if($postulante->idmodalidad == 16)
                                             <tr>

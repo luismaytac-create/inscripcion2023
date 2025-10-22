@@ -35,19 +35,19 @@ class RulesServiceProvider extends ServiceProvider
         $this->ValidaNumeroIdentificacion();
         $this->ValidaNumIdenUsuario();
         $this->ValidaVacantes();
-		$this->ValidaDniRegistro();
+	$this->ValidaDniRegistro();
         #Validacion de datos de familiares
         $this->DniSize();
         $this->DniNumeric();
 		
-		$this->ValidaNombresString();
-		$this->ValidaDniSegunTipo();
-		#$this->ValidaDniSegunOrce();
-		$this->ValidaFechaNacimiento();
-		$this->ValidaNombresFamiString();
-		$this->ValidaApoderado();
-		$this->ValidaDireccion();
-		$this->ValidaTipoDocVal();
+	$this->ValidaNombresString();
+	$this->ValidaDniSegunTipo();
+	#$this->ValidaDniSegunOrce();
+	$this->ValidaFechaNacimiento();
+	$this->ValidaNombresFamiString();
+	$this->ValidaApoderado();
+	$this->ValidaDireccion();
+	$this->ValidaTipoDocVal();
         $this->ValidaCelularLong();
     }
 

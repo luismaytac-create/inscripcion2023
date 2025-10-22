@@ -70,7 +70,7 @@
                 <h3 class="div1" style="display: none;">Confirmar Especialidad a la que postulas</h3>
                 <dl class="div1" style="display: none;">
                     <dt>Observación</dt>
-                    <dd>Puedes seleccionar hasta 3 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
+                    <dd>Puedes seleccionar la especialidad que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
                 </dl>
 
 

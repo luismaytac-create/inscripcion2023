@@ -70,109 +70,11 @@ class HomeController extends Controller
                     return redirect()->to('/');
 
                 }else {
-                    #if (env('INGRESANTE')) {
-                    if(false){
-                        $esingresante = Ingresante::where('idpostulante',$postulante->id)->first();
-                        //Restriccion Ingresante
-                        if( $esingresante == 0 ) {
-                            Auth::logout();
-                            Alert::danger('Restricción')
-                                ->details('No es ingresante del Concurso de Admisión.');
-                            return redirect()->to('/');
-                        }
-    
-                        $esconforme = Ingresante::where('idpostulante',$postulante->id)->where('estado_constancia','CONFORME')->count();
-                        if($esconforme >0 ) {
-                           Auth::logout();
-                           Alert::danger('Restricción')
-                               ->details('EL ESTADO DE SUS DOCUMENTOS ES CONFORME.');
-                           return redirect()->to('/');
-                        }
-    
                     
-                        $countmeet = DB::table("data_meet")->where('dni',$postulante->numero_identificacion)->count();
-                        $meet = false;
-                        $constancia= false;
-                        $ingresante = Ingresante::where('idpostulante',$postulante->id)->first();
-                        $estadocons = '';
-    
-                        
-                        if( $countmeet> 0){
-                            if( $ingresante->estado_constancia == 'CONFORME' || $ingresante->estado_constancia=='CONFORME Y RESERVA'){
-                                $estadocons='CONFORME';
-                            }else {
-                                $estadocons = 'CON OBSERVACIONES';
-                            }
-                            $datosmeet = DB::table("data_meet")->where('dni',$postulante->numero_identificacion)->first();
-    
-                            if($estadocons == 'CONFORME'){
-                                $meet = false;
-                                $constancia = true;
-                            }else{
-                                $meet = true;
-                                $constancia = false;
-                            }
-    
-    
-                            return view('index',compact('swp','victima','meet','datosmeet','constancia', 'estadocons'));
-                        }else {
-    
-                            $datosmeet ='';
-                            $meet = false;
-                            return view('index',compact('swp','victima','meet','datosmeet'));
-                        }
-                    }
-
-
-                    if(!isset($postulante->idespecialidad)){
-                    //    return redirect()->route('ficha.index');
-                    }
-
-                    if($postulante->pago and !$postulante->datos_ok){
-                    //    return redirect()->route('ficha.index');
-                    }
-
-
-
-
-
-
-                   $cuentaconfima=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->count();
-                    $noacepto=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->where('acepto','NO')->count();
-                    if($cuentaconfima>0){
-                        $muestraficha = true;
-                        $mens=false;
-                        if($noacepto>0){
-                            $mens=true;
-                        }
-
-
-
-                        return view('indexficha',compact('swp','victima','meet','postulante','muestraficha','mens'));
-
-                    }else {
-                        $fichacon = DB::table("vista_confirma_ficha")->where('numero_identificacion',$postulante->numero_identificacion)->count();
-
-                        if($fichacon>0){
-                            $muestraficha = false;
-                            $mens=false;
-                            return view('indexficha',compact('swp','victima','meet','postulante','muestraficha','mens'));
-                        }else {
-                            return view('index',compact('swp','victima','meet'));
-                        }
-
-
-
-
-
-                    }
-
-
-
-
-
-
-
+				$meet = false;
+				$datosmeet ='';
+				return view('index',compact('swp','victima','meet','datosmeet'));
+                   
 
 
                 }

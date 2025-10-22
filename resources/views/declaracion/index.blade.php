@@ -46,26 +46,27 @@
                 @endif
 
                    <h2>1. Descarga la declaración jurada:</h2>
-                       <a target="_blank"
+                        <a target="_blank"
                           @if($postulante->idmodalidad == 16 )
-                          href="{{ asset("DECLARACION_JURADA_25-1.pdf")  }}"
+                          href="{{ asset("DECLARACION_JURADA_IEN_26-1.pdf")  }}"
                           @else
-                          href="{{ asset("DECLARACION_JURADA_25-1.pdf")  }}"
+                          href="{{ asset("DECLARACION_JURADA_IEN_26-1.pdf")  }}"
                                   @endif
 
                           class="btn btn-success m-btn  m-btn--icon">
                         <span>
                             <i class="fa flaticon-book"></i>
-                            <span>DESCARGAR DECLARACIÓN</span>
+                         <span>DESCARGAR DECLARACIÓN</span> 
                         </span>
                        </a>
+	<!-- 	<h4>Disponible desde el 07 de julio, continua completado tus datos personales </h4>-->
                        <hr>
-                    <h2>2. Llena la información y fírmala.</h2>
+                    <h2>2. Llene la información y fírmala.</h2>
                     <h2>3. Escanea y sube tu declaración jurada en formato pdf o imagen</h2>
                        
                </div>
            </div>
-                <!-- end row-->
+                
                 <hr>
                <div class="row">
                    <form id="Frm6" style="width: 100%;">
@@ -86,7 +87,7 @@
                            </b>
                        </p>
                    </form>
-               </div>
+               </div> 
                 <hr>
                 <div class="row">
 

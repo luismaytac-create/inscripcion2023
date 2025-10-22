@@ -891,7 +891,31 @@ class PagosController extends Controller
                 break;
                 case '519'://CONVAL.CURSO TITUL/GRADUADOS
                     $postulantes = Postulante::TituladosIngresantes()->IsNull(0)->Alfabetico()->get();
-                break;
+		    break;
+		    case '526': //"ING.DIR.ESC.EST.LIMA-CALL"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '527': //"ING.DIR.ESC.PRI.LIMA-CALL"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '528': //"ING.DIR.ESC.EST.PROV"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '529': //"ING.DIR.ESC.PRI.PROV"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '531': //"ING.DIR.ESC.EST.LIMA-CALL.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '532': //"ING.DIR.ESC.PRI.LIMA-CALL.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '533': //"ING.DIR.ESC.EST.PROV.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '534': //"ING.DIR.ESC.PRI.PROV.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
             default:
                 $postulantes = collect([]);
                 break;
@@ -963,7 +987,31 @@ class PagosController extends Controller
                break;*/
             /*case '521':
                 $postulantes = Postulante::PagoFormatoSemibeca()->IsNull(0)->get();
-               break;*/
+		break;*/
+		case '526': //"ING.DIR.ESC.EST.LIMA-CALL"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '527': //"ING.DIR.ESC.PRI.LIMA-CALL"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '528': //"ING.DIR.ESC.EST.PROV"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '529': //"ING.DIR.ESC.PRI.PROV"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '531': //"ING.DIR.ESC.EST.LIMA-CALL.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '532': //"ING.DIR.ESC.PRI.LIMA-CALL.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '533': //"ING.DIR.ESC.EST.PROV.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Pública'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
+                case '534': //"ING.DIR.ESC.PRI.PROV.SEMIB"
+                    $postulantes = Postulante::PagoGestion('Colegio',['Privada'],['IEN-UNI','TALBE','INTR','SBEC'])->IsNull(0)->get();
+                    break;
             default:
                 $postulantes = collect([]);
                 break;

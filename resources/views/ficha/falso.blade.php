@@ -29,7 +29,7 @@
         </div>
 
         <div class="m-portlet__body lead">
-           <h1>FICHA DE INSCRIPCIÓN DISPONIBLE EL 11 DE FEBRERO</h1>
+
 
 
 

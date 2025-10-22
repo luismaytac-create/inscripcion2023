@@ -45,9 +45,9 @@
                    <h1>Sube tus documentos</h1>
                 @endif
                     @if($postulante->idmodalidad == 2   || $postulante->idmodalidad2 == 2 )
-                   <li>Acta que acredite haber obtenido uno de los dos primeros puestos en sus estudios secundarios, firmada por el director del plantel.
+                   <li>Acta que acredite haber obtenido uno de los cinco primeros puestos en sus estudios secundarios, emitida desde la plataforma de MINEDU y firmada por el director del plantel.
                    </li>
-                   <li>Certificado de Estudios con cuadro de orden de méritos o constancia de Logros de Aprendizaje que acredite haber concluido la Educación Secundaria, que permita constatar y verificar que acredite haber ocupado uno de los dos primeros puestos de su promoción.</li>
+                   <li>Certificado de Estudios verificable, con cuadro de orden de mérito o Constancia de Logros de Aprendizaje, que acredite haber concluido la educación secundaria y acredite haber ocupado uno de los cinco primeros puestos de su promoción</li>
                     @endif
 
                    @if($postulante->idmodalidad ==3 || $postulante->idmodalidad2 == 3 )
@@ -63,23 +63,22 @@
                    @endif
 
                    @if($postulante->idmodalidad == 5 || $postulante->idmodalidad2 == 5)
-                       <li>Copia autenticada notarialmente del Título profesional o grado de bachiller</li>
-                       <li>Certificado de estudios universitarios</li>
-                       <li>Sílabos de las asignaturas aprobadas en la universidad de origen y visados por su escuela profesional.</li>
+                       <li>Título Profesional o Grado de Bachiller registrado en SUNEDU</li>
+                       <li>Certificado de Estudios Universitarios</li>
+                       <li>sílabos de las asignaturas aprobadas en la universidad de origen visados por su escuela profesional</li>
 
                    @endif
 
                    @if($postulante->idmodalidad == 6 || $postulante->idmodalidad2 == 6)
-                            <li>Copia certificada o fedateada por la UNI del diploma de bachiller o del título profesional otorgado por la UNI.</li>
-                            <li>Copia certificada o fedateada por la UNI del Certificado de estudios universitarios.</li>
-                         <li>Sílabos de las asignaturas aprobadas en la UNI, sellados por la dirección de la Escuela Profesional correspondiente</li>
+                            <li>Declaración Jurada en la que afirma contar con Título o Grado de Bachiller.</li>
+                         <li> Sílabos de las asignaturas aprobadas en la UNI, sellados por la Dirección de la Escuela Profesional correspondiente.</li>
                    @endif
 
                    @if($postulante->idmodalidad == 7 || $postulante->idmodalidad2 == 7)
 
-                       <li>Certificado de estudios que acredite haber aprobado por lo menos cuatro periodos lectivos semestrales, dos anuales o setenta y dos (72) créditos.</li>
-                       <li>Sílabos de las asignaturas aprobadas y copia del Plan Curricular de la especialidad en que está matriculado, sellados por la universidad de origen.</li>
-                       <li>Constancia de no haber sido sometido a sanción disciplinaria, ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220, expedida en su universidad de origen dentro de los seis (6) meses anteriores al momento de su postulación (para quienes deseen continuar estudios universitarios)</li>
+                       <li>Certificado de Estudios que acredite haber aprobado por lo menos cuatro periodos lectivos semestrales, dos anuales o setenta y dos (72) créditos</li>
+                       <li>sílabos de las asignaturas aprobadas y el Plan Curricular de la especialidad en la que está matriculado, sellados y firmados por el responsable de la universidad de origen</li>
+                       <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220, expedida por su universidad de origen dentro de los seis (6) meses anteriores al momento de su postulación (para quienes deseen continuar estudios universitarios)</li>
 
                    @endif
                    @if($postulante->idmodalidad == 8 || $postulante->idmodalidad2 == 8)
@@ -107,28 +106,28 @@
                    @endif
                    @if($postulante->idmodalidad == 11 || $postulante->idmodalidad2 == 11)
                        <li>DNI</li>
-                   <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones - Registro Único de Víctimas (Ley Nº 28592 y su Reglamento)</li>
+                   <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones – RUV.</li>
 
                    @endif
                    @if($postulante->idmodalidad == 12 || $postulante->idmodalidad2 == 12)
                        <li>DNI</li>
-                       <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones - Registro Único de Víctimas (Ley Nº 28592 y su Reglamento)</li>
+                       <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones – RUV.</li>
 
                    @endif
 
                    @if($postulante->idmodalidad == 13 || $postulante->idmodalidad2 == 13)
-                       <li>Carné de inscripción en el Registro del CONADIS o Certificado médico expedido por un centro hospitalario del Ministerio de Salud, de Defensa, del Interior o del Seguro Social de Salud (ESSALUD), en el que se indique que la persona tiene discapacidad.</li>
+                       <li> Certificado de Discapacidad que acredite su condición. Este debe ser otorgado por médicos certificadores registrados en las instituciones públicas, privadas o mixtas prestadoras de salud-IPRESS a nivel nacional.</li>
 
                    @endif
 
                    @if($postulante->idmodalidad == 14 || $postulante->idmodalidad2 == 14)
-                       <li>Carné de inscripción en el Registro del CONADIS o Certificado médico expedido por un centro hospitalario del Ministerio de Salud, de Defensa, del Interior o del Seguro Social de Salud (ESSALUD), en el que se indique que la persona tiene discapacidad.</li>
+                       <li> Certificado de Discapacidad que acredite su condición. Este debe ser otorgado por médicos certificadores registrados en las instituciones públicas, privadas o mixtas prestadoras de salud-IPRESS a nivel nacional.</li>
 
                    @endif
                        @if($postulante->idmodalidad == 19)
-                           <li>Certificado de estudios, que acredite haber aprobado por lo menos un periodo lectivo o diecinueve (19) créditos.</li>
-                           <li>Sílabos de las asignaturas aprobadas y copia del Plan Curricular de la especialidad en que está matriculado, sellados por la universidad de origen o Sunedu.</li>
-                           <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220 en su universidad de origen.</li>
+                           <li>Certificado de Estudios que acredite haber aprobado por lo menos un periodo lectivo o diecinueve (19) créditos</li>
+                           <li>sílabos de las asignaturas aprobadas y copia del Plan Curricular de la especialidad en que está matriculado, sellados por la universidad de origen o SUNEDU</li>
+                           <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220 en su universidad de origen</li>
 
                        @endif
                        @if($postulante->idmodalidad == 18)
@@ -136,8 +135,8 @@
                        @endif
 
                        @if($postulante->idmodalidad == 20 || $postulante->idmodalidad2 == 20)
-                       <li>Carta u Oficio de presentación de deportistas calificados de alto nivel para su incorporación a universidades, expedido por el IPD con antigüedad no mayor de un año, presentando al solicitante, cuya participación deportiva haya ocurrido dentro de los tres últimos años (D.S. Nº 010-2009-ED TUPA/IPD, procedimiento Nº 19).</li>
-                       <li>Carta de compromiso con firma legalizada notarialmente, de participar obligatoriamente, representando a la UNI, en las competencias deportivas en las que intervenga.</li>
+                       <li>Carta u Oficio de Presentación de Deportistas Calificados de Alto Nivel para su incorporación a universidades, expedido por el IPD con antigüedad no mayor de un año que presente al solicitante, cuya participación deportiva haya ocurrido dentro de los tres últimos años (D.S. N 010-2009-ED TUPA/IPD, procedimiento N° 19)</li>
+                       <li>Carta Notarial de Compromiso de representar a la UNI en las competencias deportivas en las se le solicite</li>
                        @endif
                </div>
 

@@ -269,7 +269,9 @@ class FichaController extends Controller
                 if($postulante->idmodalidad ==16 ) {
                     $servicio = Servicio::where('codigo',$item)->first();
                     if($servicio->codigo == '475'){
-                        if(str_contains($pagos_realizados,$item)){
+                       
+                    }
+ if(str_contains($pagos_realizados,$item)){
                             $correcto_pagos = true;
                         } else{
                             $correcto_pagos = false;
@@ -277,7 +279,6 @@ class FichaController extends Controller
                             $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer dÃ­a habil)','mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
                             $debe = true;
                         }
-                    }
 
 
                     if($servicio->codigo == '474'){
@@ -296,7 +297,7 @@ class FichaController extends Controller
                             if (str_contains($pagos_realizados, $item)) {
                                 if (date('Y-m-d') >= env('FINAL_CEPRE')) {
                                     $ccc = DB::table("arquitectura_cepre_pagos")->where('codigo', $postulante->numero_identificacion)->count();
-
+                                    // CAMBIAR AQUI CEPRE DOBLE 160
                                     if ($ccc > 1) {
                                         $correcto_pagos = true;
                                     } else {
@@ -370,11 +371,28 @@ class FichaController extends Controller
 
 
 
+ $debecvocaseng= DB::table("vista_deben_voca_segunda_opc")->where('numero_identificacion', $postulante->numero_identificacion)->count();
+
+            if($debecvocaseng>0){
+
+                $correcto_pagos = false;
+                $servicio = Servicio::where('codigo','474')->first();
+                $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)',
+                    'mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas,
+                             de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                $debe = true;
+
+            }
+
+
+
+
+
             ################### FIN VALIDACION PAGOS
 
             $correcto_pagos = ($debe) ? false : true ;
             #Casos especiales a los que se les permite el ingreso sin pago
-            $casos=['73031555'];
+            $casos=[''];
             if(in_array($postulante->numero_identificacion,$casos))$correcto_pagos = true; 
             if($debecepre){
              //   $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer dÃ­a habil)','mensaje'=>'No esta registrado el pago de '.'VOCACIONAL'.' por S/ '.'160'.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
@@ -494,13 +512,15 @@ class FichaController extends Controller
                             Postulante::AsignarAula($postulante->id);
                         }
                     }
-                    $cuentaconfima=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->count();
+
+                    return view('ficha.index',compact('id','postulante'));
+                 /*   $cuentaconfima=  DB::table("confirmacion")->where('dni',$postulante->numero_identificacion)->count();
                     if( $cuentaconfima >0 ){
                         return view('ficha.index',compact('id','postulante'));
                     }else {
                         return redirect()->to('/');
                     }
-
+                */
 
 
 
@@ -780,13 +800,14 @@ class FichaController extends Controller
             $postulante = Postulante::Usuario()->first();
         }
         $evaluacion = Evaluacion::Activo()->first();
-
+        /*
         $muestraficha = DB::table("vista_muestra_ficha")->where('numero_identificacion', $postulante->numero_identificacion)->where('ficha','MUESTRA')->count();
         if( $muestraficha >0){
 
         }else {
             return view('ficha.falso',compact('postulante'));
         }
+        */
 
 
 
@@ -816,6 +837,10 @@ class FichaController extends Controller
         } else {
             $facultad = $postulante->idfacultad;
         }
+
+
+     PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210,297);
+            PDF::AddPage('U', 'A4');
 
         PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
         #    PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
@@ -974,12 +999,16 @@ class FichaController extends Controller
             PDF::SetFont('helvetica', '', 10);
             PDF::Cell(130, 5, $postulante->nombre_especialidad2, 0, 0, 'L');
 
+            /*
             PDF::SetFont('helvetica', 'B', 10);
             PDF::SetXY(5, 105 + 26 - 20 + 10 + 3 + 6);
             PDF::Cell(130, 5, 'TERCERA PRIORIDAD: ', 0, 0, 'L');
             PDF::SetFont('helvetica', '', 10);
             PDF::SetXY(45, 105 + 26 - 20 + 10 + 3 + 6);
             PDF::Cell(130, 5, $postulante->nombre_especialidad3, 0, 0, 'L');
+            */
+
+
         }
 
         #PDF::Cell(110,5,,0,0,'L');
@@ -1036,7 +1065,7 @@ class FichaController extends Controller
                 PDF::SetFont('helvetica', '', 10);
                 PDF::SetXY(45, 134 + 5 + 6);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad5, 0, 0, 'L');
-
+                /*
                 PDF::SetFont('helvetica', 'B', 10);
                 PDF::SetXY(5, 134 + 5 + 5 + 6);
                 PDF::Cell(130, 5, 'TERCERA PRIORIDAD: ', 0, 0, 'L');
@@ -1044,21 +1073,25 @@ class FichaController extends Controller
                 PDF::SetFont('helvetica', '', 10);
                 PDF::SetXY(45, 134 + 5 + 5 + 6);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad6, 0, 0, 'L');
+                */
             }
 
         }
         #AULAS
         $arq = false;
-        if (($postulante->codigo_especialidad == 'A1' || $postulante->codigo_especialidad4 == 'A1') && $postulante->codigo_modalidad != 'ID-CEPRE') {
+        if (($postulante->codigo_especialidad == 'A1' || $postulante->codigo_especialidad2 == 'A1') && $postulante->codigo_modalidad != 'ID-CEPRE') {
 
             PDF::SetFillColor(119, 205, 238);
             PDF::SetXY(5, 91 + 6 - 5 - 8);
             PDF::SetFont('helvetica', 'B', 15);
-            PDF::Cell(40, 7, 'SA 15/02  ', 0, 0, 'C', 1, '', 1);
+            PDF::Cell(40, 7, 'SA 09/08  ', 0, 0, 'C', 1, '', 1);
 
-            PDF::SetFont('helvetica', 'B', 35);
+            PDF::SetFont('helvetica', 'B', 25);
+
             PDF::SetXY(5, 97 + 6 - 5 - 8);
-            PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . '', 0, 0, 'L', true, '', 1, true);
+             PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . ' PUERTA N 4B', 0, 0, 'L', true, '', 1, true);
+  #          PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
+
 
             $arq = true;
         } else {
@@ -1066,10 +1099,10 @@ class FichaController extends Controller
                 PDF::SetFillColor(119, 205, 238);
                 PDF::SetXY(5, 91 + 6 - 5 - 8);
                 PDF::SetFont('helvetica', 'B', 15);
-                PDF::Cell(40, 7, 'SA 15/02 ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'SA 09/08 ', 0, 0, 'C', 1, '', 1);
                 PDF::SetFont('helvetica', 'B', 35);
                 PDF::SetXY(5, 97 + 6 - 5 - 8);
-                PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo, 0, 0, 'L', true, '', 1, true);
+                PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo. ' PUERTA N°4B', 0, 0, 'L', true, '', 1, true);
                 $arq = true;
             }
 
@@ -1137,7 +1170,7 @@ class FichaController extends Controller
             PDF::SetFont('helvetica', 'B', 15);
             PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
 
-            PDF::Cell(40, 7, 'LU 17/02 ', 0, 0, 'C', true);
+            PDF::Cell(40, 7, 'MI 13/08 ', 0, 0, 'C', true);
             PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
             PDF::SetFont('helvetica', 'B', 25);
 
@@ -1147,7 +1180,7 @@ class FichaController extends Controller
             PDF::SetFillColor(243, 218, 114);
             PDF::SetFont('helvetica', 'B', 15);
             PDF::SetXY(55 + $varxx, 91 + 6 - 8 - 5);
-            PDF::Cell(40, 7, 'MI 19/02 ', 0, 0, 'C', 1, '', 1);
+            PDF::Cell(40, 7, 'VI 15/08 ', 0, 0, 'C', 1, '', 1);
             PDF::SetXY(55 + $varxx, 120 + 9 + 8 - 40 + 6 - 8 - 5);
             PDF::SetFont('helvetica', 'B', 25);
             PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
@@ -1155,7 +1188,7 @@ class FichaController extends Controller
             PDF::SetFillColor(247, 176, 203);
             PDF::SetXY(105 + $varxx, 88 + 3 + 6 - 8 - 5);
             PDF::SetFont('helvetica', 'B', 15);
-            PDF::Cell(40, 7, 'VI 21/02 ', 0, 0, 'C', 1, '', 1);
+            PDF::Cell(40, 7, 'DO 17/08 ', 0, 0, 'C', 1, '', 1);
 
             PDF::SetFont('helvetica', 'B', 25);
             PDF::SetXY(105 + $varxx, 94 + 3 + 6 - 8 - 5);
@@ -1165,7 +1198,7 @@ class FichaController extends Controller
             PDF::SetFillColor(243, 218, 114);
             PDF::SetFont('helvetica', 'B', 15);
             PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
-            PDF::Cell(40, 7, 'MI 19/02 ', 0, 0, 'C', 1, '', 1);
+            PDF::Cell(40, 7, 'MI 13/08 ', 0, 0, 'C', 1, '', 1);
             PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
             PDF::SetFont('helvetica', 'B', 25);
             PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
@@ -1371,10 +1404,11 @@ class FichaController extends Controller
 
         #Mapa
         PDF::AddPage('U', 'A4');
-        PDF::StartTransform();
-        PDF::Rotate(90, 140, 135);
-        PDF::Image(asset('assets/pages/img/mapa-uni.jpg'), 0, 0, 270);
-        PDF::StopTransform();
+    PDF::Image(storage_path('app/documentos/mapa.jpg'), 0, 0, 210,297);
+      #  PDF::StartTransform();
+      #  PDF::Rotate(90, 140, 135);
+      #  PDF::Image(asset('assets/pages/img/mapa-uni.jpg'), 0, 0, 270);
+      #  PDF::StopTransform();
 
 
         #    PDF::AddPage('U','A4');
@@ -1388,7 +1422,7 @@ class FichaController extends Controller
 
 
         #EXPORTO
-        PDF::Output(public_path('storage/tmp/') . 'Ficha_' . $postulante->numero_identificacion . '.pdf', 'FI');
+        PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
 
 
 

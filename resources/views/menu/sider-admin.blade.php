@@ -232,6 +232,8 @@
 
             {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
 {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
+  {!!Form::menu('Declaración',route('admin.declaracion.index'),'fa fa-dollar')!!}
+
         @endif
 
 
@@ -259,6 +261,9 @@
                 <h4 class="m-menu__section-text">Módulos</h4>
                 <i class="m-menu__section-icon flaticon-more-v2"></i>
             </li>
+
+	 {!!Form::menu('Ingresante',route('admin.ingresantes.index'),'fa fa-graduation-cap')!!}
+
         <!-- {!!Form::menu('Constancias',route('admin.ingresantes.constancias'),'fa fa-file-pdf-o')!!} -->
         <!-- {!!Form::menu('Etiquetas',route('admin.ingresantes.etiquetas'),'fa fa-sticky-note-o')!!} -->
          <!--   {!!Form::menu('Ingresante',route('admin.ingresantes.index'),'fa fa-graduation-cap')!!} -->
@@ -284,6 +289,11 @@
         @if(str_contains(Auth::user()->dni,['uni002']))
 
             {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
+        @endif
+
+   @if(str_contains(Auth::user()->dni,['jmelende']))
+
+            {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
         @endif
 
 

@@ -96,7 +96,7 @@
         <div class="m-grid__item m-grid__item--fluid m-grid m-grid--center m-grid--hor m-grid__item--order-tablet-and-mobile-1 m--hidden-tablet-and-mobile	m-login__content m-grid-item--center" style="background-image: url({{asset('assets2/app/media/img//bg/bg-3.jpg')}})">
 
                 <div class="m-grid">
-                    <img class="responsive img-fluid m--hidden-tablet-and-mobile"  src="{{asset('img/logo25.jpg')}}">
+                    <img class="responsive img-fluid m--hidden-tablet-and-mobile"  src="{{asset('/img/logo_ien_261.png')}}">
                 </div>
 
 

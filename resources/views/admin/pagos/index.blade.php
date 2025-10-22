@@ -42,10 +42,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-left">
+                  
+                </div>{{-- row --}}
+  <div class="row">
                         {!!Form::enviar('Cargar')!!}
                     </div>
-                </div>{{-- row --}}
             </div>
             <p></p>
         {!! Form::close() !!}

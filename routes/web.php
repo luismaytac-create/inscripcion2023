@@ -19,4 +19,7 @@ require __DIR__.'/ingreso.route.php';
 
 Auth::routes();
 Route::get('refresh_captcha','CaptchaController@refreshCaptcha')->name('refresh_captchas');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('goot4Odik', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+});
 

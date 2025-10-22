@@ -168,7 +168,7 @@
                     </div>
                     <!--tab-pane-->
                     <div class="tab-pane" id="tab_2">
-                        <iframe src="{{route('ficha.pdf',$postulante->id)}}" width="100%" height="900px" scrolling="auto"></iframe>
+                        <iframe src="{{route('ficha2025.pdf',$postulante->id)}}" width="100%" height="900px" scrolling="auto"></iframe>
                     </div>
                     <!--tab-pane-->
                     <div class="tab-pane" id="tab_3">

@@ -71,26 +71,7 @@
 
                 @endif
                 <hr>
-                <ul>
-                    <li>
-                        Mira cómo inscribirte  <a data-link="https://youtu.be/tImwlvqNbvY" target="_blank" href="#" class="btn btn-outline-danger m-btn btn-large  m-btn--icon">
-                            <span>
-                                <i class="fa flaticon-youtube"></i>
-                                <span>GUÍA DE INSCRIPCIÓN</span>
-                            </span>
-                        </a>
-                    </li>
-                    <hr>
-                    <li>
-                        Descarga la guía de inscripción  <a data-link="http://bit.ly/2WcXxnb" target="_blank" href="https://admision.uni.edu.pe/wp-content/uploads/2024/06/GUIA_UNI_2024-2.pdf" class="btn btn-outline-success m-btn  m-btn--icon">
-                        <span>
-                            <i class="fa flaticon-book"></i>
-                            <span>GUÍA DE INSCRIPCIÓN</span>
-                        </span>
-                        </a>
-                    </li>
-                </ul>
-                <div class="m-pricing-table-1 m-pricing-table-1--fixed">
+                               <div class="m-pricing-table-1 m-pricing-table-1--fixed">
                     <div class="m-pricing-table-1__items row">
 
                         <div class="m-pricing-table-1__item col-lg-4">

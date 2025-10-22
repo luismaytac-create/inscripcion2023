@@ -41,41 +41,15 @@
                                 <div class="col-md-12">
 
                                     @if (PagoProspecto())
-                                       <div class="list-group">
+                                   
+                                            <a href="{{ route('document.download','catalogo') }}" class="list-group-item"> Cat醠ogo de Especialidades </a>
+                                           <a href="{{ route('document.download','guia') }}" class="list-group-item"> Gu韆 de Inscripci髇 </a>
+                                           
+                                        <a href="{{ route('document.download','reglamento') }}" class="list-group-item"> Reglamento</a>
 
 
-
-
-                                            <a href="{{ route('document.download','catalogo') }}" class="list-group-item"> Cat谩logo de Especialidades </a>
-                                           <a href="{{ route('document.download','guia') }}" class="list-group-item"> Gu铆a de Inscripci贸n </a>
-                                           <a href="{{ route('document.download','reglamento') }}" class="list-group-item"> Reglamento de Admisi贸n </a>
-                                      <a href="{{ route('document.download','solucionario24_1') }}" class="list-group-item"> Solucionario 2024-1</a>
-
-                                           <a href="{{ route('document.download','solucionario') }}" class="list-group-item"> Solucionario 2024-2</a>
-
+                                           <a href="{{ route('document.download','solucionario') }}" class="list-group-item"> Solucionario 2025-1</a>
                                            <a href="{{ route('document.download','temario') }}" class="list-group-item"> Temario</a>
-
-                                            @if(false)
-
-
-
-
-
-
-                                               <a href="{{ route('document.download','solucionario23_1') }}" class="list-group-item"> Solucionario 2023-1</a>
-
-
-
-
-                                               <a href="{{ route('document.download','temario') }}" class="list-group-item"> Temario </a>
-                                               <div class="note note-danger">
-                                                   <h4 class="block">Aviso</h4>
-                                                   <p> Se enviar谩 una notificaci贸n a su correo electr贸nico cuando est茅 disponible para su descarga.  </p>
-
-                                               </div>
-                                           @endif
-                                        </div>
-
 
                                     @else
                                         <div class="note note-danger">

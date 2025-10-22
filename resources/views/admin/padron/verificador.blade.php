@@ -32,6 +32,7 @@
 
                                 <th>DNI</th>
                                 <th>ESTADO</th>
+				<th>SUBIO</th>
 
                                 <th> ACCIONES </th>
                                 <th>Teléfonos</th>
@@ -319,6 +320,7 @@
 
                 {data: 'numero_identificacion'},
                 { data : 'evaluar' },
+{ data: 'subio_dbi'},
                 { data : 'numero_identificacion'},
 
                 { data : 'telefono' },
@@ -327,7 +329,8 @@
                 { data : 'observacion' },
                 { data : 'pago' },
 
-                { data : 'email' },
+                { data : 'email' }
+		
 
 
 
@@ -348,7 +351,7 @@
                         return '<a data-toggle="modal" data-target="#m_modal_4" onclick="modalFoto('+din+')" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="DNI"> <i class="flaticon-profile-1"></i> </a>';
                     }
                 },{
-                    'targets':8,
+                    'targets':9,
                     'render': function ( data, type, row, meta ) {
 
                         var e ="'";
