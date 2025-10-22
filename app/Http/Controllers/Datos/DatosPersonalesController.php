@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Datos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DatosPersonalesRequest;
+use App\Models\Catalogo;
 use App\Models\Modalidad;
 use App\Models\Postulante;
 use App\Models\Restriccion;
@@ -22,6 +23,10 @@ class DatosPersonalesController extends Controller
     public function index()
     {
         $postulante = Postulante::Usuario()->first();
+        $sedes = Catalogo::where('idtable', 13)
+            ->orderBy('nombre')
+            ->pluck('nombre', 'id')   // <- clave: id => nombre
+            ->toArray();
         if(is_null($postulante)){
             if(is_null($postulante))return view('datos.personal.index',compact('dni'));
         }else {
@@ -31,7 +36,7 @@ class DatosPersonalesController extends Controller
                 return redirect()->route('home.index');
             }else {
 
-                return view('datos.personal.edit',compact('postulante'));
+                return view('datos.personal.edit',compact('postulante','sedes'));
 
             }
         }
@@ -217,6 +222,11 @@ class DatosPersonalesController extends Controller
             $data['idfacultad'] = $request->facultades;
 
         }
+        //Si existe sede que lo guarde
+        if ($request->has('idsede')){
+            $data['id_sede'] = $request->has('idsede') ? $request->idsede : null;
+        }
+
         $postulante->fill($data);
         $postulante->save();
         Alert::success('se actualizo sus datos con exito');

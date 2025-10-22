@@ -2,10 +2,7 @@
 
 @section('content')
 
-
-
     <div class="m-content">
-
 
 
         <!--begin::Portlet-->
@@ -18,7 +15,7 @@
 													<i class="flaticon-statistics"></i>
 												</span>
                         <h2 class="lead">
-                            Ingresa  <u><strong>los datos del postulante</strong></u> (NO EL DE TU APODERADO).
+                            Ingresa <u><strong>los datos del postulante</strong></u> (NO EL DE TU APODERADO).
                         </h2>
                         <div class="actions">
                             {!!Form::back(route('datos.index'))!!}
@@ -38,7 +35,8 @@
 
                 <dl>
                     <dt>Observación</dt>
-                    <dd>Los nombres y apellidos deben coincidir de tu DNI, <strong>todos los campos con (*) son obligatorios.</strong></dd>
+                    <dd>Los nombres y apellidos deben coincidir de tu DNI, <strong>todos los campos con (*) son
+                            obligatorios.</strong></dd>
                 </dl>
                 <div class="row">
                     <div class="col-md-4">
@@ -68,12 +66,11 @@
                 </div><!--row-->
 
 
-
                 <h3 class="div0">Facultad a la que postulas</h3>
 
                 <div class="row m--margin-top-15 m--margin-bottom-15 div0">
                     <div class="col-md-6 ">
-                        <select class="form-control border-success"  id="facultades"  name="facultades">
+                        <select class="form-control border-success" id="facultades" name="facultades">
                             <option value="">Escoger la Facultad de postulación</option>
 
                         </select>
@@ -84,17 +81,14 @@
                 <h3 class="div1" style="display: none;">Especialidad a la que postulas</h3>
                 <dl class="div1" style="display: none;">
                     <dt>Observación</dt>
-                    <dd>Puedes seleccionar hasta 2 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
+                    <dd>Puedes seleccionar hasta 2 especialidades de las que brinda la Facultad, en orden de
+                        prioridad.<strong></strong></dd>
                 </dl>
-
-
-
-
 
 
                 <div id="div1" class="row m--margin-top-15 m--margin-bottom-15" style="display: none;">
                     <div class="col-md-6">
-                        <select class="form-control"  id="especialidad"  name="especialidad">
+                        <select class="form-control" id="especialidad" name="especialidad">
                             <option value="">Escoger la Especialidad de postulación</option>
 
                         </select>
@@ -102,7 +96,8 @@
                     </div>
                     <div style="display: none;" class="col-md-6" id="pregunta1">
                         <h4>¿ Deseas agregar otra prioridad?</h4>
-                        <button id="agregar1" type="button" class="btn btn-info m-btn 	m-btn m-btn--icon m-btn--pill">
+                        <button id="agregar1" type="button"
+                                class="btn btn-info m-btn 	m-btn m-btn--icon m-btn--pill">
 															<span>
 																<i class="la la-plus"></i>
 																<span>AGREGAR</span>
@@ -113,7 +108,7 @@
                 </div>
                 <div id="div2" class="row m--margin-top-15 m--margin-bottom-15" style="display: none;">
                     <div class="col-md-6">
-                        <select class="form-control"  id="especialidad2"  name="especialidad2">
+                        <select class="form-control" id="especialidad2" name="especialidad2">
                             <option value="">Escoger la segunda prioridad de postulación</option>
 
                         </select>
@@ -122,7 +117,8 @@
 
                     <div style="display: none;" class="col-md-3" id="quitarpregunta2">
                         <h4>¿ Deseas quitar la segunda prioridad?</h4>
-                        <button id="quitar2" type="button" class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
+                        <button id="quitar2" type="button"
+                                class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
 															<span>
 																<i class="la la-trash"></i>
 																<span>QUITAR</span>
@@ -152,7 +148,7 @@
 
                     <div class="row m--margin-top-15 m--margin-bottom-15 div0">
                         <div class="col-md-6 ">
-                            <select class="form-control border-success"  id="facultades2"  name="facultades2">
+                            <select class="form-control border-success" id="facultades2" name="facultades2">
                                 <option value="">Escoger la Facultad de postulación</option>
 
                             </select>
@@ -162,21 +158,17 @@
                     </div>
 
 
-
                     <h3 class="div1cepre" style="display: none;">Especialidad a la que postulas</h3>
                     <dl class="div1cepre" style="display: none;">
                         <dt>Observación</dt>
-                        <dd>Puedes seleccionar hasta 2 especialidades de las que brinda la Facultad, en orden de prioridad.<strong></strong></dd>
+                        <dd>Puedes seleccionar hasta 2 especialidades de las que brinda la Facultad, en orden de
+                            prioridad.<strong></strong></dd>
                     </dl>
-
-
-
-
 
 
                     <div id="div1cepre" class="row m--margin-top-15 m--margin-bottom-15" style="display: none;">
                         <div class="col-md-6">
-                            <select class="form-control"  id="especialidad4"  name="especialidad4">
+                            <select class="form-control" id="especialidad4" name="especialidad4">
                                 <option value="">Escoger la Especialidad de postulación</option>
 
                             </select>
@@ -184,7 +176,8 @@
                         </div>
                         <div style="display: none;" class="col-md-6" id="pregunta1cepre">
                             <h4>¿ Deseas agregar otra prioridad?</h4>
-                            <button id="agregar1cepre" type="button" class="btn btn-info m-btn 	m-btn m-btn--icon m-btn--pill">
+                            <button id="agregar1cepre" type="button"
+                                    class="btn btn-info m-btn 	m-btn m-btn--icon m-btn--pill">
 															<span>
 																<i class="la la-plus"></i>
 																<span>AGREGAR</span>
@@ -195,7 +188,7 @@
                     </div>
                     <div id="div2cepre" class="row m--margin-top-15 m--margin-bottom-15" style="display: none;">
                         <div class="col-md-6">
-                            <select class="form-control"  id="especialidad5"  name="especialidad5">
+                            <select class="form-control" id="especialidad5" name="especialidad5">
                                 <option value="">Escoger la segunda prioridad de postulación</option>
 
                             </select>
@@ -204,7 +197,8 @@
 
                         <div style="display: none;" class="col-md-3" id="quitarpregunta2cepre">
                             <h4>¿ Deseas quitar la segunda prioridad?</h4>
-                            <button id="quitar2cepre" type="button" class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
+                            <button id="quitar2cepre" type="button"
+                                    class="btn btn-danger m-btn 	m-btn m-btn--icon m-btn--pill">
 															<span>
 																<i class="la la-trash"></i>
 																<span>QUITAR</span>
@@ -215,36 +209,36 @@
                     </div>
 
 
-
                 </div>
 
 
                 <h3>Institución Educativa donde culminó la secundaria</h3>
                 <dl>
                     <dt>Observación</dt>
-                    <dd>Es tu responsabilidad seleccionar correctamente la Institución Educativa de donde procede. <strong>El cambio de gestión de las instituciones Educativas (pública o privada) implica realizar el pago correspondiente.</strong></dd>
+                    <dd>Es tu responsabilidad seleccionar correctamente la Institución Educativa de donde procede.
+                        <strong>El cambio de gestión de las instituciones Educativas (pública o privada) implica
+                            realizar el pago correspondiente.</strong></dd>
                 </dl>
 
 
                 <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
                     <div class="m-demo__preview">
                         <blockquote class="blockquote">
-                            <p class="mb-0"><strong></strong> Los pagos realizados a favor de la Universidad por los conceptos establecidos en el Concurso de Admisión, se realizan en las entidades financieras que la Universidad autorice. Los pagos efectuados no serán reembolsados.</p>
-                            <footer class="blockquote-footer"><cite title="Source Title">Reglamento del  Concurso de Admisión</cite></footer>
+                            <p class="mb-0"><strong></strong> Los pagos realizados a favor de la Universidad por los
+                                conceptos establecidos en el Concurso de Admisión, se realizan en las entidades
+                                financieras que la Universidad autorice. Los pagos efectuados no serán reembolsados.</p>
+                            <footer class="blockquote-footer"><cite title="Source Title">Reglamento del Concurso de
+                                    Admisión</cite></footer>
                         </blockquote>
 
                     </div>
                 </div>
 
                 <div class="row">
-
-
-
                     <div class="col-md-12 Colegio">
                         <div id="depacoldiv" class="col-md-12">
 
                             {!!Field::select('iddepacolegio',$depas,ColegioDepartamento($postulante->idcolegio) ,['label'=>'Escoger Departamento del colegio(*)','empty'=>'Escoger departamento del colegio']);!!}
-
 
 
                         </div>
@@ -254,24 +248,25 @@
 
                             @if(Request::old('idcolegio') == NULL)
 
-
                                 {!!Field::select('idcolegio',ColegioPersonal($postulante->idcolegio),['style'=>'width: 100%','label'=>'Escoger el colegio(*)']);!!}
                             @endif
 
                             @if(Request::old('idcolegio') != NULL)
 
-
                                 {!!Field::select('idcolegio',ColegioPersonal(Request::old('idcolegio')),['style'=>'width: 100%','label'=>'Escoger el colegio']);!!}
                             @endif
 
 
-
-
-
-
-
-
-
+                        </div>
+                        <div id="colediv" class="col-md-12">
+                            @if(Request::old('idsede') == NULL)
+                                {!! Field::select(
+                                        'idsede',
+                                        $sedes,
+                                        isset($postulante) ? $postulante->idsede : null, // o old('idsede')
+                                        ['style' => 'width: 100%', 'label' => 'Escoger Sede(*)']
+                                    ) !!}
+                            @endif
                         </div>
 
 
@@ -279,20 +274,15 @@
                     <div class="col-md-6 Universidad">
 
 
-
                         @if(Request::old('iduniversidad') == NULL)
-
 
                             {!!Field::select('iduniversidad',UniversidadPersonal($postulante->iduniversidad),['style'=>'width: 100%','label'=>'Escoger Universidad(*)']);!!}
                         @endif
 
                         @if(Request::old('iduniversidad') != NULL)
 
-
                             {!!Field::select('iduniversidad',UniversidadPersonal(Request::old('iduniversidad')),['style'=>'width: 100%','label'=>'Escoger Universidad']);!!}
                         @endif
-
-
 
 
                     </div><!--span-->
@@ -306,7 +296,7 @@
                 </button>
 
 
-                <div class="modal fade" id="modal_confirmacion" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal fade" id="modal_confirmacion" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -337,7 +327,7 @@
                                                 <tr id="trtitu" style="display: none;" class="m--font-info">
                                                     <td>
 
-                                                        <h3 id="txttitu"> </h3>
+                                                        <h3 id="txttitu"></h3>
                                                     </td>
 
                                                 </tr>
@@ -371,11 +361,10 @@
                                                 <tr id="trop2" style="display: none;" class="m--font-success">
                                                     <td>
 
-                                                        <h3 id="txtop2"> </h3>
+                                                        <h3 id="txtop2"></h3>
                                                     </td>
 
                                                 </tr>
-
 
 
                                                 <tr id="trmoda2" style="display: none;" class="m--font-info">
@@ -393,12 +382,10 @@
                                                 <tr id="trop5" style="display: none;" class="m--font-info">
                                                     <td>
 
-                                                        <h3 id="txtop5"> </h3>
+                                                        <h3 id="txtop5"></h3>
                                                     </td>
 
                                                 </tr>
-
-
 
 
                                                 </tbody>
@@ -410,17 +397,22 @@
                                 </div>
 
 
-
                             </div>
-                            <div class="modal-footer" >
+                            <div class="modal-footer">
 
                                 <div class="row" style="width: 100%;">
                                     <div class="col-md-6 text-left">
 
-                                        <button type="submit" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" >CONFIRMAR</button>
+                                        <button type="submit"
+                                                class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">
+                                            CONFIRMAR
+                                        </button>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Corregir datos</button>
+                                        <button type="button" data-dismiss="modal"
+                                                class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                                form="form-register">Corregir datos
+                                        </button>
                                     </div>
                                 </div>
 
@@ -428,8 +420,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
 
             </div>
@@ -450,7 +440,7 @@
                     <h4 class="modal-title">Ten en cuenta:</h4>
                 </div>
                 <div class="modal-body">
-                    <h3 ><strong id="parraf"> </strong></h3>
+                    <h3><strong id="parraf"> </strong></h3>
                     <h3 class="text-info"><strong>Traer toda la información necesaria hasta el cierre de inscripciones
                             para su evaluación respectiva convocada por la facultad.</strong></h3>
                 </div>
@@ -465,7 +455,7 @@
     </div>
     {!! Form::close() !!}
     <!-- Modal -->
-    <div class="modal fade" id="modal_agregar_1" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_agregar_1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -482,28 +472,28 @@
 
                         <label class="bold">¿Estas seguro de agregar la segunda prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una segunda prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una segunda prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirma1" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Agregar prioridad</button>
+                            <button type="button" id="confirma1"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Agregar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -516,7 +506,7 @@
 
     <!--end::Modal-->
     <!-- Modal -->
-    <div class="modal fade" id="modal_agregar_2" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_agregar_2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -533,28 +523,28 @@
 
                         <label class="bold">¿Estas seguro de agregar la tercera prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una tercera prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una tercera prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirma2" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Agregar prioridad</button>
+                            <button type="button" id="confirma2"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Agregar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -568,7 +558,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="modal_quitar_3" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_quitar_3" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -585,28 +575,28 @@
 
                         <label class="bold">¿Estas seguro de quitar la tercera prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una tercera prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una tercera prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirmaquitar3" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Quitar prioridad</button>
+                            <button type="button" id="confirmaquitar3"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Quitar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -618,7 +608,7 @@
     <!--end::Modal-->
 
     <!-- Modal -->
-    <div class="modal fade" id="modal_quitar_2" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_quitar_2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -635,28 +625,28 @@
 
                         <label class="bold">¿Estas seguro de quitar la segunda prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una segunda prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una segunda prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirmaquitar2" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Quitar prioridad</button>
+                            <button type="button" id="confirmaquitar2"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Quitar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -669,7 +659,7 @@
     <!-- CEPRE -->
 
 
-    <div class="modal fade" id="modal_agregar_1cepre" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_agregar_1cepre" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -686,28 +676,28 @@
 
                         <label class="bold">¿Estas seguro de agregar la segunda prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una segunda prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una segunda prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirma1cepre" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Agregar prioridad</button>
+                            <button type="button" id="confirma1cepre"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Agregar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -718,7 +708,7 @@
 
     <!--end::Modal-->
     <!-- Modal -->
-    <div class="modal fade" id="modal_agregar_2cepre" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_agregar_2cepre" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -735,28 +725,28 @@
 
                         <label class="bold">¿Estas seguro de agregar la tercera prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una tercera prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una tercera prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirma2cepre" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Agregar prioridad</button>
+                            <button type="button" id="confirma2cepre"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Agregar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -770,7 +760,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="modal_quitar_3cepre" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_quitar_3cepre" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -787,28 +777,28 @@
 
                         <label class="bold">¿Estas seguro de quitar la tercera prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una tercera prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una tercera prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirmaquitar3cepre" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Quitar prioridad</button>
+                            <button type="button" id="confirmaquitar3cepre"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Quitar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -820,7 +810,7 @@
     <!--end::Modal-->
 
     <!-- Modal -->
-    <div class="modal fade" id="modal_quitar_2cepre" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade" id="modal_quitar_2cepre" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -837,28 +827,28 @@
 
                         <label class="bold">¿Estas seguro de quitar la segunda prioridad de especialidad? </label>
 
-                        <label><strong>Recuerda que la elección de una segunda prioridad no es obligatoria.</strong></label>
-
-
-
-
-
+                        <label><strong>Recuerda que la elección de una segunda prioridad no es
+                                obligatoria.</strong></label>
 
 
                     </div>
 
 
-
-
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
 
                     <div class="row" style="width: 100%;">
                         <div class="col-md-6 text-left">
-                            <button type="button" id="confirmaquitar2cepre" class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Quitar prioridad</button>
+                            <button type="button" id="confirmaquitar2cepre"
+                                    class="btn btn-success btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Quitar prioridad
+                            </button>
                         </div>
                         <div class="col-md-6 text-right">
-                            <button type="button" data-dismiss="modal" class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air" form="form-register">Cancelar</button>
+                            <button type="button" data-dismiss="modal"
+                                    class="btn btn-danger btn-focus m-btn m-btn--pill m-btn--custom m-btn--air"
+                                    form="form-register">Cancelar
+                            </button>
                         </div>
                     </div>
 
@@ -867,47 +857,41 @@
         </div>
     </div>
 
-
-
-
-
-
 @stop
 
 @section('js-scripts')
 
-
     <script>
 
 
-        var espes ;
+        var espes;
         var espesfacu = [];
         var opcion1;
         var opcion2;
         var opcion3;
 
-        function iniciarnormal(a){
+        function iniciarnormal(a) {
             console.log('inicio');
             console.log(espes);
-            espes=a;
+            espes = a;
             console.log(espes);
         }
 
 
-        $("#facultades").change(function(){
+        $("#facultades").change(function () {
             espesfacu = [];
-            var id=  $('#facultades').val();
+            var id = $('#facultades').val();
             limpiarSelects();
             ocualtarOpciones();
             limpiarPasos();
 
 
-            if( id != ""){
+            if (id != "") {
                 cargarEspecialidad(id);
-            }else {
+            } else {
                 ocualtarOpciones();
             }
-            
+
 
         });
 
@@ -920,9 +904,10 @@
             $('#pregunta2').hide();
             $('.div1').hide();
         }
+
         function limpiarPasos() {
-            opcion2=false;
-            opcion3=false;
+            opcion2 = false;
+            opcion3 = false;
 
         }
 
@@ -942,7 +927,7 @@
 
         }
 
-        function cargarEspecialidad(facultad){
+        function cargarEspecialidad(facultad) {
 
             $('#div1').show();
             $('.div1').show();
@@ -950,36 +935,36 @@
             $('#especialidad')
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de primera prioridad</option>');
-            
-            var restringe_modalidad = [5,6,7,10,19];
-            var restringe = [2,7,32,33];
+
+            var restringe_modalidad = [5, 6, 7, 10, 19];
+            var restringe = [2, 7, 32, 33];
             var idmodalidad = $('#idmodalidad').val();
 
-            $('#idmodalidad').change(function() {
+            $('#idmodalidad').change(function () {
                 // Obtener el valor seleccionado
                 idmodalidad = $(this).val();
-                
-                for ( var key in espes.data) {
-                    if ( espes.data[key].idfacultad == facultad) {
+
+                for (var key in espes.data) {
+                    if (espes.data[key].idfacultad == facultad) {
                         //console.log(espes.data[key].idfacultad);
-                        if(!restringe.includes(espes.data[key].id) && !restringe_modalidad.includes(idmodalidad)){
+                        if (!restringe.includes(espes.data[key].id) && !restringe_modalidad.includes(idmodalidad)) {
                             espesfacu.push(espes.data[key]);
-                            var nom =  espes.data[key].nombre;
+                            var nom = espes.data[key].nombre;
                             var id = espes.data[key].id;
-                            $('#especialidad').append('<option value='+id+'>'+nom+'</option>');
+                            $('#especialidad').append('<option value=' + id + '>' + nom + '</option>');
                         }
                     }
                 }
             });
 
-            for ( var key in espes.data) {
-                if ( espes.data[key].idfacultad == facultad) {
-                
+            for (var key in espes.data) {
+                if (espes.data[key].idfacultad == facultad) {
+
                     espesfacu.push(espes.data[key]);
-                    var nom =  espes.data[key].nombre;
+                    var nom = espes.data[key].nombre;
                     var id = espes.data[key].id;
-                    $('#especialidad').append('<option value='+id+'>'+nom+'</option>');
-                    
+                    $('#especialidad').append('<option value=' + id + '>' + nom + '</option>');
+
                 }
 
             }
@@ -1006,6 +991,7 @@
             }
 
         }
+
         function validarCantidadEspecialidad2(array) {
 
 
@@ -1027,8 +1013,7 @@
         }
 
 
-
-        function cargarEspecialidad2(facultad){
+        function cargarEspecialidad2(facultad) {
 
             $('#especialidad2')
                 .empty()
@@ -1037,21 +1022,20 @@
 
             var datasx = quitarEspecialidad1();
 
-            for ( var key in datasx) {
+            for (var key in datasx) {
 
-                if ( datasx[key].idfacultad == facultad) {
-                    var nom =  datasx[key].nombre;
+                if (datasx[key].idfacultad == facultad) {
+                    var nom = datasx[key].nombre;
                     var id = datasx[key].id;
-                    $('#especialidad2').append('<option value='+id+'>'+nom+'</option>');
+                    $('#especialidad2').append('<option value=' + id + '>' + nom + '</option>');
                 }
 
             }
 
 
-
         }
 
-        function cargarEspecialidad3(facultad){
+        function cargarEspecialidad3(facultad) {
 
             $('#especialidad3')
                 .empty()
@@ -1061,43 +1045,41 @@
             $('#quitarpregunta3').show();
             var datasx1 = quitarEspecialidad1();
             var datasx = quitarEspecialidad2(datasx1);
-            for ( var key in datasx) {
+            for (var key in datasx) {
 
-                if ( datasx[key].idfacultad == facultad) {
-                    var nom =  datasx[key].nombre;
+                if (datasx[key].idfacultad == facultad) {
+                    var nom = datasx[key].nombre;
                     var id = datasx[key].id;
-                    $('#especialidad3').append('<option value='+id+'>'+nom+'</option>');
+                    $('#especialidad3').append('<option value=' + id + '>' + nom + '</option>');
                 }
 
             }
 
 
-
         }
-
-
 
 
         function quitarEspecialidad1() {
 
             var espe1 = $('#especialidad').val();
-            var data = $.grep(espesfacu, function(e){
+            var data = $.grep(espesfacu, function (e) {
                 return e.id != espe1;
             });
             return data;
 
         }
+
         function quitarEspecialidad2(array) {
 
             var espe2 = $('#especialidad2').val();
-            var data = $.grep(array, function(e){
+            var data = $.grep(array, function (e) {
                 return e.id != espe2;
             });
             return data;
 
         }
 
-        function prepararEspecialidad(){
+        function prepararEspecialidad() {
             $('#especialidad2')
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de primera prioridad</option>')
@@ -1115,19 +1097,19 @@
         }
 
 
-        $("#especialidad").change(function(){
-            if (  $('#especialidad').val() != ""){
+        $("#especialidad").change(function () {
+            if ($('#especialidad').val() != "") {
                 validarCantidadEspecialidad();
-            }else {
+            } else {
 
                 prepararEspecialidad();
             }
-            if( opcion2) {
-                var id=  $('#facultades').val();
+            if (opcion2) {
+                var id = $('#facultades').val();
                 cargarEspecialidad2(id);
 
             }
-            if( opcion3) {
+            if (opcion3) {
                 $('#especialidad3')
                     .empty()
                     .append('<option selected="selected" value="">Escoger la especialidad de tercera prioridad</option>')
@@ -1135,70 +1117,63 @@
             }
 
 
-
-
         });
 
 
-
-        $("#especialidad2").change(function(){
-            if (  $('#especialidad2').val() != ""){
+        $("#especialidad2").change(function () {
+            if ($('#especialidad2').val() != "") {
                 var datasx = quitarEspecialidad1();
                 validarCantidadEspecialidad2(datasx);
-            }else {
+            } else {
                 $('#pregunta2').hide();
             }
-            if( opcion3) {
-                var id=  $('#facultades').val();
+            if (opcion3) {
+                var id = $('#facultades').val();
                 cargarEspecialidad3(id);
 
             }
 
 
-
-
         });
 
 
-
-
-        $('#confirma1').click(function() {
+        $('#confirma1').click(function () {
             $('#div2').show();
 
             $('#quitarpregunta2').show();
             $('#modal_agregar_1').modal('hide');
-            var id=  $('#facultades').val();
+            var id = $('#facultades').val();
             cargarEspecialidad2(id);
-            opcion2=true;
+            opcion2 = true;
 
 
             $('#pregunta2').hide();
             $('#pregunta1').hide();
         });
 
-        $('#confirma2').click(function() {
+        $('#confirma2').click(function () {
             $('#div3').show();
             $('#modal_agregar_2').modal('hide');
-            var id=  $('#facultades').val();
+            var id = $('#facultades').val();
             cargarEspecialidad3(id);
-            opcion3=true;
+            opcion3 = true;
 
         });
 
 
-        $('#confirmaquitar3').click(function() {
+        $('#confirmaquitar3').click(function () {
             $('#div3').hide();
             $('#modal_quitar_3').modal('hide');
             $('#especialidad3')
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de tercera prioridad</option>')
             ;
-            opcion3=false;
+            opcion3 = false;
 
         });
 
 
-        $('#confirmaquitar2').click(function() {
+        $('#confirmaquitar2').click(function () {
             $('#div3').hide();
             $('#div2').hide();
             $('#modal_quitar_2').modal('hide');
@@ -1209,32 +1184,32 @@
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de segunda prioridad</option>')
             ;
-            opcion3=false;
-            opcion2=false;
+            opcion3 = false;
+            opcion2 = false;
             $('#pregunta1').show();
 
         });
 
-        $('#agregar1').click(function() {
+        $('#agregar1').click(function () {
             $('#modal_agregar_1').modal({
                 keyboard: false,
                 backdrop: 'static'
             });
         });
-        $('#agregar2').click(function() {
+        $('#agregar2').click(function () {
             $('#modal_agregar_2').modal({
                 keyboard: false,
                 backdrop: 'static'
             });
         });
 
-        $('#quitar3').click(function() {
+        $('#quitar3').click(function () {
             $('#modal_quitar_3').modal({
                 keyboard: false,
                 backdrop: 'static'
             });
         });
-        $('#quitar2').click(function() {
+        $('#quitar2').click(function () {
             $('#modal_quitar_2').modal({
                 keyboard: false,
                 backdrop: 'static'
@@ -1249,42 +1224,40 @@
     <script>
 
 
-        var espescepre ;
+        var espescepre;
         var espesfacucepre = [];
         var opcion1cepre;
         var opcion2cepre;
         var opcion3cepre;
         $.ajax({
             url: '{{ "especialidades" }}',
-            success: function(respuesta) {
+            success: function (respuesta) {
 
                 espescepre = respuesta;
 
             },
-            error: function() {
+            error: function () {
                 console.log("No se ha podido obtener la información");
                 location.reload();
             }
         });
 
-        $("#facultades2").change(function(){
+        $("#facultades2").change(function () {
             espesfacucepre = [];
-            var id=  $('#facultades2').val();
+            var id = $('#facultades2').val();
             limpiarSelectscepre();
             ocualtarOpcionescepre();
             limpiarPasoscepre();
 
 
-            if( id != ""){
+            if (id != "") {
                 cargarEspecialidadcepre(id);
-            }else {
+            } else {
                 ocualtarOpcionescepre();
             }
 
 
-
         });
-
 
 
         function ocualtarOpcionescepre() {
@@ -1295,9 +1268,10 @@
             $('#pregunta2cepre').hide();
             $('.div1cepre').hide();
         }
+
         function limpiarPasoscepre() {
-            opcion2cepre=false;
-            opcion3cepre=false;
+            opcion2cepre = false;
+            opcion3cepre = false;
 
         }
 
@@ -1318,8 +1292,7 @@
         }
 
 
-
-        function cargarEspecialidadcepre(facultad){
+        function cargarEspecialidadcepre(facultad) {
 
             $('#div1cepre').show();
             $('.div1cepre').show();
@@ -1329,20 +1302,19 @@
                 .append('<option selected="selected" value="">Escoger la especialidad de primera prioridad</option>');
 
 
-            for ( var key in espescepre.data) {
+            for (var key in espescepre.data) {
 
-                if ( espescepre.data[key].idfacultad == facultad) {
+                if (espescepre.data[key].idfacultad == facultad) {
                     espesfacucepre.push(espescepre.data[key]);
-                    var nom =  espescepre.data[key].nombre;
+                    var nom = espescepre.data[key].nombre;
                     var id = espescepre.data[key].id;
-                    $('#especialidad4').append('<option value='+id+'>'+nom+'</option>');
+                    $('#especialidad4').append('<option value=' + id + '>' + nom + '</option>');
                 }
 
             }
 
 
         }
-
 
 
         function validarCantidadEspecialidadcepre() {
@@ -1387,8 +1359,7 @@
         }
 
 
-
-        function cargarEspecialidad2cepre(facultad){
+        function cargarEspecialidad2cepre(facultad) {
 
             $('#especialidad5')
                 .empty()
@@ -1397,20 +1368,20 @@
 
             var datasx = quitarEspecialidad1cepre();
 
-            for ( var key in datasx) {
+            for (var key in datasx) {
 
-                if ( datasx[key].idfacultad == facultad) {
-                    var nom =  datasx[key].nombre;
+                if (datasx[key].idfacultad == facultad) {
+                    var nom = datasx[key].nombre;
                     var id = datasx[key].id;
-                    $('#especialidad5').append('<option value='+id+'>'+nom+'</option>');
+                    $('#especialidad5').append('<option value=' + id + '>' + nom + '</option>');
                 }
 
             }
 
 
-
         }
-        function cargarEspecialidad3cepre(facultad){
+
+        function cargarEspecialidad3cepre(facultad) {
 
             $('#especialidad6')
                 .empty()
@@ -1420,39 +1391,40 @@
             $('#quitarpregunta3cepre').show();
             var datasx1 = quitarEspecialidad1cepre();
             var datasx = quitarEspecialidad2cepre(datasx1);
-            for ( var key in datasx) {
+            for (var key in datasx) {
 
-                if ( datasx[key].idfacultad == facultad) {
-                    var nom =  datasx[key].nombre;
+                if (datasx[key].idfacultad == facultad) {
+                    var nom = datasx[key].nombre;
                     var id = datasx[key].id;
-                    $('#especialidad6').append('<option value='+id+'>'+nom+'</option>');
+                    $('#especialidad6').append('<option value=' + id + '>' + nom + '</option>');
                 }
 
             }
 
 
-
         }
+
         function quitarEspecialidad1cepre() {
 
             var espe1 = $('#especialidad4').val();
-            var data = $.grep(espesfacucepre, function(e){
+            var data = $.grep(espesfacucepre, function (e) {
                 return e.id != espe1;
             });
             return data;
 
         }
+
         function quitarEspecialidad2cepre(array) {
 
             var espe2 = $('#especialidad5').val();
-            var data = $.grep(array, function(e){
+            var data = $.grep(array, function (e) {
                 return e.id != espe2;
             });
             return data;
 
         }
 
-        function prepararEspecialidadcepre(){
+        function prepararEspecialidadcepre() {
             $('#especialidad5')
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de primera prioridad</option>')
@@ -1470,19 +1442,19 @@
         }
 
 
-        $("#especialidad4").change(function(){
-            if (  $('#especialidad4').val() != ""){
+        $("#especialidad4").change(function () {
+            if ($('#especialidad4').val() != "") {
                 validarCantidadEspecialidadcepre();
-            }else {
+            } else {
 
                 prepararEspecialidadcepre();
             }
-            if( opcion2cepre) {
-                var id=  $('#facultades2').val();
+            if (opcion2cepre) {
+                var id = $('#facultades2').val();
                 cargarEspecialidad2cepre(id);
 
             }
-            if( opcion3cepre) {
+            if (opcion3cepre) {
                 $('#especialidad6')
                     .empty()
                     .append('<option selected="selected" value="">Escoger la especialidad de tercera prioridad</option>')
@@ -1490,72 +1462,63 @@
             }
 
 
-
-
         });
 
 
-
-        $("#especialidad5").change(function(){
-            if (  $('#especialidad5').val() != ""){
+        $("#especialidad5").change(function () {
+            if ($('#especialidad5').val() != "") {
                 var datasx = quitarEspecialidad1cepre();
                 validarCantidadEspecialidad2cepre(datasx);
-            }else {
+            } else {
                 $('#pregunta2cepre').hide();
             }
-            if( opcion3cepre) {
-                var id=  $('#facultades2').val();
+            if (opcion3cepre) {
+                var id = $('#facultades2').val();
                 cargarEspecialidad3cepre(id);
 
             }
 
 
-
-
         });
 
 
-
-
-
-
-        $('#confirma1cepre').click(function() {
+        $('#confirma1cepre').click(function () {
             $('#div2cepre').show();
 
             $('#quitarpregunta2cepre').show();
             $('#modal_agregar_1cepre').modal('hide');
-            var id=  $('#facultades2').val();
+            var id = $('#facultades2').val();
             cargarEspecialidad2cepre(id);
-            opcion2cepre=true;
+            opcion2cepre = true;
 
 
             $('#pregunta2cepre').hide();
             $('#pregunta1cepre').hide();
         });
 
-        $('#confirma2cepre').click(function() {
+        $('#confirma2cepre').click(function () {
             $('#div3cepre').show();
             $('#modal_agregar_2cepre').modal('hide');
-            var id=  $('#facultades2').val();
+            var id = $('#facultades2').val();
             cargarEspecialidad3cepre(id);
-            opcion3cepre=true;
+            opcion3cepre = true;
 
         });
 
 
-        $('#confirmaquitar3cepre').click(function() {
+        $('#confirmaquitar3cepre').click(function () {
             $('#div3cepre').hide();
             $('#modal_quitar_3cepre').modal('hide');
             $('#especialidad3cepre')
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de tercera prioridad</option>')
             ;
-            opcion3cepre=false;
+            opcion3cepre = false;
 
         });
 
 
-        $('#confirmaquitar2cepre').click(function() {
+        $('#confirmaquitar2cepre').click(function () {
             $('#div3cepre').hide();
             $('#div2cepre').hide();
             $('#modal_quitar_2cepre').modal('hide');
@@ -1566,32 +1529,32 @@
                 .empty()
                 .append('<option selected="selected" value="">Escoger la especialidad de segunda prioridad</option>')
             ;
-            opcion3cepre=false;
-            opcion2cepre=false;
+            opcion3cepre = false;
+            opcion2cepre = false;
             $('#pregunta1cepre').show();
 
         });
 
-        $('#agregar1cepre').click(function() {
+        $('#agregar1cepre').click(function () {
             $('#modal_agregar_1cepre').modal({
                 keyboard: false,
                 backdrop: 'static'
             });
         });
-        $('#agregar2cepre').click(function() {
+        $('#agregar2cepre').click(function () {
             $('#modal_agregar_2cepre').modal({
                 keyboard: false,
                 backdrop: 'static'
             });
         });
 
-        $('#quitar3cepre').click(function() {
+        $('#quitar3cepre').click(function () {
             $('#modal_quitar_3cepre').modal({
                 keyboard: false,
                 backdrop: 'static'
             });
         });
-        $('#quitar2cepre').click(function() {
+        $('#quitar2cepre').click(function () {
             $('#modal_quitar_2cepre').modal({
                 keyboard: false,
                 backdrop: 'static'
@@ -1603,81 +1566,77 @@
 
     <script>
 
-        function validarFormulario(){
+        function validarFormulario() {
 
-            if (  !$('#paterno').val() ){
+            if (!$('#paterno').val()) {
                 swal("INGRESA EL APELLIDO PATERNO", "Debes ingresar tu apellido paterno.", "error");
                 return false;
 
             }
-            if (  !$('#materno').val() ){
+            if (!$('#materno').val()) {
                 swal("INGRESA EL APELLIDO MATERNO", "Debes ingresar tu apellido materno.", "error");
                 return false;
 
             }
-            if (  !$('#nombres').val() ){
+            if (!$('#nombres').val()) {
                 swal("INGRESA TU NOMBRE", "Debes ingresar tus nombres.", "error");
                 return false;
 
             }
-            if (  !$('#idmodalidad').val() ){
+            if (!$('#idmodalidad').val()) {
                 swal("SELECCIONA LA MODALIDAD", "Debes seleccionar tu modalidad.", "error");
                 return false;
 
             }
 
 
-            if(  $('#idmodalidad').val() == 16){
+            if ($('#idmodalidad').val() == 16) {
 
 
-
-
-
-                if (  !$('#codigo_verificacion').val() ){
+                if (!$('#codigo_verificacion').val()) {
                     swal("INGRESA TU CÓDIGO CEPRE-UNI", "Debes ingresar tu código CEPRE-UNI.", "error");
                     return false;
 
                 }
 
-                if (  !$('#idmodalidad2').val() ){
+                if (!$('#idmodalidad2').val()) {
                     swal("SELECCIONA LA SEGUNDA MODALIDAD", "Debes seleccionar tu segunda modalidad.", "error");
                     return false;
 
                 }
 
 
-                if (  !$('#facultades').val() ){
+                if (!$('#facultades').val()) {
                     swal("SELECCIONA LA FACULTAD", "Debes seleccionar la facultad.", "error");
                     return false;
 
                 }
 
-                if (  !$('#especialidad').val() ){
+                if (!$('#especialidad').val()) {
                     swal("SELECCIONA LA ESPECIALIDAD", "Debes seleccionar la primera prioridad.", "error");
                     return false;
 
                 }
 
 
-                if (  !$('#facultades2').val() ){
+                if (!$('#facultades2').val()) {
                     swal("SELECCIONA LA SEGUNDA FACULTAD", "Debes seleccionar la segunda facultad.", "error");
                     return false;
 
                 }
 
-                if (  !$('#especialidad4').val() ){
+                if (!$('#especialidad4').val()) {
                     swal("SELECCIONA LA ESPECIALIDAD DE TU SEGUNDA MODALIDAD", "Debes seleccionar la primera prioridad.", "error");
                     return false;
 
                 }
 
 
-                if(  $('#idmodalidad2').val() == 15 || $('#idmodalidad2').val() == 14 || $('#idmodalidad2').val() == 12 ||  $('#idmodalidad2').val() == 10 || $('#idmodalidad2').val() == 7 || $('#idmodalidad2').val() == 6 || $('#idmodalidad2').val() == 5 ){
+                if ($('#idmodalidad2').val() == 15 || $('#idmodalidad2').val() == 14 || $('#idmodalidad2').val() == 12 || $('#idmodalidad2').val() == 10 || $('#idmodalidad2').val() == 7 || $('#idmodalidad2').val() == 6 || $('#idmodalidad2').val() == 5) {
 
 
-
-                }else {
-                    if (  !$('#idcolegio').val() ){
+                } else {
+                    if (!$('#idcolegio').val()) {
                         swal("SELECCIONA EL COLEGIO", "Debes seleccionar tu colegio.", "error");
                         return false;
 
@@ -1685,51 +1644,36 @@
                 }
 
 
+            } else {
 
-
-
-
-
-
-
-
-
-
-            }else {
-
-                if (  !$('#facultades').val() ){
+                if (!$('#facultades').val()) {
                     swal("SELECCIONA LA FACULTAD", "Debes seleccionar la facultad.", "error");
                     return false;
 
                 }
 
-                if (  !$('#especialidad').val() ){
+                if (!$('#especialidad').val()) {
                     swal("SELECCIONA LA ESPECIALIDAD", "Debes seleccionar la primera prioridad.", "error");
                     return false;
 
                 }
 
-                if( $('#idmodalidad').val() == 19 || $('#idmodalidad').val() == 20 ||  $('#idmodalidad').val() == 15 || $('#idmodalidad').val() == 14 || $('#idmodalidad').val() == 12 ||  $('#idmodalidad').val() == 10 || $('#idmodalidad').val() == 7 || $('#idmodalidad').val() == 6 || $('#idmodalidad').val() == 5 ){
+                if ($('#idmodalidad').val() == 19 || $('#idmodalidad').val() == 20 || $('#idmodalidad').val() == 15 || $('#idmodalidad').val() == 14 || $('#idmodalidad').val() == 12 || $('#idmodalidad').val() == 10 || $('#idmodalidad').val() == 7 || $('#idmodalidad').val() == 6 || $('#idmodalidad').val() == 5) {
 
-                    if (  !$("#iduniversidad").val() ){
+                    if (!$("#iduniversidad").val()) {
                         swal("SELECCIONA LA UNIVERSIDAD", "Debes seleccionar tu universidad.", "error");
                         return false;
 
                     }
 
-                }else {
-                    if (  !$('#idcolegio').val() ){
+                } else {
+                    if (!$('#idcolegio').val()) {
                         swal("SELECCIONA EL COLEGIO", "Debes seleccionar tu colegio.", "error");
                         return false;
 
                     }
                 }
             }
-
-
-
-
-
 
 
             return true;
@@ -1737,22 +1681,22 @@
         }
 
 
-        $('#guardar').click(function() {
+        $('#guardar').click(function () {
 
 
-            if( validarFormulario()){
+            if (validarFormulario()) {
 
                 $('#modal_confirmacion').modal({
                     keyboard: false,
                     backdrop: 'static'
                 });
 
-                var nomm ='APELLIDO Y NOMBRES: '+  $('#paterno').val().toUpperCase() + ' ' + $('#materno').val().toUpperCase() + ' '+ $('#nombres').val().toUpperCase();
+                var nomm = 'APELLIDO Y NOMBRES: ' + $('#paterno').val().toUpperCase() + ' ' + $('#materno').val().toUpperCase() + ' ' + $('#nombres').val().toUpperCase();
                 $('#txtdatos').text(nomm);
-                $('#txtdni').text('NÚMERO DE DNI: ' + $('.dni').val() );
+                $('#txtdni').text('NÚMERO DE DNI: ' + $('.dni').val());
 
 
-                if( $('#idmodalidad').val() == 16) {
+                if ($('#idmodalidad').val() == 16) {
 
                     if ($('#idmodalidad').val() != "") {
                         $('#trmoda1').show();
@@ -1805,7 +1749,6 @@
                     }
 
 
-
                     if ($('#especialidad4').val() != "") {
                         $('#trop4').show();
                         $('#txtop4').text('ESPECIALIDAD DE PRIMERA PRIORIDAD: ' + $('#especialidad4 option:selected').text());
@@ -1815,7 +1758,6 @@
                         $('#trop4').hide();
                         $('#txtop4').text('');
                     }
-
 
 
                     if ($('#especialidad5').val() != "") {
@@ -1836,9 +1778,7 @@
                     }
 
 
-                }else {
-
-
+                } else {
 
 
                     if ($('#idmodalidad').val() != "") {
@@ -1881,46 +1821,45 @@
                     }
 
 
-
-                    if( $('#idmodalidad').val() == 6){
+                    if ($('#idmodalidad').val() == 6) {
                         var modaa;
                         $.ajax({
                             url: 'info-vacantesuni',
                             dataType: 'json',
                             data: {idmodalidad: 6}
                         })
-                            .done(function(modalidad) {
+                            .done(function (modalidad) {
                                 /*Muestra Colegio o universidad segun la modalidad correspondiente*/
-                                modaaa=modalidad;
-                                var modd=$("#idmodalidad").val();
-                                var espp=$("#especialidad").val();
+                                modaaa = modalidad;
+                                var modd = $("#idmodalidad").val();
+                                var espp = $("#especialidad").val();
 
                                 var vacanup;
                                 for (var key in modaaa) {
                                     if (modaaa.hasOwnProperty(key)) {
-                                        if(modaaa[key].idespecialidad==espp){
-                                            vacanup=modaaa[key].vacantes;
+                                        if (modaaa[key].idespecialidad == espp) {
+                                            vacanup = modaaa[key].vacantes;
 
                                         }
 
                                     }
                                 }
-                                var menjj=0;
+                                var menjj = 0;
                                 $.ajax({
                                     url: 'info-numerouni',
                                     dataType: 'json',
                                     data: {idespecialidad: espp}
                                 })
-                                    .done(function(especialidad) {
+                                    .done(function (especialidad) {
                                         /*Muestra Colegio o universidad segun la modalidad correspondiente*/
 
-                                        menjj=JSON.stringify(especialidad);
+                                        menjj = JSON.stringify(especialidad);
                                         /*menjj=menjj+1;*/
-                                        if(vacanup == 100){
+                                        if (vacanup == 100) {
                                             vacanup = 'TODOS LOS INSCRITOS';
                                         }
                                         $("#trtitu").show();
-                                        $("#txttitu").text("Existen "+menjj+" inscritos postulando a esta especialidad con "+vacanup+" vacante(s) disponible(s). La facultad evaluará el ingreso.");
+                                        $("#txttitu").text("Existen " + menjj + " inscritos postulando a esta especialidad con " + vacanup + " vacante(s) disponible(s). La facultad evaluará el ingreso.");
 
                                     });
 
@@ -1929,14 +1868,7 @@
                     }
 
 
-
-
-
-
                 }
-
-
-
 
 
             }
@@ -1958,13 +1890,13 @@
     <script>
 
 
-        $("#iddepacolegio").click(function(event) {
-            var dp=$('#iddepacolegio').val();
-            if(dp>0){
+        $("#iddepacolegio").click(function (event) {
+            var dp = $('#iddepacolegio').val();
+            if (dp > 0) {
 
                 $('#colediv').show();
 
-            }else {
+            } else {
                 $('#colediv').hide();
             }
 
@@ -1972,33 +1904,33 @@
         });
 
 
-        $(function() {
+        $(function () {
 
 
             var idmodal = $("#idmodalidad").val();
 
-            if(idmodal>0){
+            if (idmodal > 0) {
                 $.ajax({
                     url: 'info-modalidad',
                     dataType: 'json',
                     data: {idmodalidad: idmodal},
                 })
-                    .done(function(modalidad) {
+                    .done(function (modalidad) {
                         /*Muestra Colegio o universidad segun la modalidad correspondiente*/
                         if (modalidad.colegio) {
                             $(".Colegio").show();
                             $('#colediv').hide();
                             $('#depacoldiv').show();
-                            var dp=$('#iddepacolegio').val();
-                            if(dp>0){
+                            var dp = $('#iddepacolegio').val();
+                            if (dp > 0) {
 
                                 $('#colediv').show();
 
-                            }else {
+                            } else {
                                 $('#colediv').hide();
                             }
                             $(".Universidad").hide();
-                        }else{
+                        } else {
                             $(".Colegio").hide();
 
                             $('#colediv').hide();
@@ -2008,7 +1940,7 @@
                         /*Muestra la segunda opcion del cepre UNI*/
                         if (modalidad.codigo == 'ID-CEPRE') {
                             $(".cepreuni").show();
-                        }else{
+                        } else {
                             $(".cepreuni").hide();
                         }
 
@@ -2016,9 +1948,7 @@
                     });
 
 
-
-
-            }else {
+            } else {
                 $(".Colegio").hide();
                 $(".Universidad").hide();
                 $(".cepreuni").hide();
@@ -2027,15 +1957,9 @@
             }
 
 
-
-
-
-
-
-            $("#idmodalidad").change(function(event) {
+            $("#idmodalidad").change(function (event) {
                 var idmodalidad = $(this).val();
-                if(idmodalidad!=""){
-
+                if (idmodalidad != "") {
 
 
                     $.ajax({
@@ -2043,8 +1967,7 @@
                         dataType: 'json',
                         data: {idmodalidad: idmodalidad},
                     })
-                        .done(function(modalidad) {
-
+                        .done(function (modalidad) {
 
 
                             /*Muestra Colegio o universidad segun la modalidad correspondiente*/
@@ -2052,16 +1975,16 @@
                                 $(".Colegio").show();
                                 $('#colediv').hide();
                                 $('#depacoldiv').show();
-                                var dp=$('#iddepacolegio').val();
-                                if(dp>0){
+                                var dp = $('#iddepacolegio').val();
+                                if (dp > 0) {
 
                                     $('#colediv').show();
 
-                                }else {
+                                } else {
                                     $('#colediv').hide();
                                 }
                                 $(".Universidad").hide();
-                            }else{
+                            } else {
                                 $(".Colegio").hide();
 
                                 $('#colediv').hide();
@@ -2071,13 +1994,12 @@
                             /*Muestra la segunda opcion del cepre UNI*/
                             if (modalidad.codigo == 'ID-CEPRE') {
                                 $(".cepreuni").show();
-                            }else{
+                            } else {
 
                                 $("#idmodalidad2").val(null);
 
                                 $("#codigo_verificacion").val(null);
                                 $("#idespecialidad2").val(null);
-
 
 
                                 $(".cepreuni").hide();
@@ -2086,7 +2008,7 @@
 
                         });//SAl
 
-                }else {
+                } else {
                     $(".Colegio").hide();
                     $('#colediv').hide();
                     $('#depacoldiv').hide();
@@ -2095,9 +2017,9 @@
 
             });
 
-            $("#idmodalidad2").on('change', function() {
+            $("#idmodalidad2").on('change', function () {
                 var idmodalidad2 = $(this).val();
-                if(idmodalidad2>0){
+                if (idmodalidad2 > 0) {
 
 
                     $.ajax({
@@ -2105,10 +2027,10 @@
                         dataType: 'json',
                         data: {idmodalidad: idmodalidad2},
                     })
-                        .done(function(res) {
+                        .done(function (res) {
                             var json = {data: []};
                             json.data = res;
-                            espescepre=json;
+                            espescepre = json;
 
                             limpiarSelectscepre();
                             ocualtarOpcionescepre();
@@ -2121,14 +2043,14 @@
             });
 
 
-            $("#idmodalidad2").click(function(event) {
+            $("#idmodalidad2").click(function (event) {
                 var idmodalidad = $(this).val();
                 $.ajax({
                     url: 'info-modalidad',
                     dataType: 'json',
                     data: {idmodalidad: idmodalidad},
                 })
-                    .done(function(modalidad) {
+                    .done(function (modalidad) {
                         /*Muestra Colegio o universidad segun la modalidad correspondiente*/
                         if (modalidad.colegio) {
 
@@ -2138,17 +2060,17 @@
                             $(".Universidad").hide();
 
 
-                            var dp=$('#iddepacolegio').val();
-                            if(dp>0){
+                            var dp = $('#iddepacolegio').val();
+                            if (dp > 0) {
 
                                 $('#colediv').show();
 
-                            }else {
+                            } else {
                                 $('#colediv').hide();
                             }
 
 
-                        }else{
+                        } else {
 
                             $(".Colegio").show();
                             $('#colediv').hide();
@@ -2156,16 +2078,14 @@
                             $(".Universidad").hide();
 
 
-                            var dp=$('#iddepacolegio').val();
-                            if(dp>0){
+                            var dp = $('#iddepacolegio').val();
+                            if (dp > 0) {
 
                                 $('#colediv').show();
 
-                            }else {
+                            } else {
                                 $('#colediv').hide();
                             }
-
-
 
 
                         }
@@ -2180,13 +2100,13 @@
                     url: '{{ url("colegio") }}',
                     dataType: 'json',
                     delay: 250,
-                    data: function(params) {
-                        dep=$(iddepacolegio).val();
+                    data: function (params) {
+                        dep = $(iddepacolegio).val();
                         return {
-                            varschool: params.term+"&depaBus="+dep // search term
+                            varschool: params.term + "&depaBus=" + dep // search term
                         };
                     },
-                    processResults: function(data) {
+                    processResults: function (data) {
                         // parse the results into the format expected by Select2.
                         // since we are using custom formatting functions we do not need to
                         // alter the remote JSON data
@@ -2196,11 +2116,11 @@
                     },
                     cache: true
                 },
-                placeholder : 'Seleccione su colegio',
+                placeholder: 'Seleccione su colegio',
                 minimumInputLength: 3,
                 templateResult: formatSchool,
                 templateSelection: formatSchoolSelection,
-                escapeMarkup: function(markup) {
+                escapeMarkup: function (markup) {
                     return markup;
                 } // let our custom formatter work
             });
@@ -2211,14 +2131,14 @@
                     url: '{{ url("universidad") }}',
                     dataType: 'json',
                     delay: 250,
-                    data: function(params) {
+                    data: function (params) {
                         var idmodalidad = $('#idmodalidad').val();
                         return {
                             varuni: params.term, // search term
                             varidmodalidad: idmodalidad,
                         };
                     },
-                    processResults: function(data) {
+                    processResults: function (data) {
                         // parse the results into the format expected by Select2.
                         // since we are using custom formatting functions we do not need to
                         // alter the remote JSON data
@@ -2228,61 +2148,64 @@
                     },
                     cache: true
                 },
-                placeholder : 'Seleccione su universidad',
+                placeholder: 'Seleccione su universidad',
                 minimumInputLength: 3,
                 templateResult: formatUni,
                 templateSelection: formatSchoolSelection,
-                escapeMarkup: function(markup) {
+                escapeMarkup: function (markup) {
                     return markup;
                 } // let our custom formatter work
             });
-            function formatSchool(school){
+
+            function formatSchool(school) {
                 if (school.loading) return school.text; //Sin esta columna no carga los items dentro de los campo array
 
                 var localidad = school.distrito;
                 if (localidad != null) {
                     var lbl_ubigeo = 'Distrito';
                     var descripcion_ubigeo = localidad.descripcion;
-                }else{
+                } else {
                     var lbl_ubigeo = 'Pais';
                     var descripcion_ubigeo = school.paises.nombre;
                 }
 
-                var markup="<div class='select2-result-repository clearfix'>" +
+                var markup = "<div class='select2-result-repository clearfix'>" +
                     "<div class='select2-result-repository__title'>" + school.text + "</div>" +
                     "<div class='select2-result-repository__description'> " + lbl_ubigeo + " : " + descripcion_ubigeo + "</div>" +
                     "<div class='select2-result-repository__description'> Gestion : " + school.gestion + "</div>" +
                     "<div class='select2-result-repository__description'> Direccion : " + school.direccion + "</div>" +
                     "<div class='select2-result-repository__description'> Código Modular : " + school.codigo_modular + "</div>" +
                     "<div class='select2-result-repository__statistics'>" +
-                    "</div>"+
+                    "</div>" +
                     "</div>";
                 return markup;
 
             }
-            function formatUni(school){
+
+            function formatUni(school) {
                 if (school.loading) return school.text; //Sin esta columna no carga los items dentro de los campo array
 
                 var localidad = school.distrito;
                 if (localidad != null) {
                     var lbl_ubigeo = 'Distrito';
                     var descripcion_ubigeo = localidad.descripcion;
-                }else{
+                } else {
                     var lbl_ubigeo = 'Pais';
                     var descripcion_ubigeo = school.paises.nombre;
                 }
-                var markup="<div class='select2-result-repository clearfix'>" +
+                var markup = "<div class='select2-result-repository clearfix'>" +
                     "<div class='select2-result-repository__title'>" + school.text + "</div>" +
                     "<div class='select2-result-repository__description'> " + lbl_ubigeo + " : " + descripcion_ubigeo + "</div>" +
                     "<div class='select2-result-repository__description'> Gestion : " + school.gestion + "</div>" +
                     "<div class='select2-result-repository__statistics'>" +
-                    "</div>"+
+                    "</div>" +
                     "</div>";
                 return markup;
 
             }
-            function formatSchoolSelection(school){
-                var markup =  school.text;
+
+            function formatSchoolSelection(school) {
+                var markup = school.text;
                 return markup;
             }
 
@@ -2295,10 +2218,10 @@
         var modaaa;
 
 
-        $("#idmodalidad").on('change', function() {
+        $("#idmodalidad").on('change', function () {
 
             var idmodalidad = $(this).val();
-            if(idmodalidad>0){
+            if (idmodalidad > 0) {
 
 
                 $.ajax({
@@ -2306,10 +2229,10 @@
                     dataType: 'json',
                     data: {idmodalidad: idmodalidad},
                 })
-                    .done(function(res) {
+                    .done(function (res) {
                         var json = {data: []};
                         json.data = res;
-                        espes=json;
+                        espes = json;
 
                         limpiarSelects();
                         ocualtarOpciones();
@@ -2320,101 +2243,85 @@
             }
 
 
-
-
-            if($("#idmodalidad").val()==6){
-                $("#btnchang").prop('type','button');
+            if ($("#idmodalidad").val() == 6) {
+                $("#btnchang").prop('type', 'button');
                 var idmodalidad = $(this).val();
                 $.ajax({
                     url: 'info-vacantesuni',
                     dataType: 'json',
                     data: {idmodalidad: idmodalidad}
                 })
-                    .done(function(modalidad) {
+                    .done(function (modalidad) {
                         /*Muestra Colegio o universidad segun la modalidad correspondiente*/
-                        modaaa=modalidad;
-
-
+                        modaaa = modalidad;
 
 
                     });
 
 
-
-
-
-
             }
         });
-        $("#idespecialidad").on('change', function() {
+        $("#idespecialidad").on('change', function () {
 
-            if($("#idmodalidad").val()==6){
+            if ($("#idmodalidad").val() == 6) {
 
-                $("#btnchang").prop('type','button');
+                $("#btnchang").prop('type', 'button');
                 var idmodalidad = $("#idmodalidad").val();
                 $.ajax({
                     url: 'info-vacantesuni',
                     dataType: 'json',
                     data: {idmodalidad: idmodalidad}
                 })
-                    .done(function(modalidad) {
+                    .done(function (modalidad) {
                         /*Muestra Colegio o universidad segun la modalidad correspondiente*/
-                        modaaa=modalidad;
-
-
+                        modaaa = modalidad;
 
 
                     });
 
 
-
-
-
-
             }
         });
-        $("#btnchang").click(function() {
-            var modd=$("#idmodalidad").val();
-            var espp=$("#idespecialidad").val();
+        $("#btnchang").click(function () {
+            var modd = $("#idmodalidad").val();
+            var espp = $("#idespecialidad").val();
 
-            if(modd==6){
-                if(espp>0){
+            if (modd == 6) {
+                if (espp > 0) {
 
                     var vacanup;
                     for (var key in modaaa) {
                         if (modaaa.hasOwnProperty(key)) {
-                            if(modaaa[key].idespecialidad==espp){
-                                vacanup=modaaa[key].vacantes;
+                            if (modaaa[key].idespecialidad == espp) {
+                                vacanup = modaaa[key].vacantes;
 
                             }
 
                         }
                     }
 
-                    var menjj=0;
+                    var menjj = 0;
                     $.ajax({
                         url: 'info-numerouni',
                         dataType: 'json',
                         data: {idespecialidad: espp}
                     })
-                        .done(function(especialidad) {
+                        .done(function (especialidad) {
                             /*Muestra Colegio o universidad segun la modalidad correspondiente*/
 
-                            menjj=JSON.stringify(especialidad);
+                            menjj = JSON.stringify(especialidad);
                             /*menjj=menjj+1;*/
-                            if(vacanup == 100){
+                            if (vacanup == 100) {
                                 vacanup = 'TODOS LOS INSCRITOS';
                             }
-                            $("#parraf").text("Existen "+menjj+" inscritos postulando a esta especialidad con "+vacanup+" vacante(s) disponible(s). La facultad evaluará el ingreso.");
+                            $("#parraf").text("Existen " + menjj + " inscritos postulando a esta especialidad con " + vacanup + " vacante(s) disponible(s). La facultad evaluará el ingreso.");
 
                             $('#myModal').modal('toggle');
 
                         });
 
 
-
-
-                }else{
+                } else {
 
                     alert("Escoja una Especialidad");
 
@@ -2423,21 +2330,17 @@
         });
 
 
-        $("#idmodalidad").on('change', function() {
+        $("#idmodalidad").on('change', function () {
 
-            if($("#idmodalidad").val()==16){
+            if ($("#idmodalidad").val() == 16) {
                 //    $("#idespecialidad option[value='1']").remove();
-            }
-            else {
+            } else {
 
-                if($("#idespecialidad option[value='1']").length > 0) {
+                if ($("#idespecialidad option[value='1']").length > 0) {
 
-                }else {
+                } else {
                     //     $("#idespecialidad").append('<option value="1">ARQUITECTURA</option>');
                 }
-
-
-
 
 
             }
@@ -2446,27 +2349,24 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             cargarDataAJax();
 
 
         });
 
-        function cargarDataAJax(){
+        function cargarDataAJax() {
             $.ajax({
                 url: '{{ "especialidades-seleccion" }}',
                 success: function (respuesta) {
 
-                    for ( var key in respuesta.facus) {
+                    for (var key in respuesta.facus) {
 
                         var nom = "FACULTAD DE " + respuesta.facus[key].nombre;
                         var id = respuesta.facus[key].id;
-                        $('#facultades').append('<option value='+id+'>'+nom+'</option>');
-                        $('#facultades2').append('<option value='+id+'>'+nom+'</option>');
+                        $('#facultades').append('<option value=' + id + '>' + nom + '</option>');
+                        $('#facultades2').append('<option value=' + id + '>' + nom + '</option>');
                     }
-
-
-
 
 
                     var jsontemp = {data: []};
@@ -2474,17 +2374,15 @@
                     jsontemp.data = respuesta.data;
                     espescepre = jsontemp;
                     espes = jsontemp;
-                    if(!respuesta.datos[0].moda2){
+                    if (!respuesta.datos[0].moda2) {
 
-                    }else{
+                    } else {
 
 
                         var idfacu2 = respuesta.datos[0].idfacultad2;
                         var idespe4 = respuesta.datos[0].idespecialidad4;
                         var idespe5 = respuesta.datos[0].idespecialidad5;
                         var idespe6 = respuesta.datos[0].idespecialidad6;
-
-
 
 
                         $("#facultades2").val(idfacu2);
@@ -2508,7 +2406,7 @@
 
                             $("#quitarpregunta2cepre").show();
                             $("#especialidad5").val(idespe5);
-                            opcion2cepre= true;
+                            opcion2cepre = true;
                         }
 
                         if (idespe6) {
@@ -2520,7 +2418,7 @@
 
                             $("#quitarpregunta3cepre").show();
                             $("#especialidad6").val(idespe6);
-                            opcion3cepre= true;
+                            opcion3cepre = true;
 
 
                         }
@@ -2531,7 +2429,6 @@
                     var idespe1 = respuesta.datos[0].idespecialidad;
                     var idespe2 = respuesta.datos[0].idespecialidad2;
                     var idespe3 = respuesta.datos[0].idespecialidad3;
-
 
 
                     $("#facultades").val(idfacu);
@@ -2556,7 +2453,7 @@
 
                         $("#quitarpregunta2").show();
                         $("#especialidad2").val(idespe2);
-                        opcion2= true;
+                        opcion2 = true;
                     }
 
                     if (idespe3) {
@@ -2568,12 +2465,10 @@
 
                         $("#quitarpregunta3").show();
                         $("#especialidad3").val(idespe3);
-                        opcion3= true;
+                        opcion3 = true;
 
 
                     }
-
-
 
 
                 },
@@ -2584,7 +2479,6 @@
             });
 
         }
-
 
 
     </script>

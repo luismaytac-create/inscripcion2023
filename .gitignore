@@ -15,3 +15,11 @@ composer.lock
 storage
 /storage/*
 storage/*
+compose.yml
+nginx
+pg_data
+check-pg.sh
+compose.yml
+nginx
+*.sql
+Dockerfile
