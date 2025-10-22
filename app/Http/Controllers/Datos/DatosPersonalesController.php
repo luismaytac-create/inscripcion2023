@@ -25,8 +25,9 @@ class DatosPersonalesController extends Controller
         $postulante = Postulante::Usuario()->first();
         $sedes = Catalogo::where('idtable', 13)
             ->orderBy('nombre')
-            ->pluck('nombre', 'id')   // <- clave: id => nombre
+            ->pluck('nombre', 'id')
             ->toArray();
+
         if(is_null($postulante)){
             if(is_null($postulante))return view('datos.personal.index',compact('dni'));
         }else {
