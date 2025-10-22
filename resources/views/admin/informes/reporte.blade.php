@@ -357,6 +357,12 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td>SEDE
+                                        </td>
+                                        <td>{{$postulante->sede}}
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             Formato de Pago
                                         </td>
