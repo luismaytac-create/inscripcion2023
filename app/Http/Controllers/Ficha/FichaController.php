@@ -97,7 +97,7 @@ class FichaController extends Controller
             if( !is_null($postulante->idmodalidad2) ){
 
                 if(isset($postulante->idmodalidad)){
-                    if($postulante->idmodalidad2<>1){
+                    if($postulante->idmodalidad2 <> 1 and $postulante->idmodalidad2 <> 17 and $postulante->idmodalidad2 <> 23){
                         $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
                         if($terr>0){
                             $correcto_terro = true;
@@ -122,7 +122,7 @@ class FichaController extends Controller
 
 
                 if(isset($postulante->idmodalidad)){
-                    if($postulante->idmodalidad<>1 and  $postulante->idmodalidad<>16  ){
+                    if($postulante->idmodalidad <> 1 and  $postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23 ){
                         $terr = SolicitanteVictima::where('idpostulante',$postulante->id)->where('estado','APROBADO')->count();
                         if($terr>0){
                             $correcto_terro = true;
@@ -259,7 +259,6 @@ class FichaController extends Controller
             $pagos = new PagoController();
             $pagos = $pagos->CalculoServiciosFicha();
 
-
             $recaudacion = Recaudacion::select('servicio','monto')->where('idpostulante',$postulante->id)->get();
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
             $debe = false;
@@ -271,7 +270,7 @@ class FichaController extends Controller
                     if($servicio->codigo == '475'){
                        
                     }
- if(str_contains($pagos_realizados,$item)){
+                if(str_contains($pagos_realizados,$item)){
                             $correcto_pagos = true;
                         } else{
                             $correcto_pagos = false;
@@ -377,7 +376,7 @@ class FichaController extends Controller
 
                 $correcto_pagos = false;
                 $servicio = Servicio::where('codigo','474')->first();
-                $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)',
+                $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer dï¿½a habil)',
                     'mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas,
                              de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
                 $debe = true;
@@ -1102,7 +1101,7 @@ class FichaController extends Controller
                 PDF::Cell(40, 7, 'SA 09/08 ', 0, 0, 'C', 1, '', 1);
                 PDF::SetFont('helvetica', 'B', 35);
                 PDF::SetXY(5, 97 + 6 - 5 - 8);
-                PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo. ' PUERTA N°4B', 0, 0, 'L', true, '', 1, true);
+                PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo. ' PUERTA Nï¿½4B', 0, 0, 'L', true, '', 1, true);
                 $arq = true;
             }
 
