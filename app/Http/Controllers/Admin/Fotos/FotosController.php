@@ -141,9 +141,10 @@ class FotosController extends Controller
                 $postulante->foto_fecha_editor = Carbon::now();
                 $postulante->idusuarioeditor= $idusuarioeditor;
                 $postulante->save();
+                Alert::success('Foto aceptada con éxito');
                 break;
 
-                Alert::success('Foto aceptada con éxito');
+                
             break;
 
             case '0':
