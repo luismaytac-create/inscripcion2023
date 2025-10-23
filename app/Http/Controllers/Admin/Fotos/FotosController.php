@@ -18,6 +18,7 @@ use App\Mail\DenegadoEmail;
 use Mail;
 use App\Http\Controllers\Sms\SmsController;
 use Illuminate\Filesystem\Filesystem;
+use Swift_TransportException;
 
 class FotosController extends Controller
 {
@@ -140,7 +141,11 @@ class FotosController extends Controller
                 $postulante->foto_fecha_editor = Carbon::now();
                 $postulante->idusuarioeditor= $idusuarioeditor;
                 $postulante->save();
+                Alert::success('Foto aceptada con éxito');
                 break;
+
+                
+            break;
 
             case '0':
                 if (Storage::exists($archivo)) {
@@ -153,8 +158,14 @@ class FotosController extends Controller
                 $postulante->foto_fecha_editor = Carbon::now();
                 $postulante->idusuarioeditor= $idusuarioeditor;
                 $postulante->save();
+                try {
                 Mail::to($postulante->email)
                 ->send(new DenegadoEmail('Foto','Su Foto ha sido observada debe subir una nueva'));
+            
+            } catch (Swift_TransportException $e) {
+                // El correo falló, registramos el error y continuamos.
+                Log::error('Error de SMTP al rechazar (update): ' . $e->getMessage());
+            }
                 // (new SmsController)->metodo2($postulante->telefono_celular,'ADMISION-UNI:Su Fotografia a sido observada revise su correo electronico');
 
     			break;
@@ -260,9 +271,16 @@ class FotosController extends Controller
         $postulante->idusuarioeditor= $idusuarioeditor;
         $postulante->foto_fecha_editor = Carbon::now();
         $postulante->save();
+
+       try {
         Mail::to($postulante->email)
             ->send(new DenegadoEmail('Foto',$motivo));
-
+            
+    } catch (Swift_TransportException $e) {
+        // El correo falló, pero no queremos que la app crashee.
+        // Opcional: Registramos el error en el log de Laravel para futura depuración.
+        Log::error('Error de SMTP al rechazar foto: ' . $e->getMessage());
+    }
         $nuevolog = new Editorlog();
         $nuevolog->dni = $postulante->numero_identificacion;
         $nuevolog->idpostulante = $postulante->id;
@@ -273,7 +291,7 @@ class FotosController extends Controller
         $nuevolog->fecha=Carbon::now();
         $nuevolog->save();
 
-
+        Alert::success('Foto rechazada con éxito');
 
         return redirect()->route('admin.fotos.index');
     }
