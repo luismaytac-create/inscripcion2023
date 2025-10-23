@@ -163,7 +163,10 @@
                                                 <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{ route('datos.complementarios.index') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Complementarios</span></a></li>
                                                 <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{ route('datos.foto.foto') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Foto y DNI</span></a></li>
                                                 <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{ route('declaracion.index') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Declaración Jurada</span></a></li>
+
+                                                @if ($requiereDocumentos)
                                                 <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{ route('documentos.index') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Documentos</span></a></li>
+                                                @endif                                                
                                                 <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a href="{{ route('email.index') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-users"></i><span class="m-menu__link-text">Confirmar Email</span></a></li>
 
                                             @endif
