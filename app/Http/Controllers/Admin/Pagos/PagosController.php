@@ -1407,44 +1407,50 @@ class PagosController extends Controller
     }
     public function validartodarchivo($codigo,$fecha)
     {
-        $correcto_pagos = false;
-        $msj = collect([]);
+        // ... (Código inicial: buscar $postulante, llamar $this->CalculoServicios, obtener $recaudacion) ...
+
+        // --- USA ESTA PARTE PARA SER MÁS PRECISO ---
+        $postulante = Postulante::where('numero_identificacion',$codigo)->first();
+        if (!$postulante) {
+             Log::warning("Postulante no encontrado en validartodarchivo para DNI: " . $codigo);
+             return; // Salir si no se encuentra el postulante
+        }
+        
+        $pagos_requeridos = $this->CalculoServicios($postulante->id); // Usamos CalculoServicios (o la función que define TODOS los pagos)
+        $recaudacion = Recaudacion::where('idpostulante', $postulante->id)->get();
+        $servicios_pagados = $recaudacion->pluck('servicio')->toArray();
+        // --- FIN PARTE PRECISA ---
+
         $debe = false;
-        #Valida Pagos-------------------------------------------------------
-
-             $postulante = Postulante::where('numero_identificacion',$codigo)->first();
-            $pagos = $this->CalculoServicios($postulante->id);
-
-
-            $recaudacion = Recaudacion::select('servicio','monto')->where('idpostulante',$postulante->id)->get();
-
-            $pagos_realizados = $recaudacion->implode('servicio', ', ');
-
-            $debe = false;
-            foreach ($pagos as $key => $item) {
-                if(str_contains($pagos_realizados,$item)){
-
-				$correcto_pagos = true;
-
-
-				}else{
-                    $correcto_pagos = false;
-                    $servicio = Servicio::where('codigo',$item)->first();
-                    $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 12 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                    $debe = true;
-
-                }
+        // Revisa si falta CUALQUIER pago requerido
+        foreach ($pagos_requeridos as $key => $item_requerido) {
+            // Usa in_array para comparación exacta
+            if (!in_array($item_requerido, $servicios_pagados)) {
+                $debe = true; // Marca que falta al menos uno
+                break; // No necesita seguir revisando
             }
+        }
 
-            $correcto_pagos = ($debe) ? false : true ;
+        $correcto_pagos = !$debe; // Si $debe es false, entonces los pagos están correctos
 
-            if ($correcto_pagos && !$postulante->pago) {
-
-                Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>$fecha]);
-				Proceso::where('idpostulante',$postulante->id)->update(['pago_examen'=>true]);
-            }
-
-
+        // --- LÓGICA DE ACTUALIZACIÓN MODIFICADA ---
+        if ($correcto_pagos) {
+            // Si AHORA cumple con TODOS los pagos requeridos
+            Postulante::where('id', $postulante->id)->update([
+                'pago' => true, 
+                'fecha_pago' => $fecha // Actualiza la fecha al procesar el archivo (podría ser la fecha del último pago requerido)
+            ]);
+            Proceso::where('idpostulante', $postulante->id)->update(['pago_examen' => true]); // Actualiza proceso si es necesario
+        } else {
+            // Si AHORA le falta CUALQUIER pago requerido (incluso si antes tenía pago=true)
+            Postulante::where('id', $postulante->id)->update([
+                'pago' => false, 
+                'fecha_pago' => null // Limpia la fecha de pago general
+            ]);
+             // Considera si debes actualizar Proceso también a false aquí
+             // Proceso::where('idpostulante',$postulante->id)->update(['pago_examen'=>false]); 
+        }
+        // --- FIN LÓGICA MODIFICADA ---
     }
     public function test(PagosRequest $request)
     {
