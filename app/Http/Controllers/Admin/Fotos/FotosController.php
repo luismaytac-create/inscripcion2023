@@ -42,7 +42,7 @@ class FotosController extends Controller
             }
         }else {
 
-           Alert::info('No tiene privilegios para realizar esta acción');
+           Alert::info('No tiene privilegios para realizar esta acciï¿½n');
            return redirect()->route('home.index');
        }
     //    return view('admin.fotos.index',compact('resumen'));
@@ -118,7 +118,7 @@ class FotosController extends Controller
     }
     public function update($id,$estado)
     {
-        /*
+        
         $idusuarioeditor=Auth::user()->id;
     	$postulante = Postulante::find($id);
     	$archivo = 'public/'.$postulante->foto;
@@ -159,7 +159,7 @@ class FotosController extends Controller
 
     			break;
     	}
-        */
+        
     	return redirect()->route('admin.fotos.index');
     }
     public function saveeditado(Request  $request){
