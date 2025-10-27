@@ -158,14 +158,14 @@
             },
 
                 {
-                    'targets':12,
+                    'targets':13,
                     'render': function ( data, type, full, meta ) {
                         return '<a href="/admin/semibeca/evaluar/'+data+'" title="EVALUAR"class="btn btn-icon-only green-haze" ><i class="fa fa-edit"></i></a>';
                     }
                 },
 
                 {
-                    'targets':13,
+                    'targets':14,
                     'render': function ( data, type, full, meta ) {
                         return '<a href="/admin/semibeca/activar/'+data+'" class="btn  green-meadow"> <i class="fa fa-plus"></i> Activar </a><a href="/admin/semibeca/desactivar/'+data+'"  class="btn red"> <i class="fa fa-plus"></i> Desactivar </a>';
 
