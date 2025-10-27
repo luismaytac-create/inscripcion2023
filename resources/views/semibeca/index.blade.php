@@ -62,10 +62,10 @@
 
                 <p> Documento 3: Certificado de Estudios  o Constancia de Logros de Aprendizaje. </p>
 
-                <p> Documento 4: Boletas de pago o recibos por honorarios de tu padre y de tu madre, correspondiente a los dos últimos meses (Agosto- Setiembre 2025). </p>
+                <p> Documento 4: Boletas de pago o recibos por honorarios de tu padre y de tu madre, correspondiente a los dos últimos meses (Agosto - Setiembre 2025). </p>
 
                 <p>Documento 5: Autovalúo (PU-HR) o título de propiedad. Si vives en casa alquilada, recibo de pago o el contrato de alquiler. En caso de vivir alojado presentar la constancia de alojamiento simple.</p>
-                <p>Documento 6: Recibo de agua, energía eléctrica y teléfono de la vivienda que ocupas en la ciudad de Lima, correspondiente a los dos últimos meses (Mayo- Junio 2025).</p>
+                <p>Documento 6: Recibo de agua, energía eléctrica y teléfono de la vivienda que ocupas en la ciudad de Lima, correspondiente a los dos últimos meses (Agosto - Setiembre 2025).</p>
                 <p>Documento 7: Descarga, completa y escanea los siguiente documentos .</p>
 
 
