@@ -265,6 +265,17 @@
 
 
                         </div>
+                        <div id="colediv" class="col-md-12">
+
+                            @if(Request::old('idsede') == NULL)
+                                {!! Field::select(
+                                        'idsede',
+                                        $sedes,
+                                        isset($postulante) ? $postulante->idsede : null,
+                                        ['style' => 'width: 100%', 'label' => 'Escoger Sede(*)']
+                                    ) !!}
+                            @endif
+                        </div>
 
 
                     </div><!--span-->
