@@ -26,9 +26,9 @@ class Colegio extends Model
      * Establecemos el la relacion con catalogo
      * @return [type] [description]
      */
-    public function Distrito()
+    public function ubigeo()
     {
-        return $this->hasOne(Ubigeo::class,'id','idubigeo');
+        return $this->belongsTo(Ubigeo::class,'idubigeo','id');
     }
     /**
      * Establecemos el la relacion con catalogo
