@@ -29,7 +29,7 @@ class DatosPersonalesController extends Controller
             ->toArray();
 
         if(is_null($postulante)){
-            if(is_null($postulante))return view('datos.personal.index',compact('dni'));
+            if(is_null($postulante)) return view('datos.personal.index', compact('sedes', 'dni')); 
         }else {
             $num = Restriccion::where('dni', $postulante->numero_identificacion)->count();
             if($num>0){
