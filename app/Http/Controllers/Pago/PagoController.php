@@ -391,13 +391,15 @@ class PagoController extends Controller
 
         // Grupo 1: Ordinario, CEPRE, ..., TALBE(21), IEN-UNI(17), INTR(23), etc. (LÓGICA CON PROVINCIA)
         if (in_array($postulante->codigo_modalidad, $grupo1_codigos)) {
-             // Usa las variables $gestion_ie, $departamento_ie y $provincia_ie calculadas arriba
+             // Usa $gestion_ie, $departamento_ie y $provincia_ie
             if (str_contains($gestion_ie,'Pública')) {
-                 // Si es LIMA Depto Y LIMA Provincia -> Metro (526), sino -> Provincia (528)
-                 $codigoExamen = ($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') ? '526' : '528';
+                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (526), sino -> Provincia (528)
+                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '526' : '528';
+                 $pagos->put('examen', $codigoExamen);
             } elseif (str_contains($gestion_ie,'Privada')) {
-                 // Si es LIMA Depto Y LIMA Provincia -> Metro (527), sino -> Provincia (529)
-                 $codigoExamen = ($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') ? '527' : '529';
+                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (527), sino -> Provincia (529)
+                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '527' : '529';
+                 $pagos->put('examen', $codigoExamen);
             }
         // Grupo 2: Diplomado, Convenios
         } elseif (in_array($postulante->codigo_modalidad, $grupo2_codigos)) {
@@ -944,14 +946,16 @@ public function CalculoServiciosFicha($id = null)
         $codigoExamen = null; // Variable para almacenar el código calculado
 
         // Grupo 1: Ordinario, CEPRE, ..., TALBE(21), IEN-UNI(17), INTR(23), etc. (LÓGICA CON PROVINCIA)
-        if (in_array($postulante->codigo_modalidad, $grupo1_codigos)) {
-             // Usa las variables $gestion_ie, $departamento_ie y $provincia_ie calculadas arriba
+       if (in_array($postulante->codigo_modalidad, $grupo1_codigos)) {
+             // Usa $gestion_ie, $departamento_ie y $provincia_ie
             if (str_contains($gestion_ie,'Pública')) {
-                 // Si es LIMA Depto Y LIMA Provincia -> Metro (526), sino -> Provincia (528)
-                 $codigoExamen = ($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') ? '526' : '528';
+                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (526), sino -> Provincia (528)
+                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '526' : '528';
+                 $pagos->put('examen', $codigoExamen);
             } elseif (str_contains($gestion_ie,'Privada')) {
-                 // Si es LIMA Depto Y LIMA Provincia -> Metro (527), sino -> Provincia (529)
-                 $codigoExamen = ($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') ? '527' : '529';
+                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (527), sino -> Provincia (529)
+                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '527' : '529';
+                 $pagos->put('examen', $codigoExamen);
             }
         // Grupo 2: Diplomado, Convenios
         } elseif (in_array($postulante->codigo_modalidad, $grupo2_codigos)) {
