@@ -34,6 +34,18 @@ class Colegio extends Model
      * Establecemos el la relacion con catalogo
      * @return [type] [description]
      */
+    public function Distrito()
+
+    {
+
+        return $this->hasOne(Ubigeo::class,'id','idubigeo');
+
+    }
+    
+    /**
+     * Establecemos el la relacion con catalogo
+     * @return [type] [description]
+     */
     public function Paises()
     {
         return $this->hasOne(Pais::class,'id','idpais');
