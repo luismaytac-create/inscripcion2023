@@ -34,6 +34,7 @@
                             <th> GESTION </th>
                             <th> ESTADO </th>
                             <th> DOCUMENTOS SUBIDOS</th>
+                            <th> FECHA SUBIDA</th>
                             <th> SEMIBECA </th>
                             <th> OBSERVACIONES</th>
                             <th> Opciones </th>
@@ -138,6 +139,23 @@
 
 
                 },
+                 {  // Target 10: FECHA SUBIDA ('fecha_subida') - Formateo Opcional
+                'targets': 10, // Corresponde al índice 10 del array 'columns' ('fecha_subida')
+                'render': function ( data, type, full, meta ) {
+                    if (data && type === 'display') {
+                        try {
+                            let date = new Date(data);
+                            let day = ('0' + date.getDate()).slice(-2);
+                            let month = ('0' + (date.getMonth() + 1)).slice(-2);
+                            let year = date.getFullYear();
+                            let hours = ('0' + date.getHours()).slice(-2);
+                            let minutes = ('0' + date.getMinutes()).slice(-2);
+                            return `${day}/${month}/${year} ${hours}:${minutes}`; // Formato DD/MM/YYYY HH:MM
+                        } catch (e) { return data; } // Muestra original si falla
+                    }
+                    return data ? data : ''; // Retorna dato o vacío
+                }
+            },
 
                 {
                     'targets':12,
@@ -154,6 +172,7 @@
                     }
 
                 }
+               
             ],
             "columns": [
                 { "data": "paterno","defaultContent": "" },
@@ -166,6 +185,7 @@
                 { "data": "gestion","defaultContent": "" },
                 { "data": "estado","defaultContent": "" },
                 { "data": "tipos","defaultContent": "" },
+                { "data": "fecha_subida", "defaultContent": "" },
                 { "data": "otorga","defaultContent": "" },
                 { "data": "observaciones","defaultContent": "" },
                 { "data": "id","defaultContent": "" },

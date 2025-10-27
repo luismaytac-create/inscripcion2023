@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Datos;
 use App\Events\AfterUpdatingDataPersonal;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateSecundariosRequest;
+use App\Models\Catalogo;
 use App\Models\Postulante;
 use App\Models\RegistroDni;
 use App\Models\Verficador;
@@ -33,6 +34,7 @@ class DatosSecundariosController extends Controller
     	$postulante = Postulante::find($id);
 
         $postulante->fill($data);
+
 
         if ($postulante->save()) {
             event(new AfterUpdatingDataPersonal($postulante));
