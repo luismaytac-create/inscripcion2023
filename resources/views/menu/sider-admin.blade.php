@@ -229,12 +229,13 @@
 
         @if (str_contains(Auth::user()->codigo_rol,['verificador']))
 
-
-            {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
-{!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
-  {!!Form::menu('Declaración',route('admin.declaracion.index'),'fa fa-dollar')!!}
-
-        @endif
+    {!!Form::menu('Documentos',route('admin.documento.index'),'fa fa-database')!!}
+    {!!Form::menu('BUSCAR POSTULANTE',route('admin.informe.index'),'icon-users')!!}
+    {!!Form::menu('Declaración',route('admin.declaracion.index'),'fa fa-dollar')!!}
+    
+    {!!Form::menu('Estadistica',route('admin.estadisticas.index'),'fa fa-bar-chart')!!}
+    
+@endif
 
 
 
