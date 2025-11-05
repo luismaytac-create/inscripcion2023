@@ -72,7 +72,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">Crea Descuento</h4>
             </div>
-            {!! Form::open(['route'=>'admin.descuentos.store','method'=>'POST']) !!}
+            {!! Form::open(['route' => 'admin.descuentos.store', 'method' => 'POST', 'autocomplete' => 'on']) !!}
             <div class="modal-body">
                     {!! Field::text('periodo',['label'=>'Periodo','placeholder'=>'Periodo']) !!}
                     {!! Field::text('concurso',['label'=>'Concurso','placeholder'=>'Concurso']) !!}
