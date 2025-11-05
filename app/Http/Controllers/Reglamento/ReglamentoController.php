@@ -19,16 +19,25 @@ class ReglamentoController extends Controller
             return back();
         }
     }
-    public function documento($doc)
+   public function documento($doc)
     {
-        $exists = Storage::disk('documentos')->exists($doc.'.pdf');
-        if ($exists) {
-        	$headers = [];
-        	return response()->download(
-        			storage_path('app/documentos/'.$doc.'.pdf'),
-        			null,
-        			$headers
-        		);
+        $disk = Storage::disk('documentos');
+
+        $filename = $doc . '.pdf';
+
+        if ($doc == 'solucionario') {
+            
+            if ($disk->exists('solucionario.zip')) {
+                $filename = 'solucionario.zip';
+            }
+        }
+        if ($disk->exists($filename)) {
+            $headers = [];
+            return response()->download(
+                storage_path('app/documentos/' . $filename),
+                null,
+                $headers
+            );
         } else {
             Alert::info('Lo sentimos en este momento no podemos mostrarle este documento');
             return back();
