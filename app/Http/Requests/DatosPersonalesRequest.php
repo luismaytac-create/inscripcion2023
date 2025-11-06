@@ -45,6 +45,7 @@ class DatosPersonalesRequest extends FormRequest
 
             'especialidad'=>'required',
             'facultades'=>'required',
+            'idsede'=>'required',
             'codigo_verificacion'=>'max:10|valida_cod_cepre:'.$idmodalidad,
             'especialidad'=>"valida_tguni:$idmodalidad,$idespecialidad",
             'especialidad2'=>"valida_tguni:$idmodalidad,$idespecialidad2",
