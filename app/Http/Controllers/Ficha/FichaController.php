@@ -62,7 +62,7 @@ class FichaController extends Controller
             $correcto_email = false;
             $correcto_decla = false;
             $correcto_terro = false;
-            // Exigir sede seleccionada para completar la ficha
+            // Exigir sede seleccionada para completar la ficha para postulantes
             $correcto_sede = false;
             $msj = collect([]);
             ################### INICIO VALIDACION DOCUMENTOS
