@@ -821,12 +821,14 @@ class FichaController extends Controller
             }
 
 
+            //AQUI OCULTAS TODO 
             PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210, 297);
             PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
-            PDF::AddPage('U', 'A4');
-
-            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
-            #    PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
+            #PDF::AddPage('U', 'A4');
+         
+         
+            #DF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
+            #PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
 
 
             PDF::SetXY(5, 100 + 16 - 20 + 10 + 3 + 6 - 6);
@@ -938,6 +940,14 @@ class FichaController extends Controller
             PDF::SetXY(31, 100 + 16 - 20 + 10 + 3 + 6);
             PDF::SetFont('helvetica', '', 13);
             PDF::Cell(150, 5, $postulante->nombre_modalidad, 0, 0, 'L');
+            // Sede (debajo de Modalidad y antes de Primera Prioridad)
+            PDF::SetXY(5, 105 + 12 - 20 + 10 + 3 + 10); 
+            PDF::SetFont('helvetica', 'B', 13);
+            PDF::Cell(60, 5, 'Sede :', 0, 0, 'L');
+            PDF::SetXY(20, 105 + 12 - 20 + 10 + 3 + 10); 
+            PDF::SetFont('helvetica', '', 13);
+            PDF::Cell(150, 5, $postulante->sede, 0, 0, 'L');
+            PDF::SetFont('helvetica', 'B', 10);
             //    PDF::SetXY(65,105+17-20+10+3);
             //    PDF::SetFont('helvetica','B',10);
             if ($postulante->nombre_especialidad == "---") {
@@ -946,17 +956,17 @@ class FichaController extends Controller
             }
             PDF::SetFont('helvetica', 'B', 10);
             if ($postulante->nombre_especialidad2 == "---" && $postulante->nombre_especialidad != "---") {
-                PDF::SetXY(5, 105 + 17 - 20 + 10 + 3 + 6);
+                PDF::SetXY(5, 105 + 17 - 20 + 10 + 3 + 6 + 8);
                 PDF::Cell(120, 5, 'ESPECIALIDAD: ');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(34, 105 + 17 - 20 + 10 + 3 + 6);
+                PDF::SetXY(34, 105 + 17 - 20 + 10 + 3 + 6 + 8);
                 PDF::Cell(120, 5, $postulante->nombre_especialidad, 0, 0, 'L');
             }
             if ($postulante->nombre_especialidad3 == "---" && $postulante->nombre_especialidad2 != "---") {
-                PDF::SetXY(5, 105 + 16 - 20 + 10 + 3 + 6);
+                PDF::SetXY(5, 105 + 16 - 20 + 10 + 3 + 6 + 8);
                 PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, 105 + 16 - 20 + 10 + 3 + 6);
+                PDF::SetXY(45, 105 + 16 - 20 + 10 + 3 + 6 + 8);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad, 0, 0, 'L');
 
                 PDF::SetFont('helvetica', 'B', 10);
@@ -969,10 +979,10 @@ class FichaController extends Controller
             }
 
             if ($postulante->nombre_especialidad != "---" && $postulante->nombre_especialidad2 != "---" && $postulante->nombre_especialidad3 != "---") {
-                PDF::SetXY(5, 105 + 16 - 20 + 10 + 3 + 6);
+                PDF::SetXY(5, 105 + 16 - 20 + 10 + 3 + 6 + 8);
                 PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, 105 + 16 - 20 + 10 + 3 + 6);
+                PDF::SetXY(45, 105 + 16 - 20 + 10 + 3 + 6 + 8);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad, 0, 0, 'L');
 
                 PDF::SetFont('helvetica', 'B', 10);
@@ -1153,7 +1163,7 @@ class FichaController extends Controller
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
 
-                PDF::Cell(40, 7, 'MI 13/08 ', 0, 0, 'C', true);
+                PDF::Cell(40, 7, 'MI 07/12 ', 0, 0, 'C', true);
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
 
@@ -1181,7 +1191,7 @@ class FichaController extends Controller
                 PDF::SetFillColor(243, 218, 114);
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
-                PDF::Cell(40, 7, 'MI 13/08 ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'MI 07/12 ', 0, 0, 'C', 1, '', 1);
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
                 PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
@@ -1382,9 +1392,20 @@ class FichaController extends Controller
             #FOTO
             if ($postulante->mostrar_foto_editada == null) {#32
             } else {
-                PDF::Image($postulante->mostrar_foto_editada, 9.4 - 2, 52.8 - 24 - 10.5, 32.2 + 3.5, 43.9 + 5 + 1.6);
-            }
+                // 1. Obtenemos la URL (ej: http://.../storage/fotosok/71982587.jpeg)
+                $urlDeFoto = $postulante->mostrar_foto_editada; 
 
+                // 2. Extraemos solo el nombre del archivo (ej: "71982587.jpeg")
+                $nombreArchivo = basename($urlDeFoto);
+
+                // 3. Construimos la RUTA LOCAL en el disco duro.
+                //    Esto asume que tus fotos están en 'storage/app/public/fotosok/'
+                $rutaLocal = storage_path('app/public/fotosok/' . $nombreArchivo);
+
+                // 4. Pasamos la RUTA LOCAL (ej: /home/vboxuser/...) a TCPDF
+                PDF::Image($rutaLocal, 9.4 - 2, 52.8 - 24 - 10.5, 32.2 + 3.5, 43.9 + 5 + 1.6);
+            }
+            
             #Mapa
             PDF::AddPage('U', 'A4');
             PDF::Image(storage_path('app/documentos/mapa.jpg'), 0, 0, 210, 297);
@@ -1561,6 +1582,13 @@ class FichaController extends Controller
             PDF::SetXY(31,100+16-20+10+3+6);
             PDF::SetFont('helvetica','',13);
             PDF::Cell(150,5,$postulante->nombre_modalidad,0,0,'L');
+            // Sede (debajo de Modalidad y antes de Primera Prioridad)
+            PDF::SetXY(5,100+16-20+10+3+6+3);
+            PDF::SetFont('helvetica','B',13);
+            PDF::Cell(60,5,'Sede :',0,0,'L');
+            PDF::SetXY(31,100+16-20+10+3+6+3);
+            PDF::SetFont('helvetica','',13);
+            PDF::Cell(150,5,$postulante->sede,0,0,'L');
         //    PDF::SetXY(65,105+17-20+10+3);
         //    PDF::SetFont('helvetica','B',10);
             if ( $postulante->nombre_especialidad == "---"){
@@ -1576,40 +1604,40 @@ class FichaController extends Controller
                 PDF::Cell(120,5,$postulante->nombre_especialidad,0,0,'L');
             }
             if( $postulante->nombre_especialidad3 == "---" && $postulante->nombre_especialidad2 != "---") {
-                PDF::SetXY(5,105+16-20+10+3+6);
+                PDF::SetXY(5,111+16-20+10+3+6);
                 PDF::Cell(130,5,'PRIMERA PRIORIDAD: ',0 ,0,'L');
                 PDF::SetFont('helvetica','',10);
-                PDF::SetXY(45,105+16-20+10+3+6);
+                PDF::SetXY(45,111+16-20+10+3+6);
                 PDF::Cell(130,5,$postulante->nombre_especialidad,0,0,'L');
 
                 PDF::SetFont('helvetica','B',10);
-                PDF::SetXY(5,105+21-20+10+3+6);
+                PDF::SetXY(5,111+21-20+10+3+6);
                 PDF::Cell(130,5,'SEGUNDA PRIORIDAD: ',0,0,'L');
-                PDF::SetXY(45,105+21-20+10+3+6);
+                PDF::SetXY(45,111+21-20+10+3+6);
                 PDF::SetFont('helvetica','',10);
                 PDF::Cell(130,5,$postulante->nombre_especialidad2,0,0,'L');
 
             }
 
             if( $postulante->nombre_especialidad != "---" && $postulante->nombre_especialidad2 != "---" && $postulante->nombre_especialidad3 != "---" ){
-                PDF::SetXY(5,105+16-20+10+3+6);
+                PDF::SetXY(5,111+16-20+10+3+6);
                 PDF::Cell(130,5,'PRIMERA PRIORIDAD: ',0 ,0,'L');
                 PDF::SetFont('helvetica','',10);
-                PDF::SetXY(45,105+16-20+10+3+6);
+                PDF::SetXY(45,111+16-20+10+3+6);
                 PDF::Cell(130,5,$postulante->nombre_especialidad,0,0,'L');
 
                 PDF::SetFont('helvetica','B',10);
-                PDF::SetXY(5,105+21-20+10+3+6);
+                PDF::SetXY(5,111+21-20+10+3+6);
                 PDF::Cell(130,5,'SEGUNDA PRIORIDAD: ',0,0,'L');
-                PDF::SetXY(45,105+21-20+10+3+6);
+                PDF::SetXY(45,111+21-20+10+3+6);
                 PDF::SetFont('helvetica','',10);
                 PDF::Cell(130,5,$postulante->nombre_especialidad2,0,0,'L');
 
                 PDF::SetFont('helvetica','B',10);
-                PDF::SetXY(5,105+26-20+10+3+6);
+                PDF::SetXY(5,111+26-20+10+3+6);
                 PDF::Cell(130,5,'TERCERA PRIORIDAD: ',0,0,'L');
                 PDF::SetFont('helvetica','',10);
-                PDF::SetXY(45,105+26-20+10+3+6);
+                PDF::SetXY(45,111+26-20+10+3+6);
                 PDF::Cell(130,5,$postulante->nombre_especialidad3,0,0,'L');
             }
 
