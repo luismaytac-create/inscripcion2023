@@ -62,6 +62,8 @@ class FichaController extends Controller
             $correcto_email = false;
             $correcto_decla = false;
             $correcto_terro = false;
+            // Exigir sede seleccionada para completar la ficha
+            $correcto_sede = false;
             $msj = collect([]);
             ################### INICIO VALIDACION DOCUMENTOS
             #Valida si esta aprobado victima
@@ -245,6 +247,9 @@ class FichaController extends Controller
                     'link' => 'datos.postulante.index',
                     'boton' => 'ESCOGER SEDE'
                 ]);
+                $correcto_sede = false;
+            } else {
+                $correcto_sede = true;
             }
             ################### FIN VALIDACION DATOS
 
@@ -420,7 +425,8 @@ class FichaController extends Controller
                 $correcto_terro &&
                 $correcto_dni &&
                 $correcto_email &&
-                $correcto_decla
+                $correcto_decla &&
+                $correcto_sede
             ) {
                 #Si los datos son correctos muestro el formulario de conformidad
                 if ($postulante->datos_ok) {
@@ -545,6 +551,10 @@ class FichaController extends Controller
 
 
             if (!$postulante->datos_ok) {
+                // Exigir sede antes de confirmar
+                if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                    return redirect()->route('ficha.index')->with('error', 'Debe seleccionar su sede antes de confirmar.');
+                }
                 $postulante->datos_ok = true;
                 $postulante->fecha_conformidad = Carbon::now();
                 $postulante->ficha_fecha = Carbon::now();
@@ -743,6 +753,11 @@ class FichaController extends Controller
                 $postulante = Postulante::find($id);
             } else {
                 $postulante = Postulante::Usuario()->first();
+            }
+
+            // Bloquear generación de ficha si no confirmó o no tiene sede
+            if (!$postulante->datos_ok || !isset($postulante->idsede) || empty($postulante->idsede)) {
+                return redirect()->route('ficha.index');
             }
 
             if ($postulante->datos_ok) {
