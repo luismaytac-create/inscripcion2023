@@ -666,7 +666,7 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios']);
             }
 
-            // Requerir sede seleccionada para completar la ficha
+            // Requerir sede seleccionada para completar la ficha para postulantes
             if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                 $msj->push([
                     'titulo' => 'Faltan datos',
