@@ -1733,8 +1733,11 @@
 
             }
 
+            if (  !$('#idsede').val() ){
+                swal("SELECCIONA LA SEDE", "Debes seleccionar la sede.", "error");
+                return false;
 
-
+            }
 
             return true;
 

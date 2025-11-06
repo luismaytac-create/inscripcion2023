@@ -122,6 +122,8 @@ class DatosPersonalesController extends Controller
             $data['idfacultad'] = $request->facultades;
 
         }
+        //Guardar la sede (requerida)
+        $data['idsede'] = $request->idsede;
 
         Postulante::create($data);
         Alert::success('Se registró tus datos con éxito, debes esperar la aprobación de la declaración jurada para que puedas realizar tus pagos.');
@@ -223,10 +225,8 @@ class DatosPersonalesController extends Controller
             $data['idfacultad'] = $request->facultades;
 
         }
-        //Si existe sede que lo guarde
-        if ($request->has('idsede')){
-            $data['id_sede'] = $request->has('idsede') ? $request->idsede : null;
-        }
+        //Guardar la sede (requerida)
+        $data['idsede'] = $request->idsede;
 
         $postulante->fill($data);
         $postulante->save();
