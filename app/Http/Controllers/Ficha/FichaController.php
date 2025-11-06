@@ -237,6 +237,15 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios'
                     , 'link' => 'datos.complementarios.index', 'boton' => 'VER DATOS COMPLEMENTARIOS']);
             }
+            // Requerir sede seleccionada para completar la ficha
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $msj->push([
+                    'titulo' => 'Faltan datos',
+                    'mensaje' => 'Usted no ha seleccionado su sede.',
+                    'link' => 'datos.postulante.index',
+                    'boton' => 'ESCOGER SEDE'
+                ]);
+            }
             ################### FIN VALIDACION DATOS
 
 
@@ -655,6 +664,16 @@ class FichaController extends Controller
             else {
                 $correcto_datos_e = false;
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios']);
+            }
+
+            // Requerir sede seleccionada para completar la ficha para postulantes
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $msj->push([
+                    'titulo' => 'Faltan datos',
+                    'mensaje' => 'Usted no ha seleccionado su sede.',
+                    'link' => 'datos.postulante.index',
+                    'boton' => 'ESCOGER SEDE'
+                ]);
             }
 
             #Valida Pagos-------------------------------------------------------
