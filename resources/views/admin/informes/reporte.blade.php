@@ -285,7 +285,7 @@
                                         </td>
                                     </tr>
                                     @endif
- @if( $countfoto >0)
+ @if( $countfoto >0 && $postulante->foto_estado == 'RECHAZADO')
 
  <tr>
                                         <td>FOTO OBSERVACION

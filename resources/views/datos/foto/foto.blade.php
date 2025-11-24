@@ -50,7 +50,9 @@
                                 <h1>Estado: <span class="text-warning">FOTO CARGADA Y EN EDICIÓN</span></h1>
                             @else
                                 <h1>Estado: <span class="text-warning">{{ $postulante->foto_estado }}</span></h1>
-                            <h4>Observación: <span>{{ $obs }}</span></h4>
+                                @if($postulante->foto_estado == 'RECHAZADO')
+                                    <h4>Observación: <span>{{ $obs }}</span></h4>
+                                @endif
                             @endif
 
 
@@ -91,7 +93,6 @@
                                     <h3>Nota:</h3>
                                     <p>Foto formato JPG tomada en estudio fotográfico (Art. 54°), tamaño pasaporte a color, a partir de los hombros, con
                                         fondo blanco, sin lentes, gorros, sin implementos que dificulten la identificación. No se permitirá otro tipo de imagen.</p>
-                                    <h3 class="text-danger">Debes esperar 24 horas para la edición de tu foto.</h3>
                                 </div><!--span-->
                             </div><!--row-->
                         </div>
