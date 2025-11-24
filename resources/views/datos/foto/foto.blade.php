@@ -50,7 +50,7 @@
                                 <h1>Estado: <span class="text-warning">FOTO CARGADA Y EN EDICIÓN</span></h1>
                             @else
                                 <h1>Estado: <span class="text-warning">{{ $postulante->foto_estado }}</span></h1>
-                                @if($postulante->foto_estado == 'RECHAZADO')
+                                @if($postulante->foto_estado == 'RECHAZADO') 
                                     <h4>Observación: <span>{{ $obs }}</span></h4>
                                 @endif
                             @endif
