@@ -36,7 +36,7 @@ class Postulante extends Model
      */
     public function getInicioEstudiosOptions()
     {
-        $date = Carbon::now()->subYear(2);
+        $date = Carbon::now()->subYear(1);
         for ($i=1970; $i < $date->year+1; $i++) {
             $data[$i]= $i;
         }
