@@ -49,7 +49,7 @@ class Postulante extends Model
     public function getFinEstudiosOptions()
     {
         $date = Carbon::now();
-        for ($i=1970; $i <= $date->year+1; $i++) {
+        for ($i=1970; $i <= $date->year+3; $i++) {
             $data[$i]= $i;
         }
         return $data;
