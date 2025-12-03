@@ -443,6 +443,27 @@ class Postulante extends Model
         if(is_null($sede))$sede = New Catalogo(['nombre'=>'---']);
         return strtoupper($sede->nombre);
     }
+    
+    /**
+    * Obtener el colegio del postulante desde catalogo (idtable = 13, texto1)
+    */
+    public function getColegioAttribute()
+    {
+        $sede = Catalogo::find($this->idsede);
+        if(is_null($sede) || !isset($sede->texto1)) return '---';
+        return mb_strtoupper($sede->texto1, 'UTF-8');
+    }
+    
+    /**
+    * Obtener la dirección del colegio desde catalogo (idtable = 13, texto2)
+    */
+    public function getDireccionAttribute()
+    {
+        $sede = Catalogo::find($this->idsede);
+        if(is_null($sede) || !isset($sede->texto2)) return '---';
+        return mb_strtoupper($sede->texto2, 'UTF-8');
+    }
+    
     /**
     * Atributos Foto
     */
