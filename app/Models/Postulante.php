@@ -457,7 +457,7 @@ class Postulante extends Model
     /**
     * Obtener la dirección del colegio desde catalogo (idtable = 13, texto2)
     */
-    public function getDireccionAttribute()
+    public function getDireccionSedeAttribute()
     {
         $sede = Catalogo::find($this->idsede);
         if(is_null($sede) || !isset($sede->texto2)) return '---';
