@@ -822,14 +822,16 @@ class FichaController extends Controller
 
 
             //AQUI OCULTAS TODO 
-            PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210, 297);
-            PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
-            #PDF::AddPage('U', 'A4');
+            //PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210, 297);
+            //PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
+            //PDF::AddPage('U', 'A4');
          
          
-            #DF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
-            #PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
-
+            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
+            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
+            
+            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
+            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
 
             PDF::SetXY(5, 100 + 16 - 20 + 10 + 3 + 6 - 6);
             PDF::SetFont('helvetica', 'B', 13);
@@ -947,59 +949,83 @@ class FichaController extends Controller
             PDF::SetXY(20, 105 + 12 - 20 + 10 + 3 + 10); 
             PDF::SetFont('helvetica', '', 13);
             PDF::Cell(150, 5, $postulante->sede, 0, 0, 'L');
+            
+             // Colegio (debajo de Sede)
+            $yColegioSede = 105 + 12 - 20 + 10 + 3 + 10 + 5;
+            PDF::SetXY(5, $yColegioSede); 
+            PDF::SetFont('helvetica', 'B', 13);
+            PDF::Cell(60, 5, 'Colegio :', 0, 0, 'L');
+            PDF::SetXY(25, $yColegioSede); 
+            PDF::SetFont('helvetica', '', 13);
+            PDF::Cell(150, 5, html_entity_decode($postulante->colegio), 0, 0, 'L');
+            
+            // Dirección (debajo de Colegio)
+            $yDireccion = $yColegioSede + 5;
+            PDF::SetXY(5, $yDireccion); 
+            PDF::SetFont('helvetica', 'B', 13);
+            PDF::Cell(60, 5, html_entity_decode('Direcci&oacute;n :'), 0, 0, 'L');
+            PDF::SetXY(30, $yDireccion); 
+            PDF::SetFont('helvetica', '', 13);
+            PDF::Cell(150, 5, html_entity_decode($postulante->direccion), 0, 0, 'L');
+            
+            // Separación reducida para que las prioridades estén más arriba
+            $yInicioPrioridades = $yDireccion + 5 + 3;
+
+
+            $yLineaActual = $yInicioPrioridades;
+            
             PDF::SetFont('helvetica', 'B', 10);
-            //    PDF::SetXY(65,105+17-20+10+3);
-            //    PDF::SetFont('helvetica','B',10);
             if ($postulante->nombre_especialidad == "---") {
 
 
             }
             PDF::SetFont('helvetica', 'B', 10);
             if ($postulante->nombre_especialidad2 == "---" && $postulante->nombre_especialidad != "---") {
-                PDF::SetXY(5, 105 + 17 - 20 + 10 + 3 + 6 + 8);
+                PDF::SetXY(5, $yLineaActual);
                 PDF::Cell(120, 5, 'ESPECIALIDAD: ');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(34, 105 + 17 - 20 + 10 + 3 + 6 + 8);
+                PDF::SetXY(34, $yLineaActual);
                 PDF::Cell(120, 5, $postulante->nombre_especialidad, 0, 0, 'L');
             }
             if ($postulante->nombre_especialidad3 == "---" && $postulante->nombre_especialidad2 != "---") {
-                PDF::SetXY(5, 105 + 16 - 20 + 10 + 3 + 6 + 8);
+                PDF::SetXY(5, $yLineaActual);
                 PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, 105 + 16 - 20 + 10 + 3 + 6 + 8);
+                PDF::SetXY(45, $yLineaActual);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad, 0, 0, 'L');
+                $yLineaActual += 6;
 
                 PDF::SetFont('helvetica', 'B', 10);
-                PDF::SetXY(5, 105 + 21 - 20 + 10 + 3 + 6);
+                PDF::SetXY(5, $yLineaActual);
                 PDF::Cell(130, 5, 'SEGUNDA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetXY(45, 105 + 21 - 20 + 10 + 3 + 6);
+                PDF::SetXY(45, $yLineaActual);
                 PDF::SetFont('helvetica', '', 10);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad2, 0, 0, 'L');
 
             }
 
             if ($postulante->nombre_especialidad != "---" && $postulante->nombre_especialidad2 != "---" && $postulante->nombre_especialidad3 != "---") {
-                PDF::SetXY(5, 105 + 16 - 20 + 10 + 3 + 6 + 8);
+                PDF::SetXY(5, $yLineaActual);
                 PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, 105 + 16 - 20 + 10 + 3 + 6 + 8);
+                PDF::SetXY(45, $yLineaActual);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad, 0, 0, 'L');
+                $yLineaActual += 6;
 
                 PDF::SetFont('helvetica', 'B', 10);
-                PDF::SetXY(5, 105 + 21 - 20 + 10 + 3 + 6);
+                PDF::SetXY(5, $yLineaActual);
                 PDF::Cell(130, 5, 'SEGUNDA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetXY(45, 105 + 21 - 20 + 10 + 3 + 6);
+                PDF::SetXY(45, $yLineaActual);
                 PDF::SetFont('helvetica', '', 10);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad2, 0, 0, 'L');
+                $yLineaActual += 6;
 
-                /*
                 PDF::SetFont('helvetica', 'B', 10);
-                PDF::SetXY(5, 105 + 26 - 20 + 10 + 3 + 6);
+                PDF::SetXY(5, $yLineaActual);
                 PDF::Cell(130, 5, 'TERCERA PRIORIDAD: ', 0, 0, 'L');
                 PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, 105 + 26 - 20 + 10 + 3 + 6);
+                PDF::SetXY(45, $yLineaActual);
                 PDF::Cell(130, 5, $postulante->nombre_especialidad3, 0, 0, 'L');
-                */
 
 
             }
@@ -1108,51 +1134,58 @@ class FichaController extends Controller
             } else {
 
             }
+            
+            // Solo mostrar puerta si la sede es LIMA
+            $mostrarPuerta = strtoupper($postulante->sede) === 'LIMA METROPOLITANA';
+            
             $puerta1 = '';
             $puerta2 = '';
             $puerta3 = '';
-            if ($postulante->datos_aula_uno->codigo == 'DIAD') {
-                $puerta1 = 'PUERTA N°4-B';
-            } elseif (str_contains($postulante->datos_aula_uno->codigo, ['A', 'C', 'D'])) {
-                $puerta1 = 'PUERTA N°3';
-            } elseif (str_contains($postulante->datos_aula_uno->codigo, ['G', 'H'])) {
-                $puerta1 = 'PUERTA N°4';
-            } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
-                $puerta1 = 'PUERTA N°5';
-            } elseif (str_contains($postulante->datos_aula_uno->codigo, ['S', 'R5'])) {
-                $puerta1 = 'PUERTA N°6';
-            } elseif (str_contains($postulante->datos_aula_uno->codigo, ['T'])) {
-                $puerta1 = 'PUERTA N°7';
-
-            }
-            if ($postulante->datos_aula_dos->codigo == 'DIAD') {
-                $puerta2 = 'PUERTA N°4-B';
-            } elseif (str_contains($postulante->datos_aula_dos->codigo, ['A', 'C', 'D'])) {
-                $puerta2 = 'PUERTA N°3';
-            } elseif (str_contains($postulante->datos_aula_dos->codigo, ['G', 'H'])) {
-                $puerta2 = 'PUERTA N°4';
-            } elseif (str_contains($postulante->datos_aula_dos->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
-                $puerta2 = 'PUERTA N°5';
-            } elseif (str_contains($postulante->datos_aula_dos->codigo, ['S', 'R5'])) {
-                $puerta2 = 'PUERTA N°6';
-            } elseif (str_contains($postulante->datos_aula_dos->codigo, ['T'])) {
-                $puerta2 = 'PUERTA N°7';
-            } elseif (str_contains($postulante->datos_aula_dos->codigo, ['DIAD'])) {
-                $puerta3 = 'PUERTA N°4-B';
-            }
-            if ($postulante->datos_aula_tres->codigo == 'DIAD') {
-                $puerta3 = 'PUERTA N°4-B';
-            } elseif (str_contains($postulante->datos_aula_tres->codigo, ['A', 'C', 'D'])) {
-                $puerta3 = 'PUERTA N°3';
-            } elseif (str_contains($postulante->datos_aula_tres->codigo, ['G', 'H'])) {
-                $puerta3 = 'PUERTA N°4';
-            } elseif (str_contains($postulante->datos_aula_tres->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
-                $puerta3 = 'PUERTA N°5';
-            } elseif (str_contains($postulante->datos_aula_tres->codigo, ['S', 'R5'])) {
-                $puerta3 = 'PUERTA N°6';
-            } elseif (str_contains($postulante->datos_aula_tres->codigo, ['T'])) {
-                $puerta3 = 'PUERTA N°7';
-
+            
+            if ($mostrarPuerta) {
+                if ($postulante->datos_aula_uno->codigo == 'DIAD') {
+                    $puerta1 = 'PUERTA N°4-B';
+                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['A', 'C', 'D'])) {
+                    $puerta1 = 'PUERTA N°3';
+                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['G', 'H'])) {
+                    $puerta1 = 'PUERTA N°4';
+                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
+                    $puerta1 = 'PUERTA N°5';
+                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['S', 'R5'])) {
+                    $puerta1 = 'PUERTA N°6';
+                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['T'])) {
+                    $puerta1 = 'PUERTA N°7';
+                }
+                
+                if ($postulante->datos_aula_dos->codigo == 'DIAD') {
+                    $puerta2 = 'PUERTA N°4-B';
+                } elseif (str_contains($postulante->datos_aula_dos->codigo, ['A', 'C', 'D'])) {
+                    $puerta2 = 'PUERTA N°3';
+                } elseif (str_contains($postulante->datos_aula_dos->codigo, ['G', 'H'])) {
+                    $puerta2 = 'PUERTA N°4';
+                } elseif (str_contains($postulante->datos_aula_dos->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
+                    $puerta2 = 'PUERTA N°5';
+                } elseif (str_contains($postulante->datos_aula_dos->codigo, ['S', 'R5'])) {
+                    $puerta2 = 'PUERTA N°6';
+                } elseif (str_contains($postulante->datos_aula_dos->codigo, ['T'])) {
+                    $puerta2 = 'PUERTA N°7';
+                } elseif (str_contains($postulante->datos_aula_dos->codigo, ['DIAD'])) {
+                    $puerta3 = 'PUERTA N°4-B';
+                }
+                
+                if ($postulante->datos_aula_tres->codigo == 'DIAD') {
+                    $puerta3 = 'PUERTA N°4-B';
+                } elseif (str_contains($postulante->datos_aula_tres->codigo, ['A', 'C', 'D'])) {
+                    $puerta3 = 'PUERTA N°3';
+                } elseif (str_contains($postulante->datos_aula_tres->codigo, ['G', 'H'])) {
+                    $puerta3 = 'PUERTA N°4';
+                } elseif (str_contains($postulante->datos_aula_tres->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
+                    $puerta3 = 'PUERTA N°5';
+                } elseif (str_contains($postulante->datos_aula_tres->codigo, ['S', 'R5'])) {
+                    $puerta3 = 'PUERTA N°6';
+                } elseif (str_contains($postulante->datos_aula_tres->codigo, ['T'])) {
+                    $puerta3 = 'PUERTA N°7';
+                }
             }
 
 
@@ -1163,7 +1196,7 @@ class FichaController extends Controller
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
 
-                PDF::Cell(40, 7, 'MI 07/12 ', 0, 0, 'C', true);
+                PDF::Cell(40, 7, 'DO 07/12 ', 0, 0, 'C', true);
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
 
@@ -1191,10 +1224,10 @@ class FichaController extends Controller
                 PDF::SetFillColor(243, 218, 114);
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
-                PDF::Cell(40, 7, 'MI 07/12 ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'DO 07/12 ', 0, 0, 'C', 1, '', 1);
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
-                PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
+                PDF::Cell(40, 12, $postulante->datos_aula_uno->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
 
             }
             #
@@ -1406,9 +1439,19 @@ class FichaController extends Controller
                 PDF::Image($rutaLocal, 9.4 - 2, 52.8 - 24 - 10.5, 32.2 + 3.5, 43.9 + 5 + 1.6);
             }
             
-            #Mapa
+            #Mapa - Validar si es Lima o Provincia
             PDF::AddPage('U', 'A4');
-            PDF::Image(storage_path('app/documentos/mapa.jpg'), 0, 0, 210, 297);
+            
+            // Determinar si es Lima Metropolitana o Provincia
+            $esLimaMetropolitana = strtoupper($postulante->sede) === 'LIMA METROPOLITANA';
+            
+            if ($esLimaMetropolitana) {
+                // Si es Lima, mostrar mapa.jpg
+                PDF::Image(storage_path('app/documentos/mapa.jpg'), 0, 0, 210, 297);
+            } else {
+                // Si es provincia, mostrar informacion.jpg
+                PDF::Image(storage_path('app/documentos/informacion.jpg'), 0, 0, 210, 297);
+            }
             #  PDF::StartTransform();
             #  PDF::Rotate(90, 140, 135);
             #  PDF::Image(asset('assets/pages/img/mapa-uni.jpg'), 0, 0, 270);
