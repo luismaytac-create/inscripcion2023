@@ -959,14 +959,14 @@ class FichaController extends Controller
             PDF::SetFont('helvetica', '', 13);
             PDF::Cell(150, 5, html_entity_decode($postulante->colegio), 0, 0, 'L');
             
-            // Dirección (debajo de Colegio)
+            // Dirección del colegio (debajo de Colegio)
             $yDireccion = $yColegioSede + 5;
             PDF::SetXY(5, $yDireccion); 
             PDF::SetFont('helvetica', 'B', 13);
             PDF::Cell(60, 5, html_entity_decode('Direcci&oacute;n :'), 0, 0, 'L');
             PDF::SetXY(30, $yDireccion); 
             PDF::SetFont('helvetica', '', 13);
-            PDF::Cell(150, 5, html_entity_decode($postulante->direccion), 0, 0, 'L');
+            PDF::Cell(150, 5, html_entity_decode($postulante->direccion_sede), 0, 0, 'L');
             
             // Separación reducida para que las prioridades estén más arriba
             $yInicioPrioridades = $yDireccion + 5 + 3;
