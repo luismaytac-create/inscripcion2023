@@ -18,7 +18,6 @@
                 </div>
 
             </div>
-            {d}
             <div class="m-portlet__body lead">
                 @if (false)
                     <ol>
