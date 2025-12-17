@@ -1137,7 +1137,7 @@ class FichaController extends Controller
             
             // Solo mostrar puerta si la sede es LIMA
             $mostrarPuerta = strtoupper($postulante->sede) === 'LIMA METROPOLITANA';
-            
+             
             $puerta1 = '';
             $puerta2 = '';
             $puerta3 = '';
