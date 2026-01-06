@@ -31,7 +31,7 @@ class DatosRequest extends FormRequest
             'fecha_nacimiento'=>'required',
             'idsexo'=>'required',
             'idgrado'=>'required',
-            'idsede'=>'required',
+            // 'idsede'=>'required', // Comentado - sede asignada automáticamente (105 LIMA METROPOLITANA)
             'idespecialidad'=>'required',
             'direccion'=>'required',
             'idubigeo'=>'required',

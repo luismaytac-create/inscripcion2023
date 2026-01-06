@@ -239,8 +239,8 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios'
                     , 'link' => 'datos.complementarios.index', 'boton' => 'VER DATOS COMPLEMENTARIOS']);
             }
-            // Requerir sede seleccionada para completar la ficha
-            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+            // Requerir sede seleccionada para completar la ficha - COMENTADO: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+            /*if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                 $msj->push([
                     'titulo' => 'Faltan datos',
                     'mensaje' => 'Usted no ha seleccionado su sede.',
@@ -250,7 +250,13 @@ class FichaController extends Controller
                 $correcto_sede = false;
             } else {
                 $correcto_sede = true;
+            }*/
+            // Asignar sede por defecto si no tiene
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $postulante->idsede = 105;
+                $postulante->save();
             }
+            $correcto_sede = true;
             ################### FIN VALIDACION DATOS
 
 
@@ -551,9 +557,13 @@ class FichaController extends Controller
 
 
             if (!$postulante->datos_ok) {
-                // Exigir sede antes de confirmar
-                if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                // Exigir sede antes de confirmar - COMENTADO: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+                /*if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                     return redirect()->route('ficha.index')->with('error', 'Debe seleccionar su sede antes de confirmar.');
+                }*/
+                // Asignar sede por defecto si no tiene
+                if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                    $postulante->idsede = 105;
                 }
                 $postulante->datos_ok = true;
                 $postulante->fecha_conformidad = Carbon::now();
@@ -676,14 +686,19 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios']);
             }
 
-            // Requerir sede seleccionada para completar la ficha para postulantes
-            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+            // Requerir sede seleccionada para completar la ficha para postulantes - COMENTADO: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+            /*if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                 $msj->push([
                     'titulo' => 'Faltan datos',
                     'mensaje' => 'Usted no ha seleccionado su sede.',
                     'link' => 'datos.postulante.index',
                     'boton' => 'ESCOGER SEDE'
                 ]);
+            }*/
+            // Asignar sede por defecto si no tiene
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $postulante->idsede = 105;
+                $postulante->save();
             }
 
             #Valida Pagos-------------------------------------------------------
@@ -755,8 +770,13 @@ class FichaController extends Controller
                 $postulante = Postulante::Usuario()->first();
             }
 
-            // Bloquear generación de ficha si no confirmó o no tiene sede
-            if (!$postulante->datos_ok || !isset($postulante->idsede) || empty($postulante->idsede)) {
+            // Bloquear generación de ficha si no confirmó - COMENTADO validación de sede: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+            // Asignar sede por defecto si no tiene
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $postulante->idsede = 105;
+                $postulante->save();
+            }
+            if (!$postulante->datos_ok) {
                 return redirect()->route('ficha.index');
             }
 

@@ -258,7 +258,7 @@
 
 
                         </div>
-                        <div id="colediv" class="col-md-12">
+                        {{-- <div id="colediv" class="col-md-12">
 
                             @if(Request::old('idsede') == NULL)
                                 {!! Field::select(
@@ -268,7 +268,7 @@
                                         ['style' => 'width: 100%', 'label' => 'Escoger Sede(*)']
                                     ) !!}
                             @endif
-                        </div>
+                        </div> --}}
 
 
                     </div><!--span-->
@@ -1676,11 +1676,11 @@
                 }
             }
 
-            if (!$('#idsede').val()) {
-                swal("SELECCIONA LA SEDE", "Debes seleccionar la sede.", "error");
-                return false;
+            // if (!$('#idsede').val()) {
+            //     swal("SELECCIONA LA SEDE", "Debes seleccionar la sede.", "error");
+            //     return false;
 
-            }
+            // }
 
             return true;
 

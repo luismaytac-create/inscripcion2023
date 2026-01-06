@@ -23,13 +23,14 @@ class DatosPersonalesController extends Controller
     public function index()
     {
         $postulante = Postulante::Usuario()->first();
-        $sedes = Catalogo::where('idtable', 13)
+        // Sede comentada - ahora se asigna por defecto 105 (LIMA METROPOLITANA)
+        /*$sedes = Catalogo::where('idtable', 13)
             ->orderBy('nombre')
             ->pluck('nombre', 'id')
-            ->toArray();
+            ->toArray();*/
 
         if(is_null($postulante)){
-            if(is_null($postulante)) return view('datos.personal.index', compact('sedes', 'dni')); 
+            if(is_null($postulante)) return view('datos.personal.index'); 
         }else {
             $num = Restriccion::where('dni', $postulante->numero_identificacion)->count();
             if($num>0){
@@ -37,7 +38,7 @@ class DatosPersonalesController extends Controller
                 return redirect()->route('home.index');
             }else {
 
-                return view('datos.personal.edit',compact('postulante','sedes'));
+                return view('datos.personal.edit',compact('postulante'));
 
             }
         }
@@ -122,8 +123,8 @@ class DatosPersonalesController extends Controller
             $data['idfacultad'] = $request->facultades;
 
         }
-        //Guardar la sede (requerida)
-        $data['idsede'] = $request->idsede;
+        // Sede por defecto: 105 (LIMA METROPOLITANA) - El postulante no escoge sede
+        $data['idsede'] = 105;
 
         Postulante::create($data);
         Alert::success('Se registró tus datos con éxito, debes esperar la aprobación de la declaración jurada para que puedas realizar tus pagos.');
@@ -225,8 +226,8 @@ class DatosPersonalesController extends Controller
             $data['idfacultad'] = $request->facultades;
 
         }
-        //Guardar la sede (requerida)
-        $data['idsede'] = $request->idsede;
+        // Sede por defecto: 105 (LIMA METROPOLITANA) - El postulante no escoge sede
+        $data['idsede'] = 105;
 
         $postulante->fill($data);
         $postulante->save();
@@ -291,6 +292,9 @@ class DatosPersonalesController extends Controller
             $data['idfacultad'] = $request->facultades;
 
         }
+        // Sede por defecto: 105 (LIMA METROPOLITANA) - El postulante no escoge sede
+        $data['idsede'] = 105;
+        
         $postulante->fill($data);
         $postulante->save();
         Alert::success('Datos confirmados');
