@@ -200,7 +200,7 @@ class FichaController extends Controller
                     , 'link' => 'datos.foto.foto', 'boton' => 'CARGAR FOTO']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'RECHAZADO') {
                 $correcto_foto = false;
-                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto nítida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes@admisionuni.edu.pe'
+                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto nítida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes.admision@uni.edu.pe'
                     , 'link' => 'datos.foto.foto', 'boton' => 'VER ESTADO DE FOTO']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'CARGADO') {
                 $correcto_foto = false;
@@ -282,7 +282,7 @@ class FichaController extends Controller
                     } else {
                         $correcto_pagos = false;
                         $servicio = Servicio::where('codigo', $item)->first();
-                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                         $debe = true;
                     }
 
@@ -294,7 +294,7 @@ class FichaController extends Controller
                             } else {
                                 $correcto_pagos = false;
                                 $servicio = Servicio::where('codigo', $item)->first();
-                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                                 $debe = true;
                             }
                         }
@@ -325,7 +325,7 @@ class FichaController extends Controller
                             } else {
                                 $correcto_pagos = false;
                                 $servicio = Servicio::where('codigo', $item)->first();
-                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                                 $debe = true;
                             }
 
@@ -342,7 +342,7 @@ class FichaController extends Controller
                     else {
                         $correcto_pagos = false;
                         $servicio = Servicio::where('codigo', $item)->first();
-                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                         $debe = true;
                     }
 
@@ -356,7 +356,7 @@ class FichaController extends Controller
                         if ($debecepre->pago_voca_ordi < 2) {
                             $correcto_pagos = false;
                             $servicio = Servicio::where('codigo', '474')->first();
-                            $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                            $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                             $debe = true;
                         }
 
@@ -379,7 +379,7 @@ class FichaController extends Controller
                 $servicio = Servicio::where('codigo', '474')->first();
                 $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer d�a habil)',
                     'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas,
-                             de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                             de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                 $debe = true;
 
             }
@@ -392,7 +392,7 @@ class FichaController extends Controller
             $casos = [''];
             if (in_array($postulante->numero_identificacion, $casos)) $correcto_pagos = true;
             if ($debecepre) {
-                //   $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.'VOCACIONAL'.' por S/ '.'160'.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                //   $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.'VOCACIONAL'.' por S/ '.'160'.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
 
             }
 
@@ -654,7 +654,7 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Falta Foto', 'mensaje' => 'Usted no ha cargado su foto']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'RECHAZADO') {
                 $correcto_foto = false;
-                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto mas nitida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes@admisionuni.edu.pe']);
+                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto mas nitida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes.admision@uni.edu.pe']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'CARGADO') {
                 $correcto_foto = false;
                 $msj->push(['titulo' => 'Edición de Foto', 'mensaje' => 'Se recibió su foto, se confirmará por correo cuando pueda descargar su ficha.']);
@@ -714,7 +714,7 @@ class FichaController extends Controller
                 else {
                     $correcto_pagos = false;
                     $servicio = Servicio::where('codigo', $item)->first();
-                    $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                    $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                     $debe = true;
                 }
             }

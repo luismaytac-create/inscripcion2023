@@ -127,7 +127,7 @@ class DatosPersonalesController extends Controller
         $data['idsede'] = 105;
 
         Postulante::create($data);
-        Alert::success('Se registró tus datos con éxito, debes esperar la aprobación de la declaración jurada para que puedas realizar tus pagos.');
+        Alert::success('Se registró tus datos con éxito, puede continuar con el proceso.');
         return redirect()->route('home.index');
     }
 
