@@ -556,115 +556,77 @@ public function CalculoServiciosAd($postulante)
         PDF::SetTitle('RECIBO DE PAGO');
         PDF::AddPage('L','A5');
         #MARCO
-        PDF::Rect(15,15, 180,100 );
-        #IMAGEN
-        PDF::Image($imagen,18,20,40);
+        PDF::Rect(15,15, 180,92 );
+        #IMAGEN YAPE - Reducida a 30mm y posicionada a la derecha
         #TITULO
-        PDF::SetXY(20,15);
-        PDF::SetFont('helvetica','',22);
-        PDF::Cell(170,15,"FORMATO DE PAGO",0,0,'C');
-        #CCOLOR DEL TEXTO
+        PDF::SetXY(18,17);
+        PDF::SetFont('helvetica','B',18);
+        PDF::SetTextColor(0);
+        PDF::Cell(140,8,"FORMATO DE PAGO",0,0,'L');
+        #COLOR DEL TEXTO
         PDF::SetTextColor(0);
         #INSTITUCION
-        PDF::SetXY(18,40);
-        PDF::SetFont('helvetica','B',11);
-        PDF::Cell(60,5,'Cuenta :',1,0,'R');
-        PDF::SetXY(78,40);
-        PDF::SetFont('helvetica','B',10);
-        PDF::Cell(110,5,'PAGO ESTUDIANTES',1,0,'L');
-        #ETIQUETA NOMBRE DEL ALUMNO
-        PDF::SetXY(18,45);
-        PDF::SetFont('helvetica','B',11);
-        PDF::Cell(60,5,'DNI POSTULANTE',1,0,'R');
-        PDF::SetXY(78,45);
-        PDF::SetFont('helvetica','',11);
-        PDF::Cell(110,5,$postulante->numero_identificacion,1,0,'L');
-        #CODIGO CNE
-        PDF::SetXY(18,50);
-        PDF::SetFont('helvetica','B',11);
-        PDF::Cell(60,5,'Nombre del postulante :',1,0,'R');
-        PDF::SetXY(78,50);
-        PDF::SetFont('helvetica','',11);
-        PDF::Cell(110,5,$postulante->nombre_completo,1,0,'L');
+        PDF::SetXY(18,27);
+        PDF::SetFont('helvetica','B',9);
+        PDF::Cell(54,4,'Cuenta :',1,0,'R');
+        PDF::SetXY(72,27);
+        PDF::SetFont('helvetica','',9);
+        PDF::Cell(116,4,'PAGO ESTUDIANTES',1,0,'L');
+        #ETIQUETA DNI
+        PDF::SetXY(18,31);
+        PDF::SetFont('helvetica','B',9);
+        PDF::Cell(54,4,'DNI POSTULANTE',1,0,'R');
+        PDF::SetXY(72,31);
+        PDF::SetFont('helvetica','',9);
+        PDF::Cell(116,4,$postulante->numero_identificacion,1,0,'L');
+        #NOMBRE
+        PDF::SetXY(18,35);
+        PDF::SetFont('helvetica','B',9);
+        PDF::Cell(54,4,'Nombre :',1,0,'R');
+        PDF::SetXY(72,35);
+        PDF::SetFont('helvetica','',9);
+        PDF::Cell(116,4,$postulante->nombre_completo,1,0,'L');
         #CONCEPTO
+        PDF::SetXY(18,39);
+        PDF::SetFont('helvetica','B',9);
+        PDF::Cell(54,4,'Concepto :',1,0,'R');
+        PDF::SetXY(72,39);
+        PDF::SetFont('helvetica','',9);
+        PDF::Cell(116,4,$lblservicio.$servicio->descripcion,1,0,'L');
+        #IMPORTE
+        PDF::SetXY(18,43);
+        PDF::SetFont('helvetica','B',9);
+        PDF::Cell(54,4,"Importe :",1,0,'R');
+        PDF::SetXY(72,43);
+        PDF::SetFont('helvetica','',9);
+        PDF::Cell(116,4,"S/. ".$servicio->monto,1,0,'L');
+        
+        #TITULO INSTRUCCIONES
+        PDF::SetXY(18,49);
+        PDF::SetFont('helvetica','B',11);
+        PDF::SetTextColor(255,0,0);
+        PDF::Cell(170,5,"Instrucciones para el postulante",0,0,'L');
+        
+        #INSTRUCCIONES - Compactadas
         PDF::SetXY(18,55);
-        PDF::SetFont('helvetica','B',11);
-        PDF::Cell(60,5,$lblconcepto,1,0,'R');
-        PDF::SetXY(78,55);
-        PDF::SetFont('helvetica','',11);
-        PDF::Cell(110,5,$lblservicio.$servicio->descripcion,1,0,'L');
-        #ETIQUETA IMPORTE
-        PDF::SetXY(18,60);
-        PDF::SetFont('helvetica','B',11);
-        PDF::Cell(60,5,"Importe :",1,0,'R');
-        PDF::SetXY(78,60);
-        PDF::SetFont('helvetica','',11);
-        PDF::Cell(110,5,"S/. $servicio->monto ",1,0,'L');
-        $pagodatime=$this->CalculoPago($postulante);
-
-		#ADVERTENCIA
-		PDF::SetXY(18,65);
-        PDF::SetFont('helvetica','B',15);
-        PDF::SetTextColor(255,0,0);
-
-
-        PDF::SetXY(18,70);
-
-	#PDF::Cell(123,5,'PUEDES PAGAR DESDE: '.$pagodatime,0,0,'L');
-
-
-        if( $pagodatime == 'NO PUEDE PAGAR YA QUE LA DECLARACIÓN NO ESTÁ APROBADA'){
-            PDF::MultiCell(150,5,$pagodatime, 0, 'L', false);
-         #  PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 30/07/2021', 0, 'L', false);
-        }else {
-
-            if($postulante->idmodalidad==16){
-           #     PDF::MultiCell(150,5,$pagodatime, 0, 'L', false);
-           #    PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 27/07/2023', 0, 'L', false);
-
-            }else {
-             #    PDF::MultiCell(150,5,'PUEDES PAGAR DESDE: '.$pagodatime, 0, 'L', false);
-             #  PDF::MultiCell(150,5,'ÚLTIMO DÍA DE PAGO 27/07/2023', 0, 'L', false);
-            }
-
-
-        }
-
-
-        PDF::SetXY(18,71);
-        PDF::SetFont('helvetica','B',12);
-        PDF::SetTextColor(255,0,0);
-
-
-
-      #  PDF::MultiCell(170,5,'La aplicación de los exámenes del Concurso de Admisión 2021-1, se desarrollará en forma presencial; pudiéndose optar por otra forma diferente que contemple la situación de emergencia sanitaria y las disposiciones legales del Gobierno Central.',0,'L',false);
-		#TITULO INSTRUCCIONES
-        PDF::SetXY(18,86);
-        PDF::SetFont('helvetica','',15);
-        PDF::SetTextColor(255,0,0);
-        PDF::Cell(123,5,"Instrucciones para el postulante",0,0,'L');
-        #INSTRUCCIONES
-        PDF::SetXY(18,92);
-        PDF::SetFont('helvetica','',11);
+        PDF::SetFont('helvetica','',9);
         PDF::SetTextColor(0);
-        PDF::Cell(123,0,"1. Verificar que los datos registrados en la parte superior sean los correctos.",0,0,'L');
-        PDF::SetXY(18,97);
-        PDF::Cell(123,0,"2. Verificar que el nombre sea del postulante y no del apoderado o de quien pague.",0,0,'L');
-        PDF::SetXY(18,102);
-        PDF::Cell(123,0,$lblinstruccion,0,0,'L');
+        PDF::MultiCell(170,3.5,"1. Ingresa a la app de YAPE en tu celular y presiona el botón YAPEAR SERVICIOS.",0,'L',false);
+        PDF::SetXY(18,58.5);
+        PDF::MultiCell(170,3.5,"2. Busca la empresa: UNIVERSIDAD NACIONAL DE INGENIERIA y digitala.",0,'L',false);
+        PDF::SetXY(18,62);
+        PDF::MultiCell(170,3.5,"3. Presiona PAGO ESTUDIANTES e ingresa tu DNI y verifica el monto S/. ".$servicio->monto,0,'L',false);
+        PDF::SetXY(18,65.5);
+        PDF::MultiCell(170,3.5,"4. Confirma el pago y listo.",0,'L',false);
         
-		
-		#ADVERTENCIA
-		#$mansjCepr=$this->MensajeCepre($postulante,$servicio);
-		
+        PDF::SetXY(18,70);
+        PDF::SetFont('helvetica','B',9);
+        PDF::SetTextColor(255,0,0);
         
-        
-		#PDF::SetXY(18,93);
-		#PDF::Cell(123,5,$mansjCepr,0,0,'L');
-		#PDF::SetTextColor(255,0,0);
-		#	PDF::SetFillColor(255);
-		
-
+        PDF::SetXY(18,76);
+        PDF::SetFont('helvetica','',8);
+        PDF::SetTextColor(0);
+        PDF::Cell(170,2.5,"El sistema confirmará tu pago dentro en el transcurso del día. Si tienes problemas, contacta a: informes.admision@uni.edu.pe",0,0,'L');
     }
 	public function MensajeCepre($postulante,$servicio){
 		$msj="";
