@@ -200,7 +200,7 @@ class FichaController extends Controller
                     , 'link' => 'datos.foto.foto', 'boton' => 'CARGAR FOTO']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'RECHAZADO') {
                 $correcto_foto = false;
-                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto nítida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes@admisionuni.edu.pe'
+                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto nítida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes.admision@uni.edu.pe'
                     , 'link' => 'datos.foto.foto', 'boton' => 'VER ESTADO DE FOTO']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'CARGADO') {
                 $correcto_foto = false;
@@ -239,8 +239,8 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios'
                     , 'link' => 'datos.complementarios.index', 'boton' => 'VER DATOS COMPLEMENTARIOS']);
             }
-            // Requerir sede seleccionada para completar la ficha
-            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+            // Requerir sede seleccionada para completar la ficha - COMENTADO: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+            /*if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                 $msj->push([
                     'titulo' => 'Faltan datos',
                     'mensaje' => 'Usted no ha seleccionado su sede.',
@@ -250,7 +250,13 @@ class FichaController extends Controller
                 $correcto_sede = false;
             } else {
                 $correcto_sede = true;
+            }*/
+            // Asignar sede por defecto si no tiene
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $postulante->idsede = 105;
+                $postulante->save();
             }
+            $correcto_sede = true;
             ################### FIN VALIDACION DATOS
 
 
@@ -263,119 +269,19 @@ class FichaController extends Controller
             $recaudacion = Recaudacion::select('servicio', 'monto')->where('idpostulante', $postulante->id)->get();
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
             $debe = false;
-            $debecepre = false;
+            
+            // Validación simplificada basada en la lógica del procedimiento almacenado
             foreach ($pagos as $key => $item) {
-
-                if ($postulante->idmodalidad == 16) {
+                if (str_contains($pagos_realizados, $item)) {
+                    $correcto_pagos = true;
+                } else {
+                    $correcto_pagos = false;
                     $servicio = Servicio::where('codigo', $item)->first();
-                    if ($servicio->codigo == '475') {
-
+                    if ($servicio) {
+                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
                     }
-                    if (str_contains($pagos_realizados, $item)) {
-                        $correcto_pagos = true;
-                    } else {
-                        $correcto_pagos = false;
-                        $servicio = Servicio::where('codigo', $item)->first();
-                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                        $debe = true;
-                    }
-
-
-                    if ($servicio->codigo == '474') {
-                        if ($postulante->idespecialidad == 1 && $postulante->idespecialidad4 != 1) {
-                            if (str_contains($pagos_realizados, $item)) {
-                                $correcto_pagos = true;
-                            } else {
-                                $correcto_pagos = false;
-                                $servicio = Servicio::where('codigo', $item)->first();
-                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                                $debe = true;
-                            }
-                        }
-
-                        if ($postulante->idespecialidad == 1 && $postulante->idespecialidad4 == 1) {
-                            if (str_contains($pagos_realizados, $item)) {
-                                if (date('Y-m-d') >= env('FINAL_CEPRE')) {
-                                    $ccc = DB::table("arquitectura_cepre_pagos")->where('codigo', $postulante->numero_identificacion)->count();
-                                    // CAMBIAR AQUI CEPRE DOBLE 160
-                                    if ($ccc > 1) {
-                                        $correcto_pagos = true;
-                                    } else {
-
-                                        $correcto_pagos = false;
-                                        $debe = true;
-                                        $debecepre = true;
-
-                                        $ingresante_arqui = DB::table("vista_cepre_arqui_ingresantes")->where('numero_identificacion', $postulante->numero_identificacion)->count();
-                                        if ($ingresante_arqui == 1) {
-                                            $correcto_pagos = true;
-                                            $debe = false;
-                                            $debecepre = false;
-                                        }
-                                    }
-                                } else {
-                                    $correcto_pagos = true;
-                                }
-                            } else {
-                                $correcto_pagos = false;
-                                $servicio = Servicio::where('codigo', $item)->first();
-                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                                $debe = true;
-                            }
-
-                        }
-                    }//
-
-
-                }//fin
-
-                if ($postulante->idmodalidad != 16) {
-
-
-                    if (str_contains($pagos_realizados, $item)) $correcto_pagos = true;
-                    else {
-                        $correcto_pagos = false;
-                        $servicio = Servicio::where('codigo', $item)->first();
-                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                        $debe = true;
-                    }
-
-                    // INICIO SEGUNDO PAGO CEPRE
-                    $debeceprecount = DB::table("deden_voca_25")->where('dni', $postulante->numero_identificacion)->count();
-                    $debecepre = DB::table("deden_voca_25")->where('dni', $postulante->numero_identificacion)->first();
-
-
-                    if ($postulante->idespecialidad == 1 and $debeceprecount > 0) {
-
-                        if ($debecepre->pago_voca_ordi < 2) {
-                            $correcto_pagos = false;
-                            $servicio = Servicio::where('codigo', '474')->first();
-                            $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                            $debe = true;
-                        }
-
-                    }
-
-                    // FIN SEGUNDO PAGO CEPRE
-
-
+                    $debe = true;
                 }
-
-
-            }
-
-
-            $debecvocaseng = DB::table("vista_deben_voca_segunda_opc")->where('numero_identificacion', $postulante->numero_identificacion)->count();
-
-            if ($debecvocaseng > 0) {
-
-                $correcto_pagos = false;
-                $servicio = Servicio::where('codigo', '474')->first();
-                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer d�a habil)',
-                    'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas,
-                             de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                $debe = true;
-
             }
 
 
@@ -385,10 +291,6 @@ class FichaController extends Controller
             #Casos especiales a los que se les permite el ingreso sin pago
             $casos = [''];
             if (in_array($postulante->numero_identificacion, $casos)) $correcto_pagos = true;
-            if ($debecepre) {
-                //   $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.'VOCACIONAL'.' por S/ '.'160'.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-
-            }
 
 
             if ($postulante->idmodalidad == 16) {
@@ -551,9 +453,13 @@ class FichaController extends Controller
 
 
             if (!$postulante->datos_ok) {
-                // Exigir sede antes de confirmar
-                if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                // Exigir sede antes de confirmar - COMENTADO: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+                /*if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                     return redirect()->route('ficha.index')->with('error', 'Debe seleccionar su sede antes de confirmar.');
+                }*/
+                // Asignar sede por defecto si no tiene
+                if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                    $postulante->idsede = 105;
                 }
                 $postulante->datos_ok = true;
                 $postulante->fecha_conformidad = Carbon::now();
@@ -644,7 +550,7 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Falta Foto', 'mensaje' => 'Usted no ha cargado su foto']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'RECHAZADO') {
                 $correcto_foto = false;
-                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto mas nitida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes@admisionuni.edu.pe']);
+                $msj->push(['titulo' => 'Foto Rechazada', 'mensaje' => 'La foto que usted ha cargado en el sistema ha sido rechazada, vuelva a cargar una foto mas nitida con fondo blanco sin lentes, si tiene problemas puede enviar su foto al correo informes.admision@uni.edu.pe']);
             } elseif (isset($postulante) && $postulante->foto_estado == 'CARGADO') {
                 $correcto_foto = false;
                 $msj->push(['titulo' => 'Edición de Foto', 'mensaje' => 'Se recibió su foto, se confirmará por correo cuando pueda descargar su ficha.']);
@@ -676,14 +582,19 @@ class FichaController extends Controller
                 $msj->push(['titulo' => 'Faltan datos', 'mensaje' => 'Usted no ha ingresado los datos complementarios']);
             }
 
-            // Requerir sede seleccionada para completar la ficha para postulantes
-            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+            // Requerir sede seleccionada para completar la ficha para postulantes - COMENTADO: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+            /*if (!isset($postulante->idsede) || empty($postulante->idsede)) {
                 $msj->push([
                     'titulo' => 'Faltan datos',
                     'mensaje' => 'Usted no ha seleccionado su sede.',
                     'link' => 'datos.postulante.index',
                     'boton' => 'ESCOGER SEDE'
                 ]);
+            }*/
+            // Asignar sede por defecto si no tiene
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $postulante->idsede = 105;
+                $postulante->save();
             }
 
             #Valida Pagos-------------------------------------------------------
@@ -695,11 +606,14 @@ class FichaController extends Controller
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
             $debe = false;
             foreach ($pagos as $key => $item) {
-                if (str_contains($pagos_realizados, $item)) $correcto_pagos = true;
-                else {
+                if (str_contains($pagos_realizados, $item)) {
+                    $correcto_pagos = true;
+                } else {
                     $correcto_pagos = false;
                     $servicio = Servicio::where('codigo', $item)->first();
-                    $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
+                    if ($servicio) {
+                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
+                    }
                     $debe = true;
                 }
             }
@@ -755,8 +669,13 @@ class FichaController extends Controller
                 $postulante = Postulante::Usuario()->first();
             }
 
-            // Bloquear generación de ficha si no confirmó o no tiene sede
-            if (!$postulante->datos_ok || !isset($postulante->idsede) || empty($postulante->idsede)) {
+            // Bloquear generación de ficha si no confirmó - COMENTADO validación de sede: Sede asignada automáticamente (105 LIMA METROPOLITANA)
+            // Asignar sede por defecto si no tiene
+            if (!isset($postulante->idsede) || empty($postulante->idsede)) {
+                $postulante->idsede = 105;
+                $postulante->save();
+            }
+            if (!$postulante->datos_ok) {
                 return redirect()->route('ficha.index');
             }
 
