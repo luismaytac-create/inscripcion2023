@@ -129,7 +129,7 @@ class PagosController extends Controller
             ($varxx==106656 && $varyyy=='$2y$10$FwzQc0vlk1IkyuA.XnQHnesb3YXDH0sYSyQwdcdlYUCygUTx.srky') ||
             ($varxx==106657 && $varyyy=='$2y$10$m27Nyb3QYOmv/7vsXE/I8eYFNf0MSnDloQqt7vhcvsVnl0uoQKiEq') ||
             ($varxx==70012665 && $varyyy=='$2y$10$CfUERk.xou6.9EQT6eEi6uPnIAw/3JWx07ZB5sJknqQsNUcgSsRtC')){
-            /**
+            /*
                 $servicio_ini = Servicio::find($request->servicio_ini);
                 $servicio_fin = Servicio::find($request->servicio_fin);
                 $recibo = $servicio_ini->codigo.$request->codigo;
@@ -1172,151 +1172,148 @@ class PagosController extends Controller
     public function CalculoServicios($id = null)
     {
         $postulante = Postulante::where('id',$id)->first();
+        if (!$postulante) return collect([]);
 
-        #Pago de Prospecto-----------------------------------------------------------------------------------------------
+        #Pago de Prospecto (siempre requerido)
         $pagos = collect(['prospecto'=>475]);
-        #Pago por derecho de examen---------------------------------------------------------------------------------------
 
-        #Modalidad Ordinario, Dos primeros alumnos, Deportisca calificado (Iniciar),Cepre Uni
-        if (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',464);
-        elseif (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Privada')) {
-            $pagos->put('examen',465);
-         }
+        #Verificar becas activas
+        $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
+        $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
 
-        #Diplomado con bachillerato, Andres bello (Continuar), convenio diplomatico
-        if (str_contains($postulante->codigo_modalidad, ['E1DB','E1CABC','E1CABI','E1CD']))
-            $pagos->put('examen',473);
+        #Determinar gestión (Pública/Privada)
+        $gestion_ie = $postulante->gestion_ie ?? 'Pública';
 
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1DB','E1CABC','E1CABI','E1CD']))
-                $pagos->put('examen2',473);
+        #Asignación según modalidad y becas
+        if ($descuento_total) {
+            // Beca total: no paga inscripción
+        } elseif ($descuento_parcial) {
+            // Semibecas (Servicios 466 y 467)
+            if (str_contains($gestion_ie, 'Pública')) {
+                $pagos->put('examen', 466); // INSC. SEMIBECA ESTATAL
+            } else {
+                $pagos->put('examen', 467); // INSC. SEMIBECA PRIVADA
+            }
+        } else {
+            // Sin beca - Asignar según modalidad
+            $idmoda = $postulante->idmodalidad;
 
-
-
-        #Traslado Externo
-        if (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',469);
-        elseif (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Privada')) {
-             $pagos->put('examen',470);
-         }
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Pública'))
-                $pagos->put('examen2',469);
-            elseif (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Privada')) {
-                 $pagos->put('examen2',470);
-             }
-        #Titulado o graduado
-        if (str_contains($postulante->codigo_modalidad, ['E1TG','E1TGU']))
-            $pagos->put('examen',468);
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1TG','E1TGU']))
-                $pagos->put('examen2',468);
-
-        #Descuentos por simulacro, semibeca o hijo de trabajador
-        $descuento = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->first();
-        if (isset($descuento)) {
-            $pagos->pull('examen');
-            if($descuento->tipo=='Parcial')$pagos->put('examen',$descuento->servicio);
+            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
+            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', 464); // INST. EDUC. ESTATAL
+                } else {
+                    $pagos->put('examen', 465); // INST. EDUC. PRIVADA
+                }
+            }
+            // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22, 23
+            elseif (in_array($idmoda, [21, 22, 23])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', 514); // MODAL.EXTRAOR.COLE.ESTAT
+                } else {
+                    $pagos->put('examen', 515); // MODAL.EXTRAOR.COLE.PARTI
+                }
+            }
+            // Traslado Externo (E1TE) - modalidades 7, 19
+            elseif (in_array($idmoda, [7, 19])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', 469); // INSC. TRASLADO EXT. EST.
+                } else {
+                    $pagos->put('examen', 470); // INSC. TRASLADO EXT.PRIV.
+                }
+                // Convalidación para Traslado
+                $pagos->put('convalidacion', 518); // CONVAL.CURSO TRASL EXTERN
+            }
+            // Titulados y Graduados (E1TGU, E1TG) - modalidades 5, 6
+            elseif (in_array($idmoda, [5, 6])) {
+                $pagos->put('examen', 468); // INSC. TIT. GRADUADOS
+                // Convalidación para Titulados
+                $pagos->put('convalidacion', 519); // CONVAL.CURSO TITUL/GRADU
+            }
+            // Bachiller Diplomado (E1DB, E1CABI, E1CD) - modalidades 4, 8, 9, 10
+            elseif (in_array($idmoda, [4, 8, 9, 10])) {
+                $pagos->put('examen', 473); // INSC. BACH. DIPLOMADO
+            }
         }
-        #Pago por examen vocacional---------------------------------------------------------------------------------------
-        if (str_contains($postulante->codigo_modalidad, 'ID-CEPRE') && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('vocacepre',474);
-        }
 
-        if (!str_contains($postulante->codigo_modalidad, ['ID-CEPRE','E1VTI','E1VTC']) && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('voca',474);
+        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
+        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+            $pagos->put('voca', 474); // PRUEBA DE APT. VOCACIONAL
         }
-
-        if (str_contains($postulante->codigo_especialidad2, 'A1')){
-            $pagos->put('voca',474);
-        }
-        #Pago extemporaneo---------------------------------------------------------------------------------------------------
-        $date = Carbon::now()->toDateString();
-        $fecha_inicio = Cronograma::FechaInicio('INEX');
-        $fecha_fin = Cronograma::FechaFin('INEX');
-       # if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo',507);
 
         return $pagos;
     }
     public function CalculoServiciosAd($id)
     {
         $postulante = Postulante::where('id',$id)->first();
-        #Pago de Prospecto-----------------------------------------------------------------------------------------------
+        if (!$postulante) return collect([]);
+
+        #Pago de Prospecto (siempre requerido)
         $pagos = collect(['prospecto'=>475]);
-        #Pago por derecho de examen---------------------------------------------------------------------------------------
 
-        #Modalidad Ordinario, Dos primeros alumnos, Deportisca calificado (Iniciar),Cepre Uni
-        if (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',464);
-        elseif (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Privada')) {
-            $pagos->put('examen',465);
-         }
+        #Verificar becas activas
+        $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
+        $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
 
-        #Diplomado con bachillerato, Andres bello (Continuar), convenio diplomatico
-        if (str_contains($postulante->codigo_modalidad, ['E1DB','E1CABC','E1CABI','E1CD']))
-            $pagos->put('examen',473);
+        #Determinar gestión (Pública/Privada)
+        $gestion_ie = $postulante->gestion_ie ?? 'Pública';
 
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1DB','E1CABC','E1CABI','E1CD']))
-                $pagos->put('examen2',473);
+        #Asignación según modalidad y becas
+        if ($descuento_total) {
+            // Beca total: no paga inscripción
+        } elseif ($descuento_parcial) {
+            // Semibecas (Servicios 466 y 467)
+            if (str_contains($gestion_ie, 'Pública')) {
+                $pagos->put('examen', 466); // INSC. SEMIBECA ESTATAL
+            } else {
+                $pagos->put('examen', 467); // INSC. SEMIBECA PRIVADA
+            }
+        } else {
+            // Sin beca - Asignar según modalidad
+            $idmoda = $postulante->idmodalidad;
 
-
-
-        #Traslado Externo
-        if (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',469);
-        elseif (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Privada')) {
-             $pagos->put('examen',470);
-         }
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Pública'))
-                $pagos->put('examen2',469);
-            elseif (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Privada')) {
-                 $pagos->put('examen2',470);
-             }
-        #Titulado o graduado
-        if (str_contains($postulante->codigo_modalidad, ['E1TG','E1TGU']))
-            $pagos->put('examen',468);
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1TG','E1TGU']))
-                $pagos->put('examen2',468);
-
-        #Descuentos por simulacro, semibeca o hijo de trabajador
-        $descuento = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->first();
-        if (isset($descuento)) {
-            $pagos->pull('examen');
-            if($descuento->tipo=='Parcial')$pagos->put('examen',$descuento->servicio);
+            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
+            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', 464); // INST. EDUC. ESTATAL
+                } else {
+                    $pagos->put('examen', 465); // INST. EDUC. PRIVADA
+                }
+            }
+            // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22, 23
+            elseif (in_array($idmoda, [21, 22, 23])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', 514); // MODAL.EXTRAOR.COLE.ESTAT
+                } else {
+                    $pagos->put('examen', 515); // MODAL.EXTRAOR.COLE.PARTI
+                }
+            }
+            // Traslado Externo (E1TE) - modalidades 7, 19
+            elseif (in_array($idmoda, [7, 19])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', 469); // INSC. TRASLADO EXT. EST.
+                } else {
+                    $pagos->put('examen', 470); // INSC. TRASLADO EXT.PRIV.
+                }
+                // Convalidación para Traslado
+                $pagos->put('convalidacion', 518); // CONVAL.CURSO TRASL EXTERN
+            }
+            // Titulados y Graduados (E1TGU, E1TG) - modalidades 5, 6
+            elseif (in_array($idmoda, [5, 6])) {
+                $pagos->put('examen', 468); // INSC. TIT. GRADUADOS
+                // Convalidación para Titulados
+                $pagos->put('convalidacion', 519); // CONVAL.CURSO TITUL/GRADU
+            }
+            // Bachiller Diplomado (E1DB, E1CABI, E1CD) - modalidades 4, 8, 9, 10
+            elseif (in_array($idmoda, [4, 8, 9, 10])) {
+                $pagos->put('examen', 473); // INSC. BACH. DIPLOMADO
+            }
         }
-        #Pago por examen vocacional---------------------------------------------------------------------------------------
-        if (str_contains($postulante->codigo_modalidad, 'ID-CEPRE') && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('voca',474);
-        }
 
-        if (!str_contains($postulante->codigo_modalidad, ['ID-CEPRE','E1VTI','E1VTC']) && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('voca',474);
+        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
+        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+            $pagos->put('voca', 474); // PRUEBA DE APT. VOCACIONAL
         }
-
-        if (str_contains($postulante->codigo_especialidad2, 'A1')){
-            $pagos->put('voca',474);
-        }
-        #Pago extemporaneo---------------------------------------------------------------------------------------------------
-        $date = Carbon::now()->toDateString();
-        $fecha_inicio = Cronograma::FechaInicio('INEX');
-        $fecha_fin = Cronograma::FechaFin('INEX');
-        if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo',507);
 
         return $pagos;
     }
@@ -1328,82 +1325,33 @@ class PagosController extends Controller
         $debe = false;
         #Valida Pagos-------------------------------------------------------
 
-             $postulante = Postulante::where('id',$id)->first();
-            $pagos = $this->CalculoServicios($id);
+        $postulante = Postulante::where('id',$id)->first();
+        if (!$postulante) return;
 
+        $pagos = $this->CalculoServicios($id);
+        $recaudacion = Recaudacion::select('servicio','monto')->where('idpostulante',$postulante->id)->get();
+        $pagos_realizados = $recaudacion->implode('servicio', ', ');
 
-            $recaudacion = Recaudacion::select('servicio','monto')->where('idpostulante',$postulante->id)->get();
-
-            $pagos_realizados = $recaudacion->implode('servicio', ', ');
-
-            $debe = false;
-            foreach ($pagos as $key => $item) {
-                if(str_contains($pagos_realizados,$item)){
-
-				$correcto_pagos = true;
-
-
-				}else{
-                    $correcto_pagos = false;
-                    $servicio = Servicio::where('codigo',$item)->first();
+        $debe = false;
+        foreach ($pagos as $key => $item) {
+            if(str_contains($pagos_realizados, $item)){
+                $correcto_pagos = true;
+            } else {
+                $correcto_pagos = false;
+                $servicio = Servicio::where('codigo',$item)->first();
+                if ($servicio) {
                     $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.$servicio->descripcion.' por S/ '.$servicio->monto.' soles, si usted acaba de realizar el pago el sistema se actualizara en 12 horas, de lo contrario comuniquese con nosotros al correo informes@admisionuni.edu.pe']);
-                    $debe = true;
-
                 }
+                $debe = true;
             }
+        }
 
-            $correcto_pagos = ($debe) ? false : true ;
+        $correcto_pagos = ($debe) ? false : true;
 
-            if( $postulante->idmodalidad==16 ){
-
-
-                if( $postulante->idespecialidad !=1 && $postulante->idespecialidad4 !=1){
-                    if ($correcto_pagos && !$postulante->pago) {
-
-                        Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
-                    }
-                }
-                if( $postulante->idespecialidad ==1 && $postulante->idespecialidad4 !=1){
-
-
-                   $varpagg=  Recaudacion::where('idpostulante',$postulante->id)->where('servicio',474)->count();
-
-                   if( $varpagg == 1){
-                       if ($correcto_pagos && !$postulante->pago) {
-
-                           Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
-                       }
-                   }
-                }
-                if( $postulante->idespecialidad !=1 && $postulante->idespecialidad4 ==1){
-
-                    $varpagg=  Recaudacion::where('idpostulante',$postulante->id)->where('servicio',474)->count();
-                    if( $varpagg == 1){
-                        if ($correcto_pagos && !$postulante->pago) {
-
-                            Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
-                        }
-                    }
-                }
-
-                if( $postulante->idespecialidad ==1 && $postulante->idespecialidad2 ==1){
-
-                    $varpagg=  Recaudacion::where('idpostulante',$postulante->id)->where('servicio',474)->count();
-                    if( $varpagg == 2){
-                        if ($correcto_pagos && !$postulante->pago) {
-
-                            Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
-                        }
-                    }
-                }
-
-            }else {
-                if ($correcto_pagos && !$postulante->pago) {
-
-                    Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
-                }
-
-            }
+        // Actualizar estado de pago del postulante
+        if ($correcto_pagos && !$postulante->pago) {
+            Postulante::where('id',$postulante->id)->update(['pago'=>true,'fecha_pago'=>Carbon::now()]);
+        }
     }
     public function validartodarchivo($codigo,$fecha)
     {

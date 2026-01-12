@@ -269,119 +269,19 @@ class FichaController extends Controller
             $recaudacion = Recaudacion::select('servicio', 'monto')->where('idpostulante', $postulante->id)->get();
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
             $debe = false;
-            $debecepre = false;
+            
+            // Validación simplificada basada en la lógica del procedimiento almacenado
             foreach ($pagos as $key => $item) {
-
-                if ($postulante->idmodalidad == 16) {
+                if (str_contains($pagos_realizados, $item)) {
+                    $correcto_pagos = true;
+                } else {
+                    $correcto_pagos = false;
                     $servicio = Servicio::where('codigo', $item)->first();
-                    if ($servicio->codigo == '475') {
-
-                    }
-                    if (str_contains($pagos_realizados, $item)) {
-                        $correcto_pagos = true;
-                    } else {
-                        $correcto_pagos = false;
-                        $servicio = Servicio::where('codigo', $item)->first();
+                    if ($servicio) {
                         $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-                        $debe = true;
                     }
-
-
-                    if ($servicio->codigo == '474') {
-                        if ($postulante->idespecialidad == 1 && $postulante->idespecialidad4 != 1) {
-                            if (str_contains($pagos_realizados, $item)) {
-                                $correcto_pagos = true;
-                            } else {
-                                $correcto_pagos = false;
-                                $servicio = Servicio::where('codigo', $item)->first();
-                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-                                $debe = true;
-                            }
-                        }
-
-                        if ($postulante->idespecialidad == 1 && $postulante->idespecialidad4 == 1) {
-                            if (str_contains($pagos_realizados, $item)) {
-                                if (date('Y-m-d') >= env('FINAL_CEPRE')) {
-                                    $ccc = DB::table("arquitectura_cepre_pagos")->where('codigo', $postulante->numero_identificacion)->count();
-                                    // CAMBIAR AQUI CEPRE DOBLE 160
-                                    if ($ccc > 1) {
-                                        $correcto_pagos = true;
-                                    } else {
-
-                                        $correcto_pagos = false;
-                                        $debe = true;
-                                        $debecepre = true;
-
-                                        $ingresante_arqui = DB::table("vista_cepre_arqui_ingresantes")->where('numero_identificacion', $postulante->numero_identificacion)->count();
-                                        if ($ingresante_arqui == 1) {
-                                            $correcto_pagos = true;
-                                            $debe = false;
-                                            $debecepre = false;
-                                        }
-                                    }
-                                } else {
-                                    $correcto_pagos = true;
-                                }
-                            } else {
-                                $correcto_pagos = false;
-                                $servicio = Servicio::where('codigo', $item)->first();
-                                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-                                $debe = true;
-                            }
-
-                        }
-                    }//
-
-
-                }//fin
-
-                if ($postulante->idmodalidad != 16) {
-
-
-                    if (str_contains($pagos_realizados, $item)) $correcto_pagos = true;
-                    else {
-                        $correcto_pagos = false;
-                        $servicio = Servicio::where('codigo', $item)->first();
-                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-                        $debe = true;
-                    }
-
-                    // INICIO SEGUNDO PAGO CEPRE
-                    $debeceprecount = DB::table("deden_voca_25")->where('dni', $postulante->numero_identificacion)->count();
-                    $debecepre = DB::table("deden_voca_25")->where('dni', $postulante->numero_identificacion)->first();
-
-
-                    if ($postulante->idespecialidad == 1 and $debeceprecount > 0) {
-
-                        if ($debecepre->pago_voca_ordi < 2) {
-                            $correcto_pagos = false;
-                            $servicio = Servicio::where('codigo', '474')->first();
-                            $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-                            $debe = true;
-                        }
-
-                    }
-
-                    // FIN SEGUNDO PAGO CEPRE
-
-
+                    $debe = true;
                 }
-
-
-            }
-
-
-            $debecvocaseng = DB::table("vista_deben_voca_segunda_opc")->where('numero_identificacion', $postulante->numero_identificacion)->count();
-
-            if ($debecvocaseng > 0) {
-
-                $correcto_pagos = false;
-                $servicio = Servicio::where('codigo', '474')->first();
-                $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer d�a habil)',
-                    'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas,
-                             de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-                $debe = true;
-
             }
 
 
@@ -391,10 +291,6 @@ class FichaController extends Controller
             #Casos especiales a los que se les permite el ingreso sin pago
             $casos = [''];
             if (in_array($postulante->numero_identificacion, $casos)) $correcto_pagos = true;
-            if ($debecepre) {
-                //   $msj->push(['titulo'=>'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)','mensaje'=>'No esta registrado el pago de '.'VOCACIONAL'.' por S/ '.'160'.' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
-
-            }
 
 
             if ($postulante->idmodalidad == 16) {
@@ -710,11 +606,14 @@ class FichaController extends Controller
             $pagos_realizados = $recaudacion->implode('servicio', ', ');
             $debe = false;
             foreach ($pagos as $key => $item) {
-                if (str_contains($pagos_realizados, $item)) $correcto_pagos = true;
-                else {
+                if (str_contains($pagos_realizados, $item)) {
+                    $correcto_pagos = true;
+                } else {
                     $correcto_pagos = false;
                     $servicio = Servicio::where('codigo', $item)->first();
-                    $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
+                    if ($servicio) {
+                        $msj->push(['titulo' => 'Falta pago (Los pagos realizado el fin de semana se cargaran el primer día habil)', 'mensaje' => 'No esta registrado el pago de ' . $servicio->descripcion . ' por S/ ' . $servicio->monto . ' soles, si usted acaba de realizar el pago el sistema se actualizara en 24 horas, de lo contrario comuniquese con nosotros al correo informes.admision@uni.edu.pe']);
+                    }
                     $debe = true;
                 }
             }

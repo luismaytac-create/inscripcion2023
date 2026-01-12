@@ -343,133 +343,76 @@ class PagoController extends Controller
         $postulante = $id ? Postulante::find($id) : Postulante::Usuario()->first();
 
         if (!$postulante) {
-             // Si no se encontró postulante, devuelve colección vacía o maneja el error como prefieras
              Log::warning("Postulante no encontrado en CalculoServicios para ID: " . ($id ?? Auth::id()));
              return collect([]);
         }
 
-        #Pago de Prospecto-----------------------------------------------------------------------------------------------
-        $pagos = collect(['prospecto'=>'475']); // Código como string
+        #Pago de Prospecto (siempre requerido)
+        $pagos = collect(['prospecto'=>'475']);
 
-        #Obtener gestión y departamento/provincia (Lógica robusta)
-        $gestion_ie = 'Privada'; // Valor por defecto si no se encuentra
-        $departamento_ie = 'LIMA'; // Valor por defecto si no se encuentra
-        $provincia_ie = 'LIMA'; // Valor por defecto si no se encuentra
+        #Verificar becas activas
+        $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
+        $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
 
-        // Intenta obtener info de la modalidad para saber si usa colegio o universidad
-        $modalidadInfo = \App\Models\Modalidad::find($postulante->idmodalidad);
-        $usaColegio = $modalidadInfo ? $modalidadInfo->colegio : true; // Asume colegio por defecto
+        #Determinar gestión (Pública/Privada)
+        $gestion_ie = $postulante->gestion_ie ?? 'Pública';
 
-        if ($usaColegio && $postulante->idcolegio) {
-             $colegio = \App\Models\Colegio::with('ubigeo')->find($postulante->idcolegio); // Carga ubigeo si es colegio
-             if ($colegio) {
-                 $gestion_ie = $colegio->gestion ?? $gestion_ie;
-                 if ($colegio->ubigeo) {
-                     $departamento_ie = $colegio->ubigeo->departamento ?? $departamento_ie;
-                     $provincia_ie = $colegio->ubigeo->provincia ?? $provincia_ie; // <-- Obtiene Provincia
-                 }
-             }
-        } else if (!$usaColegio && $postulante->iduniversidad) {
-             $universidad = \App\Models\Universidad::find($postulante->iduniversidad);
-             if ($universidad) {
-                 $gestion_ie = $universidad->gestion ?? $gestion_ie;
-                 // Mantenemos Lima/Lima para universidades según lógica SQL previa
-                 $departamento_ie = 'LIMA';
-                 $provincia_ie = 'LIMA';
-             }
-        }
-        // --- FIN OBTENER UBICACIÓN ---
-
-        #Pago por derecho de examen---------------------------------------------------------------------------------------
-        // Define arrays de códigos para claridad y usa in_array
-        $grupo1_codigos = ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE', 'TALBE', 'IEN-UNI', 'INTR']; // Incluye 17, 21, 23 (asegúrate que INTR sea el código correcto)
-        $grupo2_codigos = ['E1DB','E1CABC','E1CABI','E1CD'];
-        $grupo3_codigos = ['E1TE'];
-        $grupo4_codigos = ['E1TG','E1TGU'];
-
-        $codigoExamen = null; // Variable para almacenar el código calculado
-
-        // Grupo 1: Ordinario, CEPRE, ..., TALBE(21), IEN-UNI(17), INTR(23), etc. (LÓGICA CON PROVINCIA)
-        if (in_array($postulante->codigo_modalidad, $grupo1_codigos)) {
-             // Usa $gestion_ie, $departamento_ie y $provincia_ie
-            if (str_contains($gestion_ie,'Pública')) {
-                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (526), sino -> Provincia (528)
-                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '526' : '528';
-                 $pagos->put('examen', $codigoExamen);
-            } elseif (str_contains($gestion_ie,'Privada')) {
-                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (527), sino -> Provincia (529)
-                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '527' : '529';
-                 $pagos->put('examen', $codigoExamen);
+        #Asignación según modalidad y becas
+        if ($descuento_total) {
+            // Beca total: no paga inscripción
+        } elseif ($descuento_parcial) {
+            // Semibecas (Servicios 466 y 467)
+            if (str_contains($gestion_ie, 'Pública')) {
+                $pagos->put('examen', '466'); // INSC. SEMIBECA ESTATAL
+            } else {
+                $pagos->put('examen', '467'); // INSC. SEMIBECA PRIVADA
             }
-        // Grupo 2: Diplomado, Convenios
-        } elseif (in_array($postulante->codigo_modalidad, $grupo2_codigos)) {
-            $codigoExamen = '473';
-        // Grupo 3: Traslado Externo
-        } elseif (str_contains($postulante->codigo_modalidad, 'E1TE')) {
-             // Usa $gestion_ie calculada arriba
-            $codigoExamen = str_contains($gestion_ie,'Pública') ? '469' : '470';
-        // Grupo 4: Titulado o Graduado
-        } elseif (in_array($postulante->codigo_modalidad, $grupo4_codigos)) {
-            $codigoExamen = '468';
-        }
-        // Añadir 'else' aquí si hay modalidades que explícitamente no pagan examen (ej. víctimas)
+        } else {
+            // Sin beca - Asignar según modalidad
+            $idmoda = $postulante->idmodalidad;
 
-        // Añadir pago de examen si se determinó un código
-        if ($codigoExamen) {
-             $pagos->put('examen', $codigoExamen);
-        }
-
-        # Pago de segunda modalidad (si aplica y no es descuento total)
-        $descuento = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->first();
-        $esBecaTotal = isset($descuento) && $descuento->tipo == 'Total';
-
-        if (!$esBecaTotal) {
-             // Revisa si existe código de segunda modalidad
-             if (!is_null($postulante->codigo_modalidad2)) {
-                 // Verifica si la segunda modalidad pertenece a algún grupo que pague
-                 if (in_array($postulante->codigo_modalidad2, $grupo2_codigos)) {
-                     $pagos->put('examen2','473');
-                 } elseif (str_contains($postulante->codigo_modalidad2, 'E1TE')) {
-                      // Usa la MISMA $gestion_ie calculada antes (basada en la primera modalidad/institución)
-                      $codigoExamen2 = str_contains($gestion_ie,'Pública') ? '469' : '470';
-                      $pagos->put('examen2', $codigoExamen2);
-                 } elseif (in_array($postulante->codigo_modalidad2, $grupo4_codigos)) {
-                    $pagos->put('examen2', '468');
-                 }
-                 // Añadir más 'elseif' si otras modalidades pueden ser segunda opción y tienen pago asociado
-             }
-        }
-
-        #Descuentos por simulacro, semibeca o hijo de trabajador
-        // $descuento ya se obtuvo arriba
-        if (isset($descuento)) {
-            if ($descuento->tipo == 'Total') {
-                $pagos->pull('examen'); // Beca total elimina el pago de examen principal
-                $pagos->pull('examen2'); // Y el de segunda modalidad si existiera
-            } elseif ($descuento->tipo == 'Parcial') {
-                 if ($pagos->has('examen')) {
-                      $pagos->put('examen', $descuento->servicio); // Reemplaza con código de descuento
-                 }
-                 // Considerar si afecta a 'examen2'
+            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
+            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', '464'); // INST. EDUC. ESTATAL
+                } else {
+                    $pagos->put('examen', '465'); // INST. EDUC. PRIVADA
+                }
+            }
+            // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22, 23
+            elseif (in_array($idmoda, [21, 22, 23])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', '514'); // MODAL.EXTRAOR.COLE.ESTAT
+                } else {
+                    $pagos->put('examen', '515'); // MODAL.EXTRAOR.COLE.PARTI
+                }
+            }
+            // Traslado Externo (E1TE) - modalidades 7, 19
+            elseif (in_array($idmoda, [7, 19])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', '469'); // INSC. TRASLADO EXT. EST.
+                } else {
+                    $pagos->put('examen', '470'); // INSC. TRASLADO EXT.PRIV.
+                }
+                // Convalidación para Traslado
+                $pagos->put('convalidacion', '518'); // CONVAL.CURSO TRASL EXTERN
+            }
+            // Titulados y Graduados (E1TGU, E1TG) - modalidades 5, 6
+            elseif (in_array($idmoda, [5, 6])) {
+                $pagos->put('examen', '468'); // INSC. TIT. GRADUADOS
+                // Convalidación para Titulados
+                $pagos->put('convalidacion', '519'); // CONVAL.CURSO TITUL/GRADU
+            }
+            // Bachiller Diplomado (E1DB, E1CABI, E1CD) - modalidades 4, 8, 9, 10
+            elseif (in_array($idmoda, [4, 8, 9, 10])) {
+                $pagos->put('examen', '473'); // INSC. BACH. DIPLOMADO
             }
         }
 
-        #Pago por examen vocacional---------------------------------------------------------------------------------------
-        // --- SECCIÓN VOCACIONAL ORIGINAL (COMENTADA POR TU PETICIÓN ANTERIOR) ---
-        /* if (str_contains($postulante->codigo_modalidad, 'ID-CEPRE') && str_contains($postulante->codigo_especialidad, 'A1')){
-             $pagos->put('voca','474'); // OJO: Verifica si es 474 o 516 para CEPRE Arqui
+        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
+        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+            $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
         }
-        // Originalmente tenías ['ID-CEPRE','E1VTI','E1VTC'] excluidos aquí, revisar si es necesario
-        if (!str_contains($postulante->codigo_modalidad, ['ID-CEPRE']) && str_contains($postulante->codigo_especialidad, 'A1')){
-             $pagos->put('voca','474');
-        }
-        // ... (resto lógica vocacional comentada) ... */
-
-        #Pago extemporaneo---------------------------------------------------------------------------------------------------
-      //  $date = Carbon::now()->toDateString();
-      //  $fecha_inicio = Cronograma::FechaInicio('INEX');
-      //  $fecha_fin = Cronograma::FechaFin('INEX');
-       // if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo','507'); // Código como string '507'
 
         return $pagos;
     } // Fin de CalculoServicios
@@ -490,76 +433,50 @@ class PagoController extends Controller
  public function CalculoServiciosTemp($id = null)
     {
         $postulante = Postulante::Usuario()->first();
-	
-        #Pago de Prospecto-----------------------------------------------------------------------------------------------
-        $pagos = collect(['prospecto'=>475]);
-        #Pago por derecho de examen---------------------------------------------------------------------------------------
+        if (!$postulante) return collect([]);
 
-        #Modalidad Ordinario, Dos primeros alumnos, Deportisca calificado (Iniciar),Cepre Uni
-        if (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',464);
-        elseif (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Privada')) {
-            $pagos->put('examen',465);
-         }
+        #Pago de Prospecto (siempre requerido)
+        $pagos = collect(['prospecto'=>'475']);
 
-        #Diplomado con bachillerato, Andres bello (Continuar), convenio diplomatico
-        if (str_contains($postulante->codigo_modalidad, ['E1DB','E1CABC','E1CABI','E1CD']))
-            $pagos->put('examen',473);
+        #Verificar becas activas
+        $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
+        $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
 
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1DB','E1CABC','E1CABI','E1CD']))
-                $pagos->put('examen2',473);
+        #Determinar gestión (Pública/Privada)
+        $gestion_ie = $postulante->gestion_ie ?? 'Pública';
 
+        #Asignación según modalidad y becas
+        if ($descuento_total) {
+            // Beca total: no paga inscripción
+        } elseif ($descuento_parcial) {
+            // Semibecas (Servicios 466 y 467)
+            if (str_contains($gestion_ie, 'Pública')) {
+                $pagos->put('examen', '466');
+            } else {
+                $pagos->put('examen', '467');
+            }
+        } else {
+            $idmoda = $postulante->idmodalidad;
 
-
-        #Traslado Externo
-        if (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',469);
-        elseif (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Privada')) {
-             $pagos->put('examen',470);
-         }
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Pública'))
-                $pagos->put('examen2',469);
-            elseif (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Privada')) {
-                 $pagos->put('examen2',470);
-             }
-        #Titulado o graduado
-        if (str_contains($postulante->codigo_modalidad, ['E1TG','E1TGU']))
-            $pagos->put('examen',468);
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1TG','E1TGU']))
-                $pagos->put('examen2',468);
-
-        #Descuentos por simulacro, semibeca o hijo de trabajador
-        $descuento = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->first();
-        if (isset($descuento)) {
-            $pagos->pull('examen');
-            if($descuento->tipo=='Parcial')$pagos->put('examen',$descuento->servicio);
-        }
-        #Pago por examen vocacional---------------------------------------------------------------------------------------
-        if (str_contains($postulante->codigo_modalidad, 'ID-CEPRE') && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('vocacepre',516);
+            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+                $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '464' : '465');
+            } elseif (in_array($idmoda, [21, 22, 23])) {
+                $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '514' : '515');
+            } elseif (in_array($idmoda, [7, 19])) {
+                $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '469' : '470');
+                $pagos->put('convalidacion', '518');
+            } elseif (in_array($idmoda, [5, 6])) {
+                $pagos->put('examen', '468');
+                $pagos->put('convalidacion', '519');
+            } elseif (in_array($idmoda, [4, 8, 9, 10])) {
+                $pagos->put('examen', '473');
+            }
         }
 
-        if (!str_contains($postulante->codigo_modalidad, ['ID-CEPRE','E1VTI','E1VTC']) && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('voca',474);
+        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
+        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+            $pagos->put('voca', '474');
         }
-
-        if (str_contains($postulante->codigo_especialidad2, 'A1')){
-            #$pagos->put('voca',474);
-        }
-        #Pago extemporaneo---------------------------------------------------------------------------------------------------
-   //     $date = Carbon::now()->toDateString();
-    //    $fecha_inicio = Cronograma::FechaInicio('INEX');
-     //   $fecha_fin = Cronograma::FechaFin('INEX');
-      //  if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo',507);
 
         return $pagos;
     }
@@ -567,77 +484,50 @@ class PagoController extends Controller
 
 public function CalculoServiciosAd($postulante)
     {
-        
-        #Pago de Prospecto-----------------------------------------------------------------------------------------------
-        $pagos = collect(['prospecto'=>475]);
-        #Pago por derecho de examen---------------------------------------------------------------------------------------
-	
-        #Modalidad Ordinario, Dos primeros alumnos, Deportisca calificado (Iniciar),Cepre Uni
-        if (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',464);
-        elseif (str_contains($postulante->codigo_modalidad, ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE'])
-            && str_contains($postulante->gestion_ie,'Privada')) {
-            $pagos->put('examen',465);
-         }
+        if (!$postulante) return collect([]);
 
-        #Diplomado con bachillerato, Andres bello (Continuar), convenio diplomatico
-        if (str_contains($postulante->codigo_modalidad, ['E1DB','E1CABC','E1CABI','E1CD']))
-            $pagos->put('examen',473);
+        #Pago de Prospecto (siempre requerido)
+        $pagos = collect(['prospecto'=>'475']);
 
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1DB','E1CABC','E1CABI','E1CD']))
-                $pagos->put('examen2',473);
+        #Verificar becas activas
+        $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
+        $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
 
+        #Determinar gestión (Pública/Privada)
+        $gestion_ie = $postulante->gestion_ie ?? 'Pública';
 
+        #Asignación según modalidad y becas
+        if ($descuento_total) {
+            // Beca total: no paga inscripción
+        } elseif ($descuento_parcial) {
+            // Semibecas (Servicios 466 y 467)
+            if (str_contains($gestion_ie, 'Pública')) {
+                $pagos->put('examen', '466');
+            } else {
+                $pagos->put('examen', '467');
+            }
+        } else {
+            $idmoda = $postulante->idmodalidad;
 
-        #Traslado Externo
-        if (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Pública'))
-            $pagos->put('examen',469);
-        elseif (str_contains($postulante->codigo_modalidad, 'E1TE')
-            && str_contains($postulante->gestion_ie,'Privada')) {
-             $pagos->put('examen',470);
-         }
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Pública'))
-                $pagos->put('examen2',469);
-            elseif (str_contains($postulante->codigo_modalidad2, 'E1TE')
-                && str_contains($postulante->gestion_ie,'Privada')) {
-                 $pagos->put('examen2',470);
-             }
-        #Titulado o graduado
-        if (str_contains($postulante->codigo_modalidad, ['E1TG','E1TGU']))
-            $pagos->put('examen',468);
-            #Se repite los pagos si es segunda modalidad
-            if (str_contains($postulante->codigo_modalidad2, ['E1TG','E1TGU']))
-                $pagos->put('examen2',468);
-
-        #Descuentos por simulacro, semibeca o hijo de trabajador
-        $descuento = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->first();
-        if (isset($descuento)) {
-            $pagos->pull('examen');
-            if($descuento->tipo=='Parcial')$pagos->put('examen',$descuento->servicio);
-        }
-        #Pago por examen vocacional---------------------------------------------------------------------------------------
-        if (str_contains($postulante->codigo_modalidad, 'ID-CEPRE') && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('vocacepre',516);
+            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+                $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '464' : '465');
+            } elseif (in_array($idmoda, [21, 22, 23])) {
+                $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '514' : '515');
+            } elseif (in_array($idmoda, [7, 19])) {
+                $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '469' : '470');
+                $pagos->put('convalidacion', '518');
+            } elseif (in_array($idmoda, [5, 6])) {
+                $pagos->put('examen', '468');
+                $pagos->put('convalidacion', '519');
+            } elseif (in_array($idmoda, [4, 8, 9, 10])) {
+                $pagos->put('examen', '473');
+            }
         }
 
-        if (!str_contains($postulante->codigo_modalidad, ['ID-CEPRE','E1VTI','E1VTC']) && str_contains($postulante->codigo_especialidad, 'A1')){
-            $pagos->put('voca',474);
+        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
+        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+            $pagos->put('voca', '474');
         }
-        $date = Carbon::now()->toDateString();
-        $fecha_cepere_voca= Cronograma::FechaFin('INCE');
-        if (str_contains($postulante->codigo_especialidad2, 'A1') && $date > $fecha_cepere_voca){
-            $pagos->put('voca',474);
-        }
-        #Pago extemporaneo---------------------------------------------------------------------------------------------------
-
-      //  $fecha_inicio = Cronograma::FechaInicio('INEX');
-      //  $fecha_fin = Cronograma::FechaFin('INEX');
-      //  if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo',507);
 
         return $pagos;
     }
@@ -646,19 +536,19 @@ public function CalculoServiciosAd($postulante)
     {
         switch ($banco) {
             case 'Scotiabank':
-                $imagen = asset('assets/pages/img/scotiabank_logo.jpg');
+                $imagen = public_path('assets/pages/img/scotiabank_logo.jpg');
                 $lblconcepto = 'Concepto :';
                 $lblservicio = ''/*($servicio->codigo+100).' - '*/;
                 $lblinstruccion = '3. Debe indicar el pago es al servicio PAGO ESTUDIANTES, luego el DNI POSTULANTE.';
                 break;
             case 'Bcp':
-                $imagen = asset('assets/pages/img/bcp_logo.jpg');
+                $imagen = public_path('assets/pages/img/bcp_logo.jpg');
                 $lblconcepto = 'Concepto :';
                 $lblservicio = '';
                 $lblinstruccion = '3. Si va a pagar en un Agente BCP, debe indicar el código 15226, luego el DNI POSTULANTE.';
                 break;
             case 'Financiero':
-                $imagen = asset('assets/pages/img/financiero_logo.jpg');
+                $imagen = public_path('assets/pages/img/financiero_logo.jpg');
                 $lblconcepto = 'Partida :';
                 $lblservicio = $servicio->partida.' - ';
                 break;
@@ -897,138 +787,76 @@ public function CalculoServiciosFicha($id = null)
         $postulante = Postulante::Usuario()->first();
 
         if (!$postulante) {
-             // Si no se encontró postulante para el usuario actual
              Log::warning("Postulante no encontrado en CalculoServiciosFicha para Usuario ID: " . (Auth::id() ?? 'N/A'));
-             return collect([]); // Devuelve colección vacía
+             return collect([]);
         }
 
-        #Pago de Prospecto-----------------------------------------------------------------------------------------------
-        $pagos = collect(['prospecto'=>'475']); // Código como string
+        #Pago de Prospecto (siempre requerido)
+        $pagos = collect(['prospecto'=>'475']);
 
-        #Obtener gestión y departamento/provincia (Lógica robusta)
-        $gestion_ie = 'Privada'; // Valor por defecto
-        $departamento_ie = 'LIMA'; // Valor por defecto
-        $provincia_ie = 'LIMA'; // Valor por defecto
+        #Verificar becas activas
+        $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
+        $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
 
-        // Intenta obtener info de la modalidad para saber si usa colegio o universidad
-        $modalidadInfo = \App\Models\Modalidad::find($postulante->idmodalidad);
-        $usaColegio = $modalidadInfo ? $modalidadInfo->colegio : true; // Asume colegio por defecto
+        #Determinar gestión (Pública/Privada)
+        $gestion_ie = $postulante->gestion_ie ?? 'Pública';
 
-        if ($usaColegio && $postulante->idcolegio) {
-             // Intenta obtener datos del colegio y su ubigeo
-             $colegio = \App\Models\Colegio::with('ubigeo')->find($postulante->idcolegio);
-             if ($colegio) {
-                 $gestion_ie = $colegio->gestion ?? $gestion_ie;
-                 if ($colegio->ubigeo) {
-                     $departamento_ie = $colegio->ubigeo->departamento ?? $departamento_ie;
-                     $provincia_ie = $colegio->ubigeo->provincia ?? $provincia_ie; // <-- Obtiene Provincia
-                 }
-             }
-        } else if (!$usaColegio && $postulante->iduniversidad) {
-             // Intenta obtener datos de la universidad
-             $universidad = \App\Models\Universidad::find($postulante->iduniversidad);
-             if ($universidad) {
-                 $gestion_ie = $universidad->gestion ?? $gestion_ie;
-                 // Mantenemos Lima/Lima para universidades
-                 $departamento_ie = 'LIMA';
-                 $provincia_ie = 'LIMA';
-             }
-        }
-        // --- FIN OBTENER UBICACIÓN ---
-
-        #Pago por derecho de examen---------------------------------------------------------------------------------------
-        // Define arrays de códigos para claridad y usa in_array
-        $grupo1_codigos = ['O','E1DPA','E1DCAN','E1PDI','E1PDC','ID-CEPRE', 'TALBE', 'IEN-UNI', 'INTR']; // Incluye 17, 21, 23 (asegúrate que INTR sea el código correcto)
-        $grupo2_codigos = ['E1DB','E1CABC','E1CABI','E1CD'];
-        $grupo3_codigos = ['E1TE'];
-        $grupo4_codigos = ['E1TG','E1TGU'];
-
-        $codigoExamen = null; // Variable para almacenar el código calculado
-
-        // Grupo 1: Ordinario, CEPRE, ..., TALBE(21), IEN-UNI(17), INTR(23), etc. (LÓGICA CON PROVINCIA)
-       if (in_array($postulante->codigo_modalidad, $grupo1_codigos)) {
-             // Usa $gestion_ie, $departamento_ie y $provincia_ie
-            if (str_contains($gestion_ie,'Pública')) {
-                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (526), sino -> Provincia (528)
-                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '526' : '528';
-                 $pagos->put('examen', $codigoExamen);
-            } elseif (str_contains($gestion_ie,'Privada')) {
-                 // CORREGIDO: (LIMA Depto Y LIMA Prov) O CALLAO Depto -> Metro (527), sino -> Provincia (529)
-                 $codigoExamen = (($departamento_ie == 'LIMA' && $provincia_ie == 'LIMA') || $departamento_ie == 'CALLAO') ? '527' : '529';
-                 $pagos->put('examen', $codigoExamen);
+        #Asignación según modalidad y becas
+        if ($descuento_total) {
+            // Beca total: no paga inscripción
+        } elseif ($descuento_parcial) {
+            // Semibecas (Servicios 466 y 467)
+            if (str_contains($gestion_ie, 'Pública')) {
+                $pagos->put('examen', '466'); // INSC. SEMIBECA ESTATAL
+            } else {
+                $pagos->put('examen', '467'); // INSC. SEMIBECA PRIVADA
             }
-        // Grupo 2: Diplomado, Convenios
-        } elseif (in_array($postulante->codigo_modalidad, $grupo2_codigos)) {
-            $codigoExamen = '473';
-        // Grupo 3: Traslado Externo
-        } elseif (str_contains($postulante->codigo_modalidad, 'E1TE')) {
-             // Usa $gestion_ie calculada arriba
-            $codigoExamen = str_contains($gestion_ie,'Pública') ? '469' : '470';
-        // Grupo 4: Titulado o Graduado
-        } elseif (in_array($postulante->codigo_modalidad, $grupo4_codigos)) {
-            $codigoExamen = '468';
-        }
-        // Añadir 'else' aquí si hay modalidades que explícitamente no pagan examen (ej. víctimas)
+        } else {
+            // Sin beca - Asignar según modalidad
+            $idmoda = $postulante->idmodalidad;
 
-        // Añadir pago de examen si se determinó un código
-        if ($codigoExamen) {
-             $pagos->put('examen', $codigoExamen);
-        }
-
-        # Pago de segunda modalidad (si aplica y no es descuento total)
-        $descuento = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->first();
-        $esBecaTotal = isset($descuento) && $descuento->tipo == 'Total';
-
-        if (!$esBecaTotal) {
-             // Revisa si existe código de segunda modalidad
-             if (!is_null($postulante->codigo_modalidad2)) {
-                 // Verifica si la segunda modalidad pertenece a algún grupo que pague
-                 if (in_array($postulante->codigo_modalidad2, $grupo2_codigos)) {
-                     $pagos->put('examen2','473');
-                 } elseif (str_contains($postulante->codigo_modalidad2, 'E1TE')) {
-                      // Usa la MISMA $gestion_ie calculada antes (basada en la primera modalidad/institución)
-                      $codigoExamen2 = str_contains($gestion_ie,'Pública') ? '469' : '470';
-                      $pagos->put('examen2', $codigoExamen2);
-                 } elseif (in_array($postulante->codigo_modalidad2, $grupo4_codigos)) {
-                    $pagos->put('examen2', '468'); // Mantenido como estaba en tu original
-                 }
-                 // Añadir más 'elseif' si otras modalidades pueden ser segunda opción y tienen pago asociado
-             }
-        }
-
-        #Descuentos por simulacro, semibeca o hijo de trabajador
-        // $descuento ya se obtuvo arriba
-        if (isset($descuento)) {
-            if ($descuento->tipo == 'Total') {
-                $pagos->pull('examen'); // Beca total elimina el pago de examen principal
-                $pagos->pull('examen2'); // Y el de segunda modalidad si existiera
-            } elseif ($descuento->tipo == 'Parcial') {
-                 if ($pagos->has('examen')) {
-                      $pagos->put('examen', $descuento->servicio); // Reemplaza con código de descuento
-                 }
-                 // Considerar si afecta a 'examen2'
+            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
+            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', '464'); // INST. EDUC. ESTATAL
+                } else {
+                    $pagos->put('examen', '465'); // INST. EDUC. PRIVADA
+                }
+            }
+            // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22, 23
+            elseif (in_array($idmoda, [21, 22, 23])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', '514'); // MODAL.EXTRAOR.COLE.ESTAT
+                } else {
+                    $pagos->put('examen', '515'); // MODAL.EXTRAOR.COLE.PARTI
+                }
+            }
+            // Traslado Externo (E1TE) - modalidades 7, 19
+            elseif (in_array($idmoda, [7, 19])) {
+                if (str_contains($gestion_ie, 'Pública')) {
+                    $pagos->put('examen', '469'); // INSC. TRASLADO EXT. EST.
+                } else {
+                    $pagos->put('examen', '470'); // INSC. TRASLADO EXT.PRIV.
+                }
+                // Convalidación para Traslado
+                $pagos->put('convalidacion', '518'); // CONVAL.CURSO TRASL EXTERN
+            }
+            // Titulados y Graduados (E1TGU, E1TG) - modalidades 5, 6
+            elseif (in_array($idmoda, [5, 6])) {
+                $pagos->put('examen', '468'); // INSC. TIT. GRADUADOS
+                // Convalidación para Titulados
+                $pagos->put('convalidacion', '519'); // CONVAL.CURSO TITUL/GRADU
+            }
+            // Bachiller Diplomado (E1DB, E1CABI, E1CD) - modalidades 4, 8, 9, 10
+            elseif (in_array($idmoda, [4, 8, 9, 10])) {
+                $pagos->put('examen', '473'); // INSC. BACH. DIPLOMADO
             }
         }
 
-        #Pago por examen vocacional---------------------------------------------------------------------------------------
-        // --- SECCIÓN VOCACIONAL ESPECÍFICA DE FICHA (COMENTADA POR TU PETICIÓN ANTERIOR) ---
-        // Revisa si esta lógica es diferente de CalculoServicios y si debe permanecer o eliminarse
-        /* if (str_contains($postulante->codigo_modalidad, 'ID-CEPRE') && str_contains($postulante->codigo_especialidad, 'A1')){
-             $pagos->put('vocacepre','474'); // OJO: Clave diferente ('vocacepre')? Revisa si es correcto
+        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
+        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+            $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
         }
-        if (!str_contains($postulante->codigo_modalidad, ['ID-CEPRE']) && str_contains($postulante->codigo_especialidad, 'A1')){
-             $pagos->put('voca','474');
-        }
-        if (str_contains($postulante->codigo_especialidad4, 'A1') && !str_contains($postulante->codigo_modalidad, 'ID-CEPRE') ){
-             $pagos->put('voca','474');
-        } */
-
-        #Pago extemporaneo---------------------------------------------------------------------------------------------------
-        // Mantenido comentado como en tu versión original
-       // $date = Carbon::now()->toDateString();
-       // $fecha_inicio = Cronograma::FechaInicio('INEX');
-        // $fecha_fin = Cronograma::FechaFin('INEX');
-        //if ($date>=$fecha_inicio && $date<=$fecha_fin && $postulante->fecha_registro>=$fecha_inicio)$pagos->put('extemporaneo','507');
 
         return $pagos;
     } // Fin de CalculoServiciosFicha
