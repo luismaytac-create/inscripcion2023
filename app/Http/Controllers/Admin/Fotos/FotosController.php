@@ -31,8 +31,18 @@ class FotosController extends Controller
             'No se permiten accesorios faciales (gorra, sombrero, etc.)' => 'No se permiten accesorios faciales (gorra, sombrero, etc.)',
             'No se aceptan fotografías tipo selfie' => 'No se aceptan fotografías tipo selfie',
             'No se aceptan fotografías del DNI ni copias del mismo' => 'No se aceptan fotografías del DNI ni copias del mismo',
-            'La fotografía debe ser nítida y con el rostro orientado al frente' => 'La fotografía debe ser nítida y con el rostro orientado al frente',
+            'La fotografía debe ser nítida y con el rostro al frente' => 'La fotografía debe ser nítida y con el rostro al frente',
+            'Subir foto actualizada con fondo blanco' => 'Subir foto actualizada con fondo blanco',
         ];
+    }
+
+    private function ultimasFotosEditadas()
+    {
+        return Postulante::where('foto_estado', 'ACEPTADO')
+            ->whereNotNull('foto_fecha_editor')
+            ->orderBy('foto_fecha_editor', 'desc')
+            ->take(5)
+            ->get();
     }
 
     public function index()
@@ -41,6 +51,7 @@ class FotosController extends Controller
         $variduser=Auth::user()->id;
 
         $motivosRechazo = $this->motivosRechazo();
+        $ultimasEditadas = $this->ultimasFotosEditadas();
 
        if($varrole == 'Informes' ||  $varrole=='Editor Foto' || $varrole=='root' || $varrole=='Sistemas' ){
 
@@ -51,10 +62,10 @@ class FotosController extends Controller
 
             $resumen = Postulante::select('foto_estado',DB::raw('count(*) as cantidad'))->Activos()->groupBy('foto_estado')->get();
             if(isset($postulante)){
-                return view('admin.fotos.index',compact('postulante','resumen','motivosRechazo'));
+                return view('admin.fotos.index',compact('postulante','resumen','motivosRechazo','ultimasEditadas'));
             }else{
                 Alert::success('No hay Foto por Editar');
-                return view('admin.fotos.blank',compact('resumen','motivosRechazo'));
+                return view('admin.fotos.blank',compact('resumen','motivosRechazo','ultimasEditadas'));
             }
         }else {
 
@@ -131,7 +142,8 @@ class FotosController extends Controller
         $postulante = Postulante::where('numero_identificacion',$request->get('dni'))->first();
         $resumen = Postulante::select('foto_estado',DB::raw('count(*) as cantidad'))->Activos()->groupBy('foto_estado')->get();
         $motivosRechazo = $this->motivosRechazo();
-        return view('admin.fotos.index',compact('postulante','resumen','motivosRechazo'));
+        $ultimasEditadas = $this->ultimasFotosEditadas();
+        return view('admin.fotos.index',compact('postulante','resumen','motivosRechazo','ultimasEditadas'));
     }
     public function update($id,$estado)
     {
@@ -253,10 +265,9 @@ class FotosController extends Controller
 
     public function fotorechazomotivo(Request  $request){
 
-        $motivosPermitidos = array_keys($this->motivosRechazo());
-        $request->validate([
-            'motivo' => ['required', Rule::in($motivosPermitidos)],
-            'dni' => ['required'],
+        $this->validate($request, [
+            'motivo' => 'required',
+            'dni' => 'required',
         ]);
 
         $idusuarioeditor=Auth::user()->id;
@@ -314,6 +325,75 @@ class FotosController extends Controller
         $nuevolog->save();
 
         Alert::success('Foto rechazada con éxito');
+
+        return redirect()->route('admin.fotos.index');
+    }
+
+    public function revertirAccion($id, $nuevoEstado)
+    {
+        $idusuarioeditor = Auth::user()->id;
+        $postulante = Postulante::find($id);
+        
+        if (!$postulante) {
+            Alert::danger('Postulante no encontrado');
+            return redirect()->route('admin.fotos.index');
+        }
+
+        $archivo = 'public/'.$postulante->foto;
+        $nuevo_archivo = 'public/fotosok/'.$postulante->numero_identificacion.'.jpg';
+        $nuevo_archivo_tmp = 'public/fotosok/tmp/'.$postulante->numero_identificacion.'.jpg';
+
+        if ($nuevoEstado == 'ACEPTADO') {
+            // Cambiar de RECHAZADO a ACEPTADO
+            // Restaurar foto si existe en rechazadas
+            if ($postulante->foto_rechazada) {
+                $archivo_rechazada = 'public/fotos_rechazadas/'.basename($postulante->foto_rechazada);
+                if (Storage::exists($archivo_rechazada)) {
+                    $postulante->foto = str_replace('public/', '', $archivo_rechazada);
+                    $postulante->foto_cargada = str_replace('public/', '', $archivo_rechazada);
+                }
+            }
+            
+            $postulante->foto_estado = 'ACEPTADO';
+            $postulante->foto_editada = str_replace('public/', '', $nuevo_archivo);
+            $postulante->foto_fecha_edicion = Carbon::now();
+            $postulante->foto_fecha_editor = Carbon::now();
+            $postulante->idusuarioeditor = $idusuarioeditor;
+            $postulante->save();
+            
+            // Copiar archivo a fotosok
+            if (Storage::exists('public/'.$postulante->foto)) {
+                if (!Storage::exists($nuevo_archivo)) Storage::copy('public/'.$postulante->foto, $nuevo_archivo);
+                if (!Storage::exists($nuevo_archivo_tmp)) Storage::copy('public/'.$postulante->foto, $nuevo_archivo_tmp);
+            }
+            
+            Alert::success('Foto cambiada a ACEPTADO con éxito');
+            
+        } elseif ($nuevoEstado == 'RECHAZADO') {
+            // Cambiar de ACEPTADO a RECHAZADO - necesita motivo
+            Alert::warning('Para rechazar use el modal de rechazo con motivo');
+            return redirect()->route('admin.fotos.index');
+            
+        } elseif ($nuevoEstado == 'CARGADO') {
+            // Revertir a CARGADO (pendiente de revisión)
+            $postulante->foto_estado = 'CARGADO';
+            $postulante->foto_fecha_editor = Carbon::now();
+            $postulante->idusuarioeditor = $idusuarioeditor;
+            $postulante->save();
+            
+            Alert::success('Foto revertida a CARGADO (pendiente de revisión)');
+        }
+
+        // Registrar en log
+        $nuevolog = new Editorlog();
+        $nuevolog->dni = $postulante->numero_identificacion;
+        $nuevolog->idpostulante = $postulante->id;
+        $nuevolog->estado = $nuevoEstado;
+        $nuevolog->observacion = 'Acción revertida por el editor';
+        $nuevolog->foto_ruta = $postulante->foto;
+        $nuevolog->usuario = $idusuarioeditor;
+        $nuevolog->fecha = Carbon::now();
+        $nuevolog->save();
 
         return redirect()->route('admin.fotos.index');
     }

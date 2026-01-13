@@ -287,6 +287,7 @@ Route::group(['namespace'=>'Fotos','middleware'=>'verificador'], function() {
 	Route::post('buscar-foto','FotosController@buscar')->name('admin.fotos.buscar');
 	Route::get('fotos-rechazadas','FotosController@fotosrechazadas')->name('admin.fotos.rechazadas');
     Route::post('foto-rechazo-motivo','FotosController@fotorechazomotivo')->name('admin.rechazo.motivo');
+    Route::get('foto-revertir/{id}/{estado}','FotosController@revertirAccion')->name('admin.fotos.revertir');
 
 
 });
