@@ -19,13 +19,28 @@ use Mail;
 use App\Http\Controllers\Sms\SmsController;
 use Illuminate\Filesystem\Filesystem;
 use Swift_TransportException;
+use Illuminate\Validation\Rule;
 
 class FotosController extends Controller
 {
+    private function motivosRechazo()
+    {
+        return [
+            'Uso de lentes no permitido' => 'Uso de lentes no permitido',
+            'El fondo debe ser de color blanco uniforme' => 'El fondo debe ser de color blanco uniforme',
+            'No se permiten accesorios faciales (gorra, sombrero, etc.)' => 'No se permiten accesorios faciales (gorra, sombrero, etc.)',
+            'No se aceptan fotografías tipo selfie' => 'No se aceptan fotografías tipo selfie',
+            'No se aceptan fotografías del DNI ni copias del mismo' => 'No se aceptan fotografías del DNI ni copias del mismo',
+            'La fotografía debe ser nítida y con el rostro orientado al frente' => 'La fotografía debe ser nítida y con el rostro orientado al frente',
+        ];
+    }
+
     public function index()
     {
         $varrole=Auth::user()->role->nombre;
         $variduser=Auth::user()->id;
+
+        $motivosRechazo = $this->motivosRechazo();
 
        if($varrole == 'Informes' ||  $varrole=='Editor Foto' || $varrole=='root' || $varrole=='Sistemas' ){
 
@@ -36,10 +51,10 @@ class FotosController extends Controller
 
             $resumen = Postulante::select('foto_estado',DB::raw('count(*) as cantidad'))->Activos()->groupBy('foto_estado')->get();
             if(isset($postulante)){
-                return view('admin.fotos.index',compact('postulante','resumen'));
+                return view('admin.fotos.index',compact('postulante','resumen','motivosRechazo'));
             }else{
                 Alert::success('No hay Foto por Editar');
-                return view('admin.fotos.blank',compact('resumen'));
+                return view('admin.fotos.blank',compact('resumen','motivosRechazo'));
             }
         }else {
 
@@ -115,7 +130,8 @@ class FotosController extends Controller
     {
         $postulante = Postulante::where('numero_identificacion',$request->get('dni'))->first();
         $resumen = Postulante::select('foto_estado',DB::raw('count(*) as cantidad'))->Activos()->groupBy('foto_estado')->get();
-        return view('admin.fotos.index',compact('postulante','resumen'));
+        $motivosRechazo = $this->motivosRechazo();
+        return view('admin.fotos.index',compact('postulante','resumen','motivosRechazo'));
     }
     public function update($id,$estado)
     {
@@ -236,6 +252,12 @@ class FotosController extends Controller
 
 
     public function fotorechazomotivo(Request  $request){
+
+        $motivosPermitidos = array_keys($this->motivosRechazo());
+        $request->validate([
+            'motivo' => ['required', Rule::in($motivosPermitidos)],
+            'dni' => ['required'],
+        ]);
 
         $idusuarioeditor=Auth::user()->id;
         $postulantex  = Postulante::where('numero_identificacion',$request->dni)->first();

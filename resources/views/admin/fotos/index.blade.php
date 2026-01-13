@@ -114,7 +114,7 @@
                     {!! Field::text('dni',$postulante->numero_identificacion,['label'=>'Número de DNI','placeholder'=>'Número de DNI','readonly'=>true]) !!}
 
 
-                    {!! Field::text('motivo',['label'=>'Motivo','placeholder'=>'Motivo']) !!}
+                    {!! Field::select('motivo',$motivosRechazo,null,['label'=>'Motivo','empty'=>'Selecciona un motivo']) !!}
                 </div>
                 <div class="modal-footer">
                     {!!Form::enviar('Guardar')!!}
