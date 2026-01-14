@@ -395,13 +395,13 @@ class PagoController extends Controller
                     $pagos->put('examen', '470'); // INSC. TRASLADO EXT.PRIV.
                 }
                 // Convalidación para Traslado
-                $pagos->put('convalidacion', '518'); // CONVAL.CURSO TRASL EXTERN
+               // $pagos->put('convalidacion', '518'); // CONVAL.CURSO TRASL EXTERN
             }
             // Titulados y Graduados (E1TGU, E1TG) - modalidades 5, 6
             elseif (in_array($idmoda, [5, 6])) {
                 $pagos->put('examen', '468'); // INSC. TIT. GRADUADOS
                 // Convalidación para Titulados
-                $pagos->put('convalidacion', '519'); // CONVAL.CURSO TITUL/GRADU
+                //$pagos->put('convalidacion', '519'); // CONVAL.CURSO TITUL/GRADU
             }
             // Bachiller Diplomado (E1DB, E1CABI, E1CD) - modalidades 4, 8, 9, 10
             elseif (in_array($idmoda, [4, 8, 9, 10])) {
@@ -464,10 +464,10 @@ class PagoController extends Controller
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '514' : '515');
             } elseif (in_array($idmoda, [7, 19])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '469' : '470');
-                $pagos->put('convalidacion', '518');
+                //$pagos->put('convalidacion', '518');
             } elseif (in_array($idmoda, [5, 6])) {
                 $pagos->put('examen', '468');
-                $pagos->put('convalidacion', '519');
+                //  $pagos->put('convalidacion', '519');
             } elseif (in_array($idmoda, [4, 8, 9, 10])) {
                 $pagos->put('examen', '473');
             }
@@ -515,10 +515,10 @@ public function CalculoServiciosAd($postulante)
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '514' : '515');
             } elseif (in_array($idmoda, [7, 19])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '469' : '470');
-                $pagos->put('convalidacion', '518');
+                // $pagos->put('convalidacion', '518');
             } elseif (in_array($idmoda, [5, 6])) {
                 $pagos->put('examen', '468');
-                $pagos->put('convalidacion', '519');
+                // $pagos->put('convalidacion', '519');
             } elseif (in_array($idmoda, [4, 8, 9, 10])) {
                 $pagos->put('examen', '473');
             }
@@ -801,13 +801,13 @@ public function CalculoServiciosFicha($id = null)
                     $pagos->put('examen', '470'); // INSC. TRASLADO EXT.PRIV.
                 }
                 // Convalidación para Traslado
-                $pagos->put('convalidacion', '518'); // CONVAL.CURSO TRASL EXTERN
+               // $pagos->put('convalidacion', '518'); // CONVAL.CURSO TRASL EXTERN
             }
             // Titulados y Graduados (E1TGU, E1TG) - modalidades 5, 6
             elseif (in_array($idmoda, [5, 6])) {
                 $pagos->put('examen', '468'); // INSC. TIT. GRADUADOS
                 // Convalidación para Titulados
-                $pagos->put('convalidacion', '519'); // CONVAL.CURSO TITUL/GRADU
+                //$pagos->put('convalidacion', '519'); // CONVAL.CURSO TITUL/GRADU
             }
             // Bachiller Diplomado (E1DB, E1CABI, E1CD) - modalidades 4, 8, 9, 10
             elseif (in_array($idmoda, [4, 8, 9, 10])) {
