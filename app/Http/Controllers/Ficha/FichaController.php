@@ -740,17 +740,17 @@ class FichaController extends Controller
             }
 
 
-            //AQUI OCULTAS TODO 
-            //PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210, 297);
-            //PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
-            //PDF::AddPage('U', 'A4');
+            
+            PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210, 297);
+            PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
+            PDF::AddPage('U', 'A4');
          
          
             //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
             //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
             
-            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
-            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
+            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
+            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
 
             PDF::SetXY(5, 100 + 16 - 20 + 10 + 3 + 6 - 6);
             PDF::SetFont('helvetica', 'B', 13);
