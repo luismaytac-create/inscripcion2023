@@ -409,8 +409,17 @@ class PagoController extends Controller
             }
         }
 
-        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
-        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+        #Pago Vocacional - Arquitectura (ID 1) en cualquiera de las 6 opciones
+        $especialidades = [
+            $postulante->idespecialidad,
+            $postulante->idespecialidad2,
+            $postulante->idespecialidad3,
+            $postulante->idespecialidad4,
+            $postulante->idespecialidad5,
+            $postulante->idespecialidad6,
+        ];
+
+        if (in_array(1, $especialidades, true)) {
             $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
         }
 
@@ -473,8 +482,17 @@ class PagoController extends Controller
             }
         }
 
-        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
-        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+        #Pago Vocacional - Arquitectura (ID 1) en cualquiera de las 6 opciones
+        $especialidades = [
+            $postulante->idespecialidad,
+            $postulante->idespecialidad2,
+            $postulante->idespecialidad3,
+            $postulante->idespecialidad4,
+            $postulante->idespecialidad5,
+            $postulante->idespecialidad6,
+        ];
+
+        if (in_array(1, $especialidades, true)) {
             $pagos->put('voca', '474');
         }
 
@@ -524,8 +542,17 @@ public function CalculoServiciosAd($postulante)
             }
         }
 
-        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
-        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+        #Pago Vocacional - Arquitectura (ID 1) en cualquiera de las 6 opciones
+        $especialidades = [
+            $postulante->idespecialidad,
+            $postulante->idespecialidad2,
+            $postulante->idespecialidad3,
+            $postulante->idespecialidad4,
+            $postulante->idespecialidad5,
+            $postulante->idespecialidad6,
+        ];
+
+        if (in_array(1, $especialidades, true)) {
             $pagos->put('voca', '474');
         }
 
@@ -815,8 +842,17 @@ public function CalculoServiciosFicha($id = null)
             }
         }
 
-        #Pago Vocacional - Si especialidad 1 o 4 es Arquitectura (IDs 1 o 188)
-        if (in_array($postulante->idespecialidad, [1, 188]) || in_array($postulante->idespecialidad4, [1, 188])) {
+        #Pago Vocacional - Arquitectura (ID 1) en cualquiera de las 6 opciones
+        $especialidades = [
+            $postulante->idespecialidad,
+            $postulante->idespecialidad2,
+            $postulante->idespecialidad3,
+            $postulante->idespecialidad4,
+            $postulante->idespecialidad5,
+            $postulante->idespecialidad6,
+        ];
+
+        if (in_array(1, $especialidades, true)) {
             $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
         }
 
