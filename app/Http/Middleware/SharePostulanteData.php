@@ -28,12 +28,12 @@ class SharePostulanteData
 
                 // Calcula $requiereDocumentos
                 if (!is_null($postulante->idmodalidad2)) {
-                    if ($postulante->idmodalidad2 <> 1 and $postulante->idmodalidad2 <> 17 and $postulante->idmodalidad2 <> 23) {
+                    if ($postulante->idmodalidad2 <> 17 && $postulante->idmodalidad2 <> 23) {
                         $requiereDocumentos = true;
                     }
                 } else {
                     if (isset($postulante->idmodalidad)) {
-                        if ($postulante->idmodalidad <> 1 and $postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23) {
+                        if ($postulante->idmodalidad <> 16 && $postulante->idmodalidad <> 17 && $postulante->idmodalidad <> 23) {
                             $requiereDocumentos = true;
                         }
                     }
