@@ -20,60 +20,39 @@ class DocumentoController extends Controller
 
         $postulante = Postulante::where('idusuario',$id)->first();
 
-        if(  $postulante->idmodalidad !=1 ){
-
-            if( $postulante->idmodalidad == 16){
-
-                if( $postulante->idmodalidad2 != 1){
-                    $swp = !is_null($postulante);
-                    $doctodos=DocumentVictima::where('dni',Auth::user()->dni)->where('activo',true)->get();
-
-                    $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
-                    $bloque = false;
-                    if($count> 0){
-                        $estado= '';
-                        $observacion ='';
-                        $solicitante = $count = SolicitanteVictima::where('idpostulante',$postulante->id)->first();
-                        $estado = $solicitante->estado;
-                        $observacion = $solicitante->observaciones;
-                        $bloque= true;
-
-                        return view('documento.index',compact('postulante','swp','doctodos','bloque','estado','observacion'));
-                    }else{
-                        return view('documento.index',compact('bloque','postulante','swp','doctodos'));
-                    }
-                }else{
-                    return redirect()->to('/');
-                }
-
-
-
-            }else {
-                $swp = !is_null($postulante);
-                $doctodos=DocumentVictima::where('dni',Auth::user()->dni)->where('activo',true)->get();
-
-                $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
-                $bloque = false;
-                if($count> 0){
-                    $estado= '';
-                    $observacion ='';
-                    $solicitante = $count = SolicitanteVictima::where('idpostulante',$postulante->id)->first();
-                    $estado = $solicitante->estado;
-                    $observacion = $solicitante->observaciones;
-                    $bloque= true;
-
-                    return view('documento.index',compact('postulante','swp','doctodos','bloque','estado','observacion'));
-                }else{
-                    return view('documento.index',compact('bloque','postulante','swp','doctodos'));
-                }
-
+        // Determinar si requiere documentos: se excluyen solo modalidades 17 y 23
+        $requiereDocs = true;
+        if (!is_null($postulante->idmodalidad2)) {
+            if (in_array($postulante->idmodalidad2, [17, 23])) {
+                $requiereDocs = false;
             }
+        } else {
+            if (in_array($postulante->idmodalidad, [17, 23])) {
+                $requiereDocs = false;
+            }
+        }
 
-
-
-        }else {
+        if (!$requiereDocs) {
             return redirect()->to('/');
         }
+
+        $swp = !is_null($postulante);
+        $doctodos = DocumentVictima::where('dni', Auth::user()->dni)->where('activo', true)->get();
+
+        $count = SolicitanteVictima::where('idpostulante', $postulante->id)->count();
+        $bloque = false;
+        if ($count > 0) {
+            $estado = '';
+            $observacion = '';
+            $solicitante = SolicitanteVictima::where('idpostulante', $postulante->id)->first();
+            $estado = $solicitante->estado;
+            $observacion = $solicitante->observaciones;
+            $bloque = true;
+
+            return view('documento.index', compact('postulante', 'swp', 'doctodos', 'bloque', 'estado', 'observacion'));
+        }
+
+        return view('documento.index', compact('bloque', 'postulante', 'swp', 'doctodos'));
 
 
     }
