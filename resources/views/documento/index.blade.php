@@ -48,7 +48,7 @@
                    <div class="alert alert-info">
                        <h4><strong>REQUISITOS GENERALES (Obligatorios para TODAS las modalidades):</strong></h4>
                        <ul>
-                           <li>Constancia de Logros de Aprendizaje</li>
+                           <li>Constancia de Logros de Aprendizaje (o, alternativamente, cualquier documento que acredite la finalización de la educación secundaria).</li>
                        </ul>
                    </div>
                    
@@ -58,9 +58,9 @@
                        </div>
                    @endif
                    
-                   @if($postulante->idmodalidad == 2   || $postulante->idmodalidad2 == 2 )
+                   @if($postulante->idmodalidad == 2   || $postulante->idmodalidad2 == 2 || $postulante->idmodalidad == 26 || $postulante->idmodalidad2 == 26)
                    <div class="alert alert-warning">
-                       <h4><strong>PRIMEROS PUESTOS / PRIMEROS ALUMNOS</strong></h4>
+                       <h4><strong>PRIMEROS PUESTOS</strong></h4>
                        <ul>
                            <li>Acta que acredite haber obtenido uno de los cinco primeros puestos en sus estudios secundarios, emitida desde la plataforma de MINEDU y firmada por el director del plantel.</li>
                            <li>Certificado de Estudios verificable, con cuadro de orden de mérito o Constancia de Logros de Aprendizaje, que acredite haber concluido la educación secundaria y acredite haber ocupado uno de los cinco primeros puestos de su promoción</li>
@@ -151,21 +151,12 @@
                        </ul>
                    </div>
                    @endif
-                   @if($postulante->idmodalidad == 11 || $postulante->idmodalidad2 == 11)
+                   @if($postulante->idmodalidad == 25 || $postulante->idmodalidad2 == 25)
                    <div class="alert alert-warning">
-                       <h4><strong>PLAN INTEGRAL DE REPARACIONES (PIR) - INICIAR ESTUDIOS</strong></h4>
+                       <h4><strong>PLAN INTEGRAL DE REPARACIONES (PIR)</strong></h4>
                        <ul>
                            <li>DNI</li>
-                           <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones – RUV.</li>
-                       </ul>
-                   </div>
-                   @endif
-                   @if($postulante->idmodalidad == 12 || $postulante->idmodalidad2 == 12)
-                   <div class="alert alert-warning">
-                       <h4><strong>PLAN INTEGRAL DE REPARACIONES (PIR) - CONTINUAR ESTUDIOS</strong></h4>
-                       <ul>
-                           <li>DNI</li>
-                           <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones – RUV.</li>
+                           <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones - RUV.</li>
                        </ul>
                    </div>
                    @endif
