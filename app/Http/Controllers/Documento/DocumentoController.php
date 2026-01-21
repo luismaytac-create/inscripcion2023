@@ -75,6 +75,7 @@ class DocumentoController extends Controller
             return redirect()->to('/');
         }
 
+
     }
 
     public function load(Request $request)

@@ -54,7 +54,7 @@ class PagoController extends Controller
 
                     if( !is_null($postulante->idmodalidad2) ){
 
-                        if($postulante->idmodalidad2 <> 17 and $postulante->idmodalidad2 <> 23
+                        if($postulante->idmodalidad2 <> 1 and $postulante->idmodalidad2 <> 17 and $postulante->idmodalidad2 <> 23
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -90,7 +90,7 @@ class PagoController extends Controller
 
 
 
-                        if($postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
+                        if($postulante->idmodalidad <> 1 and $postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -181,7 +181,7 @@ class PagoController extends Controller
 
                     if( !is_null($postulante->idmodalidad2) ){
 
-                        if($postulante->idmodalidad2 <> 17 and $postulante->idmodalidad2 <> 23
+                        if($postulante->idmodalidad2 <> 1 and $postulante->idmodalidad2 <> 17 and $postulante->idmodalidad2 <> 23
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -217,7 +217,7 @@ class PagoController extends Controller
 
 
 
-                        if($postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
+                        if($postulante->idmodalidad <> 1 and $postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
