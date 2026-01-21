@@ -34,7 +34,8 @@
            <!--row-->
            <div class="row">
                <div class="col-12">
- 
+
+
 
                    @if($bloque)
                     <h1 class="text-danger">Estado de Aprobación</h1>
@@ -43,14 +44,10 @@
                    <hr>
                    <h1>Sube tus documentos</h1>
                 @endif
-                           <!--Documentos por modalidad-->
-
                      <h3>Documentos Requeridos:</h3>
                    @if($postulante->idmodalidad == 1 || $postulante->idmodalidad2 == 1)
                        <div class="alert alert-success">
-                           <h4><strong>Constancia de Logros de Aprendizaje (o, alternativamente, cualquier documento que acredite la finalización de la educación secundaria).
-                            Según lo establecido en el Articulo 30° del Reglamento vigente de Admisión-UNI.
-                           </strong></h4>
+                           <h4><strong>Constancia de Logros de Aprendizaje (o, alternativamente, cualquier documento que acredite la finalización de la educación secundaria).</strong></h4>
                        </div>
                    @endif
                    
