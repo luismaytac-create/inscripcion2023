@@ -34,7 +34,6 @@
            <!--row-->
            <div class="row">
                <div class="col-12">
-
  
                    @if($bloque)
                     <h1 class="text-danger">Estado de Aprobación</h1>
