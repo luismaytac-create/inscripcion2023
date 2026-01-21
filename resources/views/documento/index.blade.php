@@ -44,99 +44,167 @@
                    <hr>
                    <h1>Sube tus documentos</h1>
                 @endif
-                    @if($postulante->idmodalidad == 2   || $postulante->idmodalidad2 == 2 )
-                   <li>Acta que acredite haber obtenido uno de los cinco primeros puestos en sus estudios secundarios, emitida desde la plataforma de MINEDU y firmada por el director del plantel.
-                   </li>
-                   <li>Certificado de Estudios verificable, con cuadro de orden de mérito o Constancia de Logros de Aprendizaje, que acredite haber concluido la educación secundaria y acredite haber ocupado uno de los cinco primeros puestos de su promoción</li>
+                
+                   <div class="alert alert-info">
+                       <h4><strong>REQUISITOS GENERALES (Obligatorios para TODAS las modalidades):</strong></h4>
+                       <ul>
+                           <li>Constancia de Logros de Aprendizaje (o, alternativamente, cualquier documento que acredite la finalización de la educación secundaria).</li>
+                       </ul>
+                   </div>
+                   
+                   @if($postulante->idmodalidad == 1 || $postulante->idmodalidad2 == 1)
+                       <div class="alert alert-success">
+                           <h4><strong>MODALIDAD ORDINARIA - Solo Requisitos Generales</strong></h4>
+                       </div>
+                   @endif
+                   
+                   @if($postulante->idmodalidad == 2   || $postulante->idmodalidad2 == 2 || $postulante->idmodalidad == 26 || $postulante->idmodalidad2 == 26)
+                   <div class="alert alert-warning">
+                       <h4><strong>PRIMEROS PUESTOS</strong></h4>
+                       <ul>
+                           <li>Acta que acredite haber obtenido uno de los cinco primeros puestos en sus estudios secundarios, emitida desde la plataforma de MINEDU y firmada por el director del plantel.</li>
+                           <li>Certificado de Estudios verificable, con cuadro de orden de mérito o Constancia de Logros de Aprendizaje, que acredite haber concluido la educación secundaria y acredite haber ocupado uno de los cinco primeros puestos de su promoción</li>
+                       </ul>
+                   </div>
                     @endif
 
                    @if($postulante->idmodalidad ==3 || $postulante->idmodalidad2 == 3 )
-
-                       <li>Carta u Oficio de presentación de deportistas calificados de alto nivel para su incorporación a universidades, expedido por el IPD con antigüedad no mayor de un año, presentando al solicitante, cuya participación deportiva haya ocurrido dentro de los tres últimos años (D.S. Nº 010-2009-ED TUPA/IPD, procedimiento Nº 19).</li>
-                       <li>Carta de compromiso con firma legalizada notarialmente, de participar obligatoriamente, representando a la UNI, en las competencias deportivas en las que intervenga.</li>
+                   <div class="alert alert-warning">
+                       <h4><strong>DEPORTISTA CALIFICADO DE ALTO NIVEL</strong></h4>
+                       <ul>
+                           <li>Carta u Oficio de presentación de deportistas calificados de alto nivel para su incorporación a universidades, expedido por el IPD con antigüedad no mayor de un año, presentando al solicitante, cuya participación deportiva haya ocurrido dentro de los tres últimos años (D.S. Nº 010-2009-ED TUPA/IPD, procedimiento Nº 19).</li>
+                           <li>Carta de compromiso con firma legalizada notarialmente, de participar obligatoriamente, representando a la UNI, en las competencias deportivas en las que intervenga.</li>
+                       </ul>
+                   </div>
                    @endif
 
                    @if($postulante->idmodalidad == 4 || $postulante->idmodalidad2 == 4)
-                       <li>Copia autenticada notarialmente del Diploma de Bachillerato</li>
-                       <li>Certificado de estudios con una nota promedio en Matemática y Ciencias mayor que 14 en escala vigesimal, o Diploma de Bachillerato con cursos y notas, en idioma español, que contenga al menos dos de las asignaturas: Matemática, Física, Química y Biología, y con un puntaje acumulado mínimo de 28 puntos.</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>DIPLOMADOS CON BACHILLERATO INTERNACIONAL</strong></h4>
+                       <ul>
+                           <li>Copia autenticada notarialmente del Diploma de Bachillerato</li>
+                           <li>Certificado de estudios con una nota promedio en Matemática y Ciencias mayor que 14 en escala vigesimal, o Diploma de Bachillerato con cursos y notas, en idioma español, que contenga al menos dos de las asignaturas: Matemática, Física, Química y Biología, y con un puntaje acumulado mínimo de 28 puntos.</li>
+                       </ul>
+                   </div>
                    @endif
 
                    @if($postulante->idmodalidad == 5 || $postulante->idmodalidad2 == 5)
-                       <li>Título Profesional o Grado de Bachiller registrado en SUNEDU</li>
-                       <li>Certificado de Estudios Universitarios</li>
-                       <li>sílabos de las asignaturas aprobadas en la universidad de origen visados por su escuela profesional</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>TITULADOS O GRADUADOS EN OTRA UNIVERSIDAD</strong></h4>
+                       <ul>
+                           <li>Título Profesional o Grado de Bachiller registrado en SUNEDU</li>
+                           <li>Certificado de Estudios Universitarios</li>
+                           <li>sílabos de las asignaturas aprobadas en la universidad de origen visados por su escuela profesional</li>
+                       </ul>
+                   </div>
                    @endif
 
                    @if($postulante->idmodalidad == 6 || $postulante->idmodalidad2 == 6)
-                            <li>Declaración Jurada en la que afirma contar con Título o Grado de Bachiller.</li>
-                         <li> Sílabos de las asignaturas aprobadas en la UNI, sellados por la Dirección de la Escuela Profesional correspondiente.</li>
+                   <div class="alert alert-warning">
+                       <h4><strong>TITULADOS O GRADUADOS UNI</strong></h4>
+                       <ul>
+                           <li>Declaración Jurada en la que afirma contar con Título o Grado de Bachiller.</li>
+                           <li>Sílabos de las asignaturas aprobadas en la UNI, sellados por la Dirección de la Escuela Profesional correspondiente.</li>
+                       </ul>
+                   </div>
                    @endif
 
                    @if($postulante->idmodalidad == 7 || $postulante->idmodalidad2 == 7)
-
-                       <li>Certificado de Estudios que acredite haber aprobado por lo menos cuatro periodos lectivos semestrales, dos anuales o setenta y dos (72) créditos</li>
-                       <li>sílabos de las asignaturas aprobadas y el Plan Curricular de la especialidad en la que está matriculado, sellados y firmados por el responsable de la universidad de origen</li>
-                       <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220, expedida por su universidad de origen dentro de los seis (6) meses anteriores al momento de su postulación (para quienes deseen continuar estudios universitarios)</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>TRASLADO EXTERNO (UNIVERSIDADES LICENCIADAS)</strong></h4>
+                       <ul>
+                           <li>Certificado de Estudios que acredite haber aprobado por lo menos cuatro periodos lectivos semestrales, dos anuales o setenta y dos (72) créditos</li>
+                           <li>sílabos de las asignaturas aprobadas y el Plan Curricular de la especialidad en la que está matriculado, sellados y firmados por el responsable de la universidad de origen</li>
+                           <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220, expedida por su universidad de origen dentro de los seis (6) meses anteriores al momento de su postulación (para quienes deseen continuar estudios universitarios)</li>
+                       </ul>
+                   </div>
                    @endif
                    @if($postulante->idmodalidad == 8 || $postulante->idmodalidad2 == 8)
-
-                   <li>Fotocopia del carné de extranjería</li>
-                       <li>Certificado de estudios universitarios con las asignaturas cursadas en la institución de origen, acompañado de los sílabos respectivos sellados por la universidad de origen</li>
-                       <li>Carta de presentación del funcionario con derecho, emitida por la embajada</li>
-                       <li>Solicitud de exoneración del examen presentada por el funcionario con derecho o tutor del postulante</li>
+                   <div class="alert alert-warning">
+                       <h4><strong>CONVENIO DIPLOMÁTICO / HIJOS O CÓNYUGE</strong></h4>
+                       <ul>
+                           <li>Fotocopia del carné de extranjería</li>
+                           <li>Certificado de estudios universitarios con las asignaturas cursadas en la institución de origen, acompañado de los sílabos respectivos sellados por la universidad de origen</li>
+                           <li>Carta de presentación del funcionario con derecho, emitida por la embajada</li>
+                           <li>Solicitud de exoneración del examen presentada por el funcionario con derecho o tutor del postulante</li>
+                       </ul>
+                   </div>
                    @endif
                    @if($postulante->idmodalidad == 9 || $postulante->idmodalidad2 == 9)
-
-                    <li>Carné de extranjería o DNI (en el caso de peruanos que han estudiado en el extranjero)</li>
-                       <li>Certificado consular que indique su permanencia regular en el país (no necesario en el caso de peruanos que han estudiado en el extranjero)</li>
-                       <li>Certificado de estudios secundarios del 1º al 5º año o su equivalente, refrendado por el respectivo Consulado Peruano, en idioma español, con la Apostilla de La Haya (para quienes deseen iniciar estudios universitarios)</li>
-                       <li>Certificado de estudios acompañado de los sílabos de las asignaturas aprobadas, sellados y visados por la universidad de origen (para quienes deseen continuar estudios universitarios)</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>CONVENIO ANDRÉS BELLO - INICIAR ESTUDIOS</strong></h4>
+                       <ul>
+                           <li>Carné de extranjería o DNI (en el caso de peruanos que han estudiado en el extranjero)</li>
+                           <li>Certificado consular que indique su permanencia regular en el país (no necesario en el caso de peruanos que han estudiado en el extranjero)</li>
+                           <li>Certificado de estudios secundarios del 1º al 5º año o su equivalente, refrendado por el respectivo Consulado Peruano, en idioma español, con la Apostilla de La Haya (para quienes deseen iniciar estudios universitarios)</li>
+                       </ul>
+                   </div>
                    @endif
                    @if($postulante->idmodalidad == 10 || $postulante->idmodalidad2 == 10)
-
-                       <li>Carné de extranjería o DNI (en el caso de peruanos que han estudiado en el extranjero)</li>
-                       <li>Certificado consular que indique su permanencia regular en el país (no necesario en el caso de peruanos que han estudiado en el extranjero)</li>
-                       <li>Certificado de estudios acompañado de los sílabos de las asignaturas aprobadas, sellados y visados por la universidad de origen (para quienes deseen continuar estudios universitarios)</li>
-                        <li>Constancia de no haber sido sometido a sanción disciplinaria, expedida por su universidad de origen dentro de los seis (6) meses anteriores al momento de su postulación (para quienes deseen continuar estudios universitarios).</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>CONVENIO ANDRÉS BELLO - CONTINUAR ESTUDIOS</strong></h4>
+                       <ul>
+                           <li>Carné de extranjería o DNI (en el caso de peruanos que han estudiado en el extranjero)</li>
+                           <li>Certificado consular que indique su permanencia regular en el país (no necesario en el caso de peruanos que han estudiado en el extranjero)</li>
+                           <li>Certificado de estudios acompañado de los sílabos de las asignaturas aprobadas, sellados y visados por la universidad de origen (para quienes deseen continuar estudios universitarios)</li>
+                           <li>Constancia de no haber sido sometido a sanción disciplinaria, expedida por su universidad de origen dentro de los seis (6) meses anteriores al momento de su postulación (para quienes deseen continuar estudios universitarios).</li>
+                       </ul>
+                   </div>
                    @endif
-                   @if($postulante->idmodalidad == 11 || $postulante->idmodalidad2 == 11)
-                       <li>DNI</li>
-                   <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones – RUV.</li>
-
-                   @endif
-                   @if($postulante->idmodalidad == 12 || $postulante->idmodalidad2 == 12)
-                       <li>DNI</li>
-                       <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones – RUV.</li>
-
+                   @if($postulante->idmodalidad == 25 || $postulante->idmodalidad2 == 25)
+                   <div class="alert alert-warning">
+                       <h4><strong>PLAN INTEGRAL DE REPARACIONES (PIR)</strong></h4>
+                       <ul>
+                           <li>DNI</li>
+                           <li>Certificado de Acreditación, otorgado por el Consejo de Reparaciones - RUV.</li>
+                       </ul>
+                   </div>
                    @endif
 
                    @if($postulante->idmodalidad == 13 || $postulante->idmodalidad2 == 13)
-                       <li> Certificado de Discapacidad que acredite su condición. Este debe ser otorgado por médicos certificadores registrados en las instituciones públicas, privadas o mixtas prestadoras de salud-IPRESS a nivel nacional.</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>PERSONAS CON DISCAPACIDAD - INICIAR ESTUDIOS</strong></h4>
+                       <ul>
+                           <li>Certificado de Discapacidad que acredite su condición. Este debe ser otorgado por médicos certificadores registrados en las instituciones públicas, privadas o mixtas prestadoras de salud-IPRESS a nivel nacional.</li>
+                       </ul>
+                   </div>
                    @endif
 
                    @if($postulante->idmodalidad == 14 || $postulante->idmodalidad2 == 14)
-                       <li> Certificado de Discapacidad que acredite su condición. Este debe ser otorgado por médicos certificadores registrados en las instituciones públicas, privadas o mixtas prestadoras de salud-IPRESS a nivel nacional.</li>
-
+                   <div class="alert alert-warning">
+                       <h4><strong>PERSONAS CON DISCAPACIDAD - CONTINUAR ESTUDIOS</strong></h4>
+                       <ul>
+                           <li>Certificado de Discapacidad que acredite su condición. Este debe ser otorgado por médicos certificadores registrados en las instituciones públicas, privadas o mixtas prestadoras de salud-IPRESS a nivel nacional.</li>
+                       </ul>
+                   </div>
                    @endif
                        @if($postulante->idmodalidad == 19)
-                           <li>Certificado de Estudios que acredite haber aprobado por lo menos un periodo lectivo o diecinueve (19) créditos</li>
-                           <li>sílabos de las asignaturas aprobadas y copia del Plan Curricular de la especialidad en que está matriculado, sellados por la universidad de origen o SUNEDU</li>
-                           <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220 en su universidad de origen</li>
-
+                       <div class="alert alert-warning">
+                           <h4><strong>TRASLADO EXTERNO (UNIVERSIDADES NO LICENCIADAS)</strong></h4>
+                           <ul>
+                               <li>Certificado de Estudios que acredite haber aprobado por lo menos un periodo lectivo o diecinueve (19) créditos</li>
+                               <li>sílabos de las asignaturas aprobadas y copia del Plan Curricular de la especialidad en que está matriculado, sellados por la universidad de origen o SUNEDU</li>
+                               <li>Constancia de no haber sido sometido a sanción disciplinaria ni haber sido retirado definitivamente por medidas académicas en cumplimiento de la Ley Universitaria N° 30220 en su universidad de origen</li>
+                           </ul>
+                       </div>
                        @endif
                        @if($postulante->idmodalidad == 18)
-                           <li>Documento Nacional de Identidad</li>
+                       <div class="alert alert-warning">
+                           <h4><strong>BECA 18</strong></h4>
+                           <ul>
+                               <li>Documento Nacional de Identidad</li>
+                           </ul>
+                       </div>
                        @endif
 
                        @if($postulante->idmodalidad == 20 || $postulante->idmodalidad2 == 20)
-                       <li>Carta u Oficio de Presentación de Deportistas Calificados de Alto Nivel para su incorporación a universidades, expedido por el IPD con antigüedad no mayor de un año que presente al solicitante, cuya participación deportiva haya ocurrido dentro de los tres últimos años (D.S. N 010-2009-ED TUPA/IPD, procedimiento N° 19)</li>
-                       <li>Carta Notarial de Compromiso de representar a la UNI en las competencias deportivas en las se le solicite</li>
+                       <div class="alert alert-warning">
+                           <h4><strong>DEPORTISTA CALIFICADO DE ALTO NIVEL</strong></h4>
+                           <ul>
+                               <li>Carta u Oficio de Presentación de Deportistas Calificados de Alto Nivel para su incorporación a universidades, expedido por el IPD con antigüedad no mayor de un año que presente al solicitante, cuya participación deportiva haya ocurrido dentro de los tres últimos años (D.S. N 010-2009-ED TUPA/IPD, procedimiento N° 19)</li>
+                               <li>Carta Notarial de Compromiso de representar a la UNI en las competencias deportivas en las se le solicite</li>
+                           </ul>
+                       </div>
                        @endif
                </div>
 
