@@ -44,17 +44,10 @@
                    <hr>
                    <h1>Sube tus documentos</h1>
                 @endif
-                
-                   <div class="alert alert-info">
-                       <h4><strong>REQUISITOS GENERALES (Obligatorios para TODAS las modalidades):</strong></h4>
-                       <ul>
-                           <li>Constancia de Logros de Aprendizaje (o, alternativamente, cualquier documento que acredite la finalización de la educación secundaria).</li>
-                       </ul>
-                   </div>
-                   
+                     <h3>Documentos Requeridos:</h3>
                    @if($postulante->idmodalidad == 1 || $postulante->idmodalidad2 == 1)
                        <div class="alert alert-success">
-                           <h4><strong>MODALIDAD ORDINARIA - Solo Requisitos Generales</strong></h4>
+                           <h4><strong>Constancia de Logros de Aprendizaje (o, alternativamente, cualquier documento que acredite la finalización de la educación secundaria).</strong></h4>
                        </div>
                    @endif
                    
