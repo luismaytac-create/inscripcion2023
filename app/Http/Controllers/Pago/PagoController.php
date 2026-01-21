@@ -90,7 +90,7 @@ class PagoController extends Controller
 
 
 
-                        if($postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
+                        if($postulante->idmodalidad <> 1 and $postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
@@ -217,7 +217,7 @@ class PagoController extends Controller
 
 
 
-                        if($postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
+                        if($postulante->idmodalidad <> 1 and $postulante->idmodalidad <> 16 and $postulante->idmodalidad <> 17 and $postulante->idmodalidad <> 23
                         ){
 
                             $count = SolicitanteVictima::where('idpostulante',$postulante->id)->count();
