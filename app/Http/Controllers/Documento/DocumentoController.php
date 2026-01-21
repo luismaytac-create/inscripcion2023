@@ -27,7 +27,7 @@ class DocumentoController extends Controller
                 $requiereDocs = false;
             }
         } else {
-            if (in_array($postulante->idmodalidad, [17, 23])) {
+            if (in_array($postulante->idmodalidad, [17, 23])) { 
                 $requiereDocs = false;
             }
         }
