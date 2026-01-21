@@ -35,6 +35,7 @@
            <div class="row">
                <div class="col-12">
  
+
                    @if($bloque)
                     <h1 class="text-danger">Estado de Aprobación</h1>
                    <h1>Estado: <span class="text-warning">{{ $estado }}</span></h1>
@@ -42,6 +43,8 @@
                    <hr>
                    <h1>Sube tus documentos</h1>
                 @endif
+                           <!--Documentos por modalidad-->
+
                      <h3>Documentos Requeridos:</h3>
                    @if($postulante->idmodalidad == 1 || $postulante->idmodalidad2 == 1)
                        <div class="alert alert-success">
