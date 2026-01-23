@@ -1073,6 +1073,14 @@ class Postulante extends Model
         return $this->hasOne(Colegio::class,'id','idcolegio');
     }
     /**
+     * Establecemos la relacion con universidad
+     * @return [type] [description]
+     */
+    public function universidad()
+    {
+        return $this->hasOne(Universidad::class,'id','iduniversidad');
+    }
+    /**
      * Establecemos el la relacion con catalogo
      * @return [type] [description]
      */

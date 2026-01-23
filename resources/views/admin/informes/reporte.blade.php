@@ -346,16 +346,54 @@
 
 
 
-                                    <tr>
-                                        <td>Colegio</td>
-                                        <td>{{$postulante->datos_colegio->nombre}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>UBIGEO  - Colegio
-                                        </td>
-                                        <td>{{$postulante->datos_colegio->descripcion_ubigeo}}
-                                        </td>
-                                    </tr>
+                                   @if(
+                                        $postulante->idmodalidad == 1 || $postulante->idmodalidad == 2 || $postulante->idmodalidad == 3 ||
+                                        $postulante->idmodalidad == 4 || $postulante->idmodalidad == 8 || $postulante->idmodalidad == 9 ||
+                                        $postulante->idmodalidad == 11 || $postulante->idmodalidad == 13 || $postulante->idmodalidad == 16 ||
+                                        $postulante->idmodalidad == 17 || $postulante->idmodalidad == 18
+                                    )
+
+                                        <tr>
+                                            <td>Colegio</td>
+                                            <td>
+                                                @if($postulante->colegios)
+                                                    {!! $postulante->colegios->nombre !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>UBIGEO - Colegio</td>
+                                            <td>
+                                                @if($postulante->colegios && $postulante->colegios->distrito)
+                                                    {!! $postulante->colegios->distrito->descripcion !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    @else
+
+                                        <tr>
+                                            <td>Universidad</td>
+                                            <td>
+                                                @if($postulante->universidad)
+                                                    {!! $postulante->universidad->nombre !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>UBIGEO - Universidad</td>
+                                            <td>
+                                                @if($postulante->universidad && $postulante->universidad->distrito)
+                                                    {!! $postulante->universidad->distrito->nombre !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                    @endif
+
+
                                     <tr>
                                         <td>SEDE
                                         </td>

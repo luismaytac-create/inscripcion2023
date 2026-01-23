@@ -38,15 +38,25 @@
 										
 										@endif
 
-                                            @if($data->idmodalidad ==1 || $data->idmodalidad ==2 || $data->idmodalidad ==3 || $data->idmodalidad ==4 || $data->idmodalidad ==8 || $data->idmodalidad ==9 || $data->idmodalidad ==11 || $data->idmodalidad ==13 || $data->idmodalidad ==16 || $data->idmodalidad ==17 || $data->idmodalidad ==18 )
+                                            @if(
+                                                $data->idmodalidad == 1 || $data->idmodalidad == 2 || $data->idmodalidad == 3 ||
+                                                $data->idmodalidad == 4 || $data->idmodalidad == 8 || $data->idmodalidad == 9 ||
+                                                $data->idmodalidad == 11 || $data->idmodalidad == 13 || $data->idmodalidad == 16 ||
+                                                $data->idmodalidad == 17 || $data->idmodalidad == 18
+                                            )
 
+                                                <b>COLEGIO - UBIGEO :</b> @if($data->colegios){!! $data->colegios->nombre !!} - @if($data->colegios->distrito){!! $data->colegios->distrito->descripcion !!}@endif @endif<br>
 
+                                                <b>GESTIÓN :</b> @if($data->colegios){!! $data->colegios->gestion !!}@endif <br>
 
-                                                <b>COLEGIO - UBIGEO    :</b> {!! $data->colegios->nombre !!} - {!! $data->colegios->distrito->descripcion !!} <br>
-                                                <b>GESTIÓN    :</b> {!! $data->colegios->gestion !!} <br>
+                                            @else
 
+                                                <b>UNIVERSIDAD - UBIGEO :</b> @if($data->universidad){!! $data->universidad->nombre !!} - @if($data->universidad->distrito){!! $data->universidad->distrito->nombre !!}@endif @endif<br>
+
+                                                <b>GESTIÓN :</b> @if($data->universidad){!! $data->universidad->gestion !!}@endif <br>
 
                                             @endif
+
                                             <b>ESTADO POSTULACIÓN    :</b> {!! $data->solicitante->otorga !!} <br>
                                        <p></p>
                                        <div class="row">
@@ -71,7 +81,7 @@
 
 
 
-                                                        <input type="hidden" name="gestion" id="gestion" value="{!! $data->colegios->gestion !!}">
+                                                        <input type="hidden" name="gestion" id="gestion" value="{!! $data->colegios ? $data->colegios->gestion : '' !!}">
 
 
                                                     @endif
