@@ -44,6 +44,13 @@
                         <td> {{ $item->Datos_servicio->descripcion }} </td>
                         <td> {{ $item->Datos_servicio->monto }} </td>
                         <td> {{ $item->motivo }} </td>
+                        <td>
+                        @if ($item->activo)
+                            <a href="{{ route('admin.descuentos.activate',$item->id) }}" class="label label-sm label-info"> SI </a>
+                        @else
+                            <a href="{{ route('admin.descuentos.activate',$item->id) }}" class="label label-sm label-danger"> NO </a>
+                        @endif
+                        </td>
                         <td>{!!Form::boton('Edit',route('admin.descuentos.edit',$item->id),'yellow','fa fa-edit','btn-xs')!!}
 
                         </td>
@@ -73,7 +80,6 @@
                     {!! Field::select('tipo',['Total'=>'Total','Parcial'=>'Parcial'],['label'=>'Escoger tipo de descuento','empty'=>'Tipo descuento']) !!}
                 {!! Field::select('idservicio',$servicios,['label'=>'Servicio','empty'=>'Servicio']) !!}
                     {!! Field::text('motivo',['label'=>'Motivo','placeholder'=>'Motivo']) !!}
-                    {!! Field::checkbox('activo',1,['label'=>'Activo','checked']) !!}
                 <div id="carterasEnviadasModal">
                     <span class="label label-warning">Ingrese un DNI para ver registros</span>
                 </div>
