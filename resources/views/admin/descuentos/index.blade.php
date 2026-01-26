@@ -73,6 +73,7 @@
                     {!! Field::select('tipo',['Total'=>'Total','Parcial'=>'Parcial'],['label'=>'Escoger tipo de descuento','empty'=>'Tipo descuento']) !!}
                 {!! Field::select('idservicio',$servicios,['label'=>'Servicio','empty'=>'Servicio']) !!}
                     {!! Field::text('motivo',['label'=>'Motivo','placeholder'=>'Motivo']) !!}
+                    {!! Field::checkbox('activo',1,['label'=>'Activo','checked']) !!}
                 <div id="carterasEnviadasModal">
                     <span class="label label-warning">Ingrese un DNI para ver registros</span>
                 </div>
@@ -106,34 +107,30 @@ $('.Servicios').dataTable({
 });
 
 // AJAX para mostrar carteras enviadas en el modal
-$(document).on('input', '#DescuentoCreate input[name="dni"]', function () {
-    console.log('blur/input disparado');
-    let dni = $(this).val();
-    let $container = $('#carterasEnviadasModal');
-
+$('#DescuentoCreate input[name="dni"]').on('blur', function() {
+    var dni = $(this).val();
+    var $container = $('#carterasEnviadasModal');
     if (dni.length > 0) {
         $container.html('<span class="label label-info">Buscando...</span>');
-
         $.ajax({
-            url: "{{ url('/admin/carteras-enviadas-por-dni') }}",
+            url: '/admin/carteras-enviadas-por-dni',
             method: 'GET',
-            data: { dni },
-            success: function (data) {
-                if (Array.isArray(data) && data.length > 0) {
-                    let html = '';
-                    data.forEach(cartera => {
-                        html += `
-                            <div>
-                                <span class="label label-info">${cartera.descripcion}</span>
-                                <span class="label label-success">S/. ${parseFloat(cartera.monto).toFixed(2)}</span>
-                            </div>`;
+            data: { dni: dni },
+            success: function(data) {
+                if (data.length > 0) {
+                    var html = '';
+                    data.forEach(function(cartera) {
+                        html += '<div>' +
+                            '<span class="label label-info">' + cartera.descripcion + '</span> ' +
+                            '<span class="label label-success">S/. ' + parseFloat(cartera.monto).toFixed(2) + '</span>' +
+                            '</div>';
                     });
                     $container.html(html);
                 } else {
                     $container.html('<span class="label label-warning">Sin registros</span>');
                 }
             },
-            error: function () {
+            error: function() {
                 $container.html('<span class="label label-danger">Error al buscar</span>');
             }
         });
@@ -141,7 +138,6 @@ $(document).on('input', '#DescuentoCreate input[name="dni"]', function () {
         $container.html('<span class="label label-warning">Ingrese un DNI para ver registros</span>');
     }
 });
-
 </script>
 @stop
 
