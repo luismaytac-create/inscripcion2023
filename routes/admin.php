@@ -2,4 +2,6 @@
 Route::group(['prefix' => 'admin','namespace'=>'Admin','middleware'=>'ip'], function() {
     require __DIR__.'/admin/admin.route.php';
 
+    Route::get('carteras-enviadas-por-dni', 'CarterasEnviadaController@porDni');
+
 });

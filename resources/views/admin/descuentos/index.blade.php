@@ -44,13 +44,6 @@
                         <td> {{ $item->Datos_servicio->descripcion }} </td>
                         <td> {{ $item->Datos_servicio->monto }} </td>
                         <td> {{ $item->motivo }} </td>
-                        <td>
-                        @if ($item->activo)
-                            <a href="{{ route('admin.descuentos.activate',$item->id) }}" class="label label-sm label-info"> SI </a>
-                        @else
-                            <a href="{{ route('admin.descuentos.activate',$item->id) }}" class="label label-sm label-danger"> NO </a>
-                        @endif
-                        </td>
                         <td>{!!Form::boton('Edit',route('admin.descuentos.edit',$item->id),'yellow','fa fa-edit','btn-xs')!!}
 
                         </td>
@@ -80,6 +73,9 @@
                     {!! Field::select('tipo',['Total'=>'Total','Parcial'=>'Parcial'],['label'=>'Escoger tipo de descuento','empty'=>'Tipo descuento']) !!}
                 {!! Field::select('idservicio',$servicios,['label'=>'Servicio','empty'=>'Servicio']) !!}
                     {!! Field::text('motivo',['label'=>'Motivo','placeholder'=>'Motivo']) !!}
+                <div id="carterasEnviadasModal">
+                    <span class="label label-warning">Ingrese un DNI para ver registros</span>
+                </div>
             </div>
             <div class="modal-footer">
                 {!!Form::enviar('Guardar')!!}
@@ -103,14 +99,43 @@ $('.Servicios').dataTable({
         "lengthMenu": "_MENU_ registros"
     },
     stateSave: true,
-
     dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
     buttons: [
         { extend: 'excel', className: 'btn yellow btn-outline ' }
-
     ],
+});
 
-
+// AJAX para mostrar carteras enviadas en el modal
+$('#DescuentoCreate input[name="dni"]').on('blur', function() {
+    var dni = $(this).val();
+    var $container = $('#carterasEnviadasModal');
+    if (dni.length > 0) {
+        $container.html('<span class="label label-info">Buscando...</span>');
+        $.ajax({
+            url: '/admin/carteras-enviadas-por-dni',
+            method: 'GET',
+            data: { dni: dni },
+            success: function(data) {
+                if (data.length > 0) {
+                    var html = '';
+                    data.forEach(function(cartera) {
+                        html += '<div>' +
+                            '<span class="label label-info">' + cartera.descripcion + '</span> ' +
+                            '<span class="label label-success">S/. ' + parseFloat(cartera.monto).toFixed(2) + '</span>' +
+                            '</div>';
+                    });
+                    $container.html(html);
+                } else {
+                    $container.html('<span class="label label-warning">Sin registros</span>');
+                }
+            },
+            error: function() {
+                $container.html('<span class="label label-danger">Error al buscar</span>');
+            }
+        });
+    } else {
+        $container.html('<span class="label label-warning">Ingrese un DNI para ver registros</span>');
+    }
 });
 </script>
 @stop

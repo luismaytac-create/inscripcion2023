@@ -125,7 +125,7 @@ class SemibecaController extends Controller
         if( $postulante->idmodalidad ==5 || $postulante->idmodalidad ==6 || $postulante->idmodalidad ==7 || $postulante->idmodalidad ==10 || $postulante->idmodalidad ==12 || $postulante->idmodalidad ==14 || $postulante->idmodalidad ==15 ) {
             $data = Postulante::ValidarDNI($postulante->numero_identificacion)->with(['solicitante'])->first();
         }else {
-            $data = Postulante::ValidarDNI($postulante->numero_identificacion)->with(['solicitante','Colegios.Distrito'])->first();
+            $data = Postulante::ValidarDNI($postulante->numero_identificacion)->with(['solicitante','Colegios.Distrito','universidad.Distrito'])->first();
         }
 	
 	
