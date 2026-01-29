@@ -42,13 +42,13 @@
 
                                     @if (PagoProspecto())
                                    
-                                            <a href="{{ route('document.download','catalogo') }}" class="list-group-item"> Catálogo de Especialidades </a>
-                                           <a href="{{ route('document.download','guia') }}" class="list-group-item"> Guía de Inscripción </a>
+                                            <a href="{{ route('document.download','catalogo') }}" class="list-group-item"> Catï¿½logo de Especialidades </a>
+                                           <a href="{{ route('document.download','guia') }}" class="list-group-item"> Guï¿½a de Inscripciï¿½n </a>
                                            
                                         <a href="{{ route('document.download','reglamento') }}" class="list-group-item"> Reglamento</a>
 
 
-                                           <a href="{{ route('document.download','solucionario') }}" class="list-group-item"> Solucionario 2025-1</a>
+                                           <a href="{{ route('document.download','solucionario') }}" class="list-group-item"> Solucionario 2025-2</a>
                                            <a href="{{ route('document.download','temario') }}" class="list-group-item"> Temario</a>
 
                                     @else
