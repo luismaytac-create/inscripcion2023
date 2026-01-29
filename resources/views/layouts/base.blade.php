@@ -223,8 +223,6 @@
                                                     <h3 class="m-menu__heading m-menu__toggle"><span class="m-menu__link-text">Bancos:</span><i class="m-menu__ver-arrow la la-angle-right"></i></h3>
                                                     <ul class="m-menu__inner">
                                                         <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">BCP</span></a></li>
-                                                        <li class="m-menu__item " m-menu-link-redirect="1" aria-haspopup="true"><a class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--line"><span></span></i><span class="m-menu__link-text">Scotiabank</span></a></li>
-
                                                     </ul>
                                                 </li>
                                             </ul>
