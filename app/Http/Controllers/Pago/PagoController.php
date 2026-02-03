@@ -350,6 +350,23 @@ class PagoController extends Controller
         #Pago de Prospecto (siempre requerido)
         $pagos = collect(['prospecto'=>'475']);
 
+        // CEPRE-UNI (modalidad 16): Si es ingresante, solo paga prospecto
+        // Si no es ingresante, recalcular según su segunda modalidad
+        if ($postulante->idmodalidad == 16) {
+            if ($postulante->ingresante == true) {
+                // Es ingresante CEPRE-UNI, solo paga prospecto
+                return $pagos;
+            }
+            // No es ingresante, usar la segunda modalidad para calcular el pago
+            $idmoda = $postulante->idmodalidad2;
+            if (is_null($idmoda)) {
+                // No tiene segunda modalidad, solo paga prospecto
+                return $pagos;
+            }
+        } else {
+            $idmoda = $postulante->idmodalidad;
+        }
+
         #Verificar becas activas
         $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
         $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
@@ -369,7 +386,6 @@ class PagoController extends Controller
             }
         } else {
             // Sin beca - Asignar según modalidad
-            $idmoda = $postulante->idmodalidad;
 
             // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
             if (in_array($idmoda, [1, 2, 3, 13, 14])) {
@@ -447,6 +463,23 @@ class PagoController extends Controller
         #Pago de Prospecto (siempre requerido)
         $pagos = collect(['prospecto'=>'475']);
 
+        // CEPRE-UNI (modalidad 16): Si es ingresante, solo paga prospecto
+        // Si no es ingresante, recalcular según su segunda modalidad
+        if ($postulante->idmodalidad == 16) {
+            if ($postulante->ingresante == true) {
+                // Es ingresante CEPRE-UNI, solo paga prospecto
+                return $pagos;
+            }
+            // No es ingresante, usar la segunda modalidad para calcular el pago
+            $idmoda = $postulante->idmodalidad2;
+            if (is_null($idmoda)) {
+                // No tiene segunda modalidad, solo paga prospecto
+                return $pagos;
+            }
+        } else {
+            $idmoda = $postulante->idmodalidad;
+        }
+
         #Verificar becas activas
         $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
         $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
@@ -465,7 +498,7 @@ class PagoController extends Controller
                 $pagos->put('examen', '467');
             }
         } else {
-            $idmoda = $postulante->idmodalidad;
+            // Sin beca - Asignar según modalidad
 
             if (in_array($idmoda, [1, 2, 3, 13, 14])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '464' : '465');
@@ -507,6 +540,23 @@ public function CalculoServiciosAd($postulante)
         #Pago de Prospecto (siempre requerido)
         $pagos = collect(['prospecto'=>'475']);
 
+        // CEPRE-UNI (modalidad 16): Si es ingresante, solo paga prospecto
+        // Si no es ingresante, recalcular según su segunda modalidad
+        if ($postulante->idmodalidad == 16) {
+            if ($postulante->ingresante == true) {
+                // Es ingresante CEPRE-UNI, solo paga prospecto
+                return $pagos;
+            }
+            // No es ingresante, usar la segunda modalidad para calcular el pago
+            $idmoda = $postulante->idmodalidad2;
+            if (is_null($idmoda)) {
+                // No tiene segunda modalidad, solo paga prospecto
+                return $pagos;
+            }
+        } else {
+            $idmoda = $postulante->idmodalidad;
+        }
+
         #Verificar becas activas
         $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
         $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
@@ -525,7 +575,7 @@ public function CalculoServiciosAd($postulante)
                 $pagos->put('examen', '467');
             }
         } else {
-            $idmoda = $postulante->idmodalidad;
+            // Sin beca - Asignar según modalidad
 
             if (in_array($idmoda, [1, 2, 3, 13, 14])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '464' : '465');
@@ -783,6 +833,23 @@ public function CalculoServiciosFicha($id = null)
         #Pago de Prospecto (siempre requerido)
         $pagos = collect(['prospecto'=>'475']);
 
+        // CEPRE-UNI (modalidad 16): Si es ingresante, solo paga prospecto
+        // Si no es ingresante, recalcular según su segunda modalidad
+        if ($postulante->idmodalidad == 16) {
+            if ($postulante->ingresante == true) {
+                // Es ingresante CEPRE-UNI, solo paga prospecto
+                return $pagos;
+            }
+            // No es ingresante, usar la segunda modalidad para calcular el pago
+            $idmoda = $postulante->idmodalidad2;
+            if (is_null($idmoda)) {
+                // No tiene segunda modalidad, solo paga prospecto
+                return $pagos;
+            }
+        } else {
+            $idmoda = $postulante->idmodalidad;
+        }
+
         #Verificar becas activas
         $descuento_total = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Total')->first();
         $descuento_parcial = Descuento::where('dni',$postulante->numero_identificacion)->Activo()->where('tipo','Parcial')->first();
@@ -802,7 +869,6 @@ public function CalculoServiciosFicha($id = null)
             }
         } else {
             // Sin beca - Asignar según modalidad
-            $idmoda = $postulante->idmodalidad;
 
             // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
             if (in_array($idmoda, [1, 2, 3, 13, 14])) {
