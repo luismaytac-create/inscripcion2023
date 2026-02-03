@@ -439,6 +439,17 @@ class PagoController extends Controller
             $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
         }
 
+        // Si es CEPRE-UNI y su segunda modalidad es ordinario, verificar vocacional en especialidades de segunda modalidad
+        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14])) {
+            $especialidades_segunda_modalidad = [
+                $postulante->idespecialidad4,
+                $postulante->idespecialidad5,
+            ];
+            if (in_array(1, $especialidades_segunda_modalidad, true)) {
+                $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
+            }
+        }
+
         return $pagos;
     } // Fin de CalculoServicios
 
@@ -529,6 +540,17 @@ class PagoController extends Controller
             $pagos->put('voca', '474');
         }
 
+        // Si es CEPRE-UNI y su segunda modalidad es ordinario, verificar vocacional en especialidades de segunda modalidad
+        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14])) {
+            $especialidades_segunda_modalidad = [
+                $postulante->idespecialidad4,
+                $postulante->idespecialidad5,
+            ];
+            if (in_array(1, $especialidades_segunda_modalidad, true)) {
+                $pagos->put('voca', '474');
+            }
+        }
+
         return $pagos;
     }
 
@@ -604,6 +626,17 @@ public function CalculoServiciosAd($postulante)
 
         if (in_array(1, $especialidades, true)) {
             $pagos->put('voca', '474');
+        }
+
+        // Si es CEPRE-UNI y su segunda modalidad es ordinario, verificar vocacional en especialidades de segunda modalidad
+        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14])) {
+            $especialidades_segunda_modalidad = [
+                $postulante->idespecialidad4,
+                $postulante->idespecialidad5,
+            ];
+            if (in_array(1, $especialidades_segunda_modalidad, true)) {
+                $pagos->put('voca', '474');
+            }
         }
 
         return $pagos;
@@ -920,6 +953,17 @@ public function CalculoServiciosFicha($id = null)
 
         if (in_array(1, $especialidades, true)) {
             $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
+        }
+
+        // Si es CEPRE-UNI y su segunda modalidad es ordinario, verificar vocacional en especialidades de segunda modalidad
+        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14])) {
+            $especialidades_segunda_modalidad = [
+                $postulante->idespecialidad4,
+                $postulante->idespecialidad5,
+            ];
+            if (in_array(1, $especialidades_segunda_modalidad, true)) {
+                $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
+            }
         }
 
         return $pagos;
