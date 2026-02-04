@@ -547,7 +547,7 @@ class PagoController extends Controller
                 $postulante->idespecialidad5,
             ];
             if (in_array(1, $especialidades_segunda_modalidad, true)) {
-                $pagos->put('voca', '474');
+                $pagos->put('voca', '516'); // PRUEBA VOCACIONAL CEPRE-UNI NO INGRESANTE
             }
         }
 
@@ -635,7 +635,7 @@ public function CalculoServiciosAd($postulante)
                 $postulante->idespecialidad5,
             ];
             if (in_array(1, $especialidades_segunda_modalidad, true)) {
-                $pagos->put('voca', '474');
+                $pagos->put('voca', '516'); // PRUEBA VOCACIONAL CEPRE-UNI NO INGRESANTE
             }
         }
 
@@ -962,7 +962,7 @@ public function CalculoServiciosFicha($id = null)
                 $postulante->idespecialidad5,
             ];
             if (in_array(1, $especialidades_segunda_modalidad, true)) {
-                $pagos->put('voca', '474'); // PRUEBA DE APT. VOCACIONAL
+                $pagos->put('voca', '516'); // PRUEBA VOCACIONAL CEPRE-UNI NO INGRESANTE
             }
         }
 
