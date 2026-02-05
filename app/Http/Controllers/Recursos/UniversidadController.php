@@ -39,14 +39,22 @@ class UniversidadController extends Controller
 
         $cond = '<>';
         $coduni = 'TODAS';
-        if (str_contains($modalidad->codigo,['E1TG','E1TE'])) { $coduni= 'UNI'; $cond = '<>';}
-        if ($modalidad->codigo == 'E1TGU') { $coduni= 'UNI'; $cond = '='; $name = '';}
+        if ($modalidad && (str_contains($modalidad->codigo,'E1TG') || str_contains($modalidad->codigo,'E1TE'))) { 
+            $coduni= 'UNI'; 
+            $cond = '<>';
+        }
+        if ($modalidad && $modalidad->codigo == 'E1TGU') { 
+            $coduni= 'UNI'; 
+            $cond = '='; 
+            $name = '';
+        }
 
 
         #-------------------------------------------------------------------------------------
         $universidad = Universidad::select('id','codigo','nombre as text','gestion','idubigeo','idpais')
         					->with(['Distrito','Paises'])
                             ->where('codigo',$cond,$coduni)
+                            ->where('activo', true)
         					->where('nombre','like',"%$name%")
         					->get();
 
