@@ -31,7 +31,7 @@ class UniversidadController extends Controller
     public function universidad(Request $request)
     {
         $name = $request->varuni ?:'';
-        $name = trim(strtoupper($name));
+        $name = trim($name);
 
         #Valido la modalidad para restringir la UNI a los Titulado o Graduado en la UNI
         $idmodalidad = $request->varidmodalidad;
@@ -55,7 +55,7 @@ class UniversidadController extends Controller
         					->with(['Distrito','Paises'])
                             ->where('codigo',$cond,$coduni)
                             ->where('activo', true)
-        					->where('nombre','like',"%$name%")
+                            ->whereRaw('UPPER(nombre) like ?', ['%' . strtoupper($name) . '%'])
         					->get();
 
         return $universidad;

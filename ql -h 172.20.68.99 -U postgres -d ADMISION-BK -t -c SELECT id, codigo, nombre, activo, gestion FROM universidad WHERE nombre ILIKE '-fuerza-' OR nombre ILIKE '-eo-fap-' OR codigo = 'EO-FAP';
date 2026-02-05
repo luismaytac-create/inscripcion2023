@@ -1,0 +1,6 @@
+ id  | codigo |                      nombre                      | activo | gestion 
+-----+--------+--------------------------------------------------+--------+---------
+  41 | UFAEP  | UNIVERSIDAD DE LAS FUERZAS ARMADAS               | t      | Privada
+ 159 | EO-FAP | Escuela de Oficiales de la Fuerza Aérea del Perú | t      | 
+(2 rows)
+
