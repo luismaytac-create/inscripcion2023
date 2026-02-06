@@ -29,11 +29,14 @@ class EstadisticasController extends Controller
     						->groupBy('fecha_registro')
     						->orderBy('fecha_registro','desc')
     						->paginate(5);
-        $Pagantes = Postulante::select('fecha_pago',DB::raw('count(*) as cantidad'))
-                            ->where('pago',1)
+        $Pagantes = Postulante::select('postulante.fecha_pago',DB::raw('count(*) as cantidad'))
+                            ->join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                            ->where('r.servicio', '<>', '475')
+                            ->where('r.servicio', '<>', '474')
+                            ->where('r.servicio', '<>', '519')
                             ->IsNull(0)
-                            ->groupBy('fecha_pago')
-                            ->orderBy('fecha_pago','desc')
+                            ->groupBy('postulante.fecha_pago')
+                            ->orderBy('postulante.fecha_pago','desc')
                             ->paginate(5);
         $Modalidades = Postulante::select('m.nombre as modalidad',DB::raw('count(*) as cantidad'))
                             ->join('modalidad as m','m.id','=','postulante.idmodalidad')
@@ -50,7 +53,10 @@ class EstadisticasController extends Controller
                             ->paginate(5);
 		$ModalidadesPag = Postulante::select('m.nombre as modalidad',DB::raw('count(*) as cantidad'))
                             ->join('modalidad as m','m.id','=','postulante.idmodalidad')
-                            ->where('pago',1)
+                            ->join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                            ->where('r.servicio', '<>', '475')
+                            ->where('r.servicio', '<>', '474')
+                            ->where('r.servicio', '<>', '519')
                             ->IsNull(0)
                             ->groupBy('m.nombre')
                             ->orderBy('m.nombre')
@@ -73,29 +79,46 @@ class EstadisticasController extends Controller
 
         $CepreUniPre = Postulante::where('idmodalidad',16)->IsNull(0)->Activos()->get()->count();
         $CepreUniIns = Postulante::where('idmodalidad',16)->IsNull(0)->where('datos_ok',1)->Activos()->get()->count();
-        $CepreUniPag = Postulante::where('idmodalidad',16)->IsNull(0)->where('pago',1)->Activos()->get()->count();
+        $CepreUniPag = Postulante::join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                            ->where('idmodalidad',16)
+                            ->where('r.servicio', '<>', '475')
+                            ->where('r.servicio', '<>', '474')
+                            ->where('r.servicio', '<>', '519')
+                            ->IsNull(0)->Activos()->get()->count();
 
         $CepreUniPreVoca = Postulante::where('idmodalidad',16)->where('idespecialidad',1)
                                 ->IsNull(0)->Activos()->get()->count();
         $CepreUniInsVoca = Postulante::where('idmodalidad',16)->where('idespecialidad',1)
                                 ->IsNull(0)->where('datos_ok',1)->Activos()->get()->count();
-        $CepreUniPagVoca = Postulante::where('idmodalidad',16)->where('idespecialidad',1)
-                                ->IsNull(0)->where('pago',1)->Activos()->get()->count();
+        $CepreUniPagVoca = Postulante::join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                                ->where('idmodalidad',16)->where('idespecialidad',1)
+                                ->where('r.servicio', '<>', '475')
+                                ->where('r.servicio', '<>', '474')
+                                ->where('r.servicio', '<>', '519')
+                                ->IsNull(0)->Activos()->get()->count();
         $CepreUniModalidad = DB::table('est_cepre_modalidad')->get();
 
         $PreVoca = Postulante::where('idespecialidad',1)->IsNull(0)->Activos()->get()->count();
         $InsVoca = Postulante::where('idmodalidad','<>',16)->where('idespecialidad',1)->IsNull(0)->where('datos_ok',1)->Activos()->get()->count();
-        $PagVoca = Postulante::where('idmodalidad','<>',16)->where('idespecialidad',1)->IsNull(0)->where('pago',1)->Activos()->get()->count();
+        $PagVoca = Postulante::join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                        ->where('idmodalidad','<>',16)->where('idespecialidad',1)
+                        ->where('r.servicio', '<>', '475')
+                        ->where('r.servicio', '<>', '474')
+                        ->where('r.servicio', '<>', '519')
+                        ->IsNull(0)->Activos()->get()->count();
         $list_preins = Postulante::select('fecha_registro',DB::raw('count(*) as cantidad'))
             ->IsNull(0)
             ->Activos()
             ->groupBy('fecha_registro')
             ->orderBy('fecha_registro','asc')->get();
-        $list_pagante = Postulante::select('fecha_pago',DB::raw('count(*) as cantidad'))
-            ->where('pago',1)
+        $list_pagante = Postulante::select('postulante.fecha_pago',DB::raw('count(*) as cantidad'))
+            ->join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+            ->where('r.servicio', '<>', '475')
+            ->where('r.servicio', '<>', '474')
+            ->where('r.servicio', '<>', '519')
             ->IsNull(0)
-            ->groupBy('fecha_pago')
-            ->orderBy('fecha_pago','asc')
+            ->groupBy('postulante.fecha_pago')
+            ->orderBy('postulante.fecha_pago','asc')
             ->get();
         $list_ins = Postulante::select('fecha_conformidad',DB::raw('count(*) as cantidad'))
             ->where('datos_ok',1)
@@ -161,11 +184,14 @@ class EstadisticasController extends Controller
     });
 	$excel->sheet('PAGANTES', function($sheet) {
 
-        $pagan_Arr = Postulante::select('fecha_pago',DB::raw('CAST (count(fecha_pago) as INTEGER) '))
-                            ->where('pago',1)
+        $pagan_Arr = Postulante::select('postulante.fecha_pago',DB::raw('CAST (count(postulante.fecha_pago) as INTEGER) '))
+                            ->join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                            ->where('r.servicio', '<>', '475')
+                            ->where('r.servicio', '<>', '474')
+                            ->where('r.servicio', '<>', '519')
                             ->IsNull(0)
-                            ->groupBy('fecha_pago')
-                            ->orderBy('fecha_pago','desc')
+                            ->groupBy('postulante.fecha_pago')
+                            ->orderBy('postulante.fecha_pago','desc')
                             ->get();
 							
 							

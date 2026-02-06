@@ -398,7 +398,11 @@ if (! function_exists('Totales')) {
                 $cantidad = Postulante::Activos()->Isnull(0)->count();
                 break;
             case 'Pagantes':
-                $cantidad = Postulante::where('pago',1)->Activos()->Isnull(0)->count();
+                $cantidad = Postulante::join('recaudacion as r', 'postulante.numero_identificacion', '=', 'r.codigo')
+                    ->where('r.servicio', '<>', '475')
+                    ->where('r.servicio', '<>', '474')
+                    ->where('r.servicio', '<>', '519')
+                    ->Activos()->Isnull(0)->count();
                 break;
             case 'Inscritos':
                 $cantidad = Postulante::where('datos_ok',1)->Activos()->Isnull(0)->count();
