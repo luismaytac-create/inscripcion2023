@@ -387,16 +387,16 @@ class PagoController extends Controller
         } else {
             // Sin beca - Asignar según modalidad
 
-            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
-            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14, 23
+            if (in_array($idmoda, [1, 2, 3, 13, 14, 23])) {
                 if (str_contains($gestion_ie, 'Pública')) {
                     $pagos->put('examen', '464'); // INST. EDUC. ESTATAL
                 } else {
                     $pagos->put('examen', '465'); // INST. EDUC. PRIVADA
                 }
             }
-            // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22, 23
-            elseif (in_array($idmoda, [21, 22, 23])) {
+            // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22
+            elseif (in_array($idmoda, [21, 22])) {
                 if (str_contains($gestion_ie, 'Pública')) {
                     $pagos->put('examen', '514'); // MODAL.EXTRAOR.COLE.ESTAT
                 } else {
@@ -511,9 +511,9 @@ class PagoController extends Controller
         } else {
             // Sin beca - Asignar según modalidad
 
-            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+            if (in_array($idmoda, [1, 2, 3, 13, 14, 23])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '464' : '465');
-            } elseif (in_array($idmoda, [21, 22, 23])) {
+            } elseif (in_array($idmoda, [21, 22])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '514' : '515');
             } elseif (in_array($idmoda, [7, 19])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '469' : '470');
@@ -541,7 +541,7 @@ class PagoController extends Controller
         }
 
         // Si es CEPRE-UNI y su segunda modalidad es ordinario, verificar vocacional en especialidades de segunda modalidad
-        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14])) {
+        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14, 23])) {
             $especialidades_segunda_modalidad = [
                 $postulante->idespecialidad4,
                 $postulante->idespecialidad5,
@@ -599,9 +599,9 @@ public function CalculoServiciosAd($postulante)
         } else {
             // Sin beca - Asignar según modalidad
 
-            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+            if (in_array($idmoda, [1, 2, 3, 13, 14, 23])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '464' : '465');
-            } elseif (in_array($idmoda, [21, 22, 23])) {
+            } elseif (in_array($idmoda, [21, 22])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '514' : '515');
             } elseif (in_array($idmoda, [7, 19])) {
                 $pagos->put('examen', str_contains($gestion_ie, 'Pública') ? '469' : '470');
@@ -629,7 +629,7 @@ public function CalculoServiciosAd($postulante)
         }
 
         // Si es CEPRE-UNI y su segunda modalidad es ordinario, verificar vocacional en especialidades de segunda modalidad
-        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14])) {
+        if ($postulante->idmodalidad == 16 && in_array($postulante->idmodalidad2, [1, 2, 3, 13, 14, 23])) {
             $especialidades_segunda_modalidad = [
                 $postulante->idespecialidad4,
                 $postulante->idespecialidad5,
@@ -903,8 +903,8 @@ public function CalculoServiciosFicha($id = null)
         } else {
             // Sin beca - Asignar según modalidad
 
-            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14
-            if (in_array($idmoda, [1, 2, 3, 13, 14])) {
+            // Ordinario (O) / CNE - modalidades 1, 2, 3, 13, 14,23
+            if (in_array($idmoda, [1, 2, 3, 13, 14,23])) {
                 if (str_contains($gestion_ie, 'Pública')) {
                     $pagos->put('examen', '464'); // INST. EDUC. ESTATAL
                 } else {
@@ -912,7 +912,7 @@ public function CalculoServiciosFicha($id = null)
                 }
             }
             // Modalidades Extraordinarias (E1DPA, E1DCAN, E1PDI) - modalidades 21, 22, 23
-            elseif (in_array($idmoda, [21, 22, 23])) {
+            elseif (in_array($idmoda, [21, 22])) {
                 if (str_contains($gestion_ie, 'Pública')) {
                     $pagos->put('examen', '514'); // MODAL.EXTRAOR.COLE.ESTAT
                 } else {
