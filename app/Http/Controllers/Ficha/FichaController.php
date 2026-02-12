@@ -701,6 +701,13 @@ class FichaController extends Controller
             } else {
                 $postulante = Postulante::Usuario()->first();
             }
+            
+            // Validar que tenga aula asignada para poder ver la ficha
+            if (!isset($postulante->idaula1) || is_null($postulante->idaula1)) {
+                Alert::warning('Aún no se le ha asignado aula. No puede ver su ficha en este momento.');
+                return redirect()->route('ficha.index');
+            }
+            
             $evaluacion = Evaluacion::Activo()->first();
             /*
             $muestraficha = DB::table("vista_muestra_ficha")->where('numero_identificacion', $postulante->numero_identificacion)->where('ficha','MUESTRA')->count();
