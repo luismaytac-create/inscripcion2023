@@ -741,16 +741,16 @@ class FichaController extends Controller
 
 
             
-            PDF::Image(storage_path('app/documentos/comunicado.jpg'), 0, 0, 210, 297);
-            PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
+            PDF::Image(storage_path('app/documentos/ficha_adm.jpg'), 0, 0, 210, 297);
+            /*PDF::Output(public_path('storage/tmp/') . 'Ficha_2025_2_' . $postulante->numero_identificacion . '.pdf', 'FI');
             PDF::AddPage('U', 'A4');
          
          
-            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
-            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
+            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
+            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
             
-            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
-            //PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
+            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
+            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);*/
 
             PDF::SetXY(5, 100 + 16 - 20 + 10 + 3 + 6 - 6);
             PDF::SetFont('helvetica', 'B', 13);
@@ -854,167 +854,74 @@ class FichaController extends Controller
 
 
             #MODALIDAD
-
+            // Si idmodalidad == 16, usar nombre_modalidad2, de lo contrario nombre_modalidad
+            $nombreModalidad = ($postulante->idmodalidad == 16) ? $postulante->nombre_modalidad2 : $postulante->nombre_modalidad;
             PDF::SetXY(5, 100 + 16 - 20 + 10 + 3 + 6);
             PDF::SetFont('helvetica', 'B', 13);
             PDF::Cell(60, 5, 'Modalidad :', 0, 0, 'L');
             PDF::SetXY(31, 100 + 16 - 20 + 10 + 3 + 6);
             PDF::SetFont('helvetica', '', 13);
-            PDF::Cell(150, 5, $postulante->nombre_modalidad, 0, 0, 'L');
-            // Sede (debajo de Modalidad y antes de Primera Prioridad)
+            PDF::Cell(150, 5, $nombreModalidad, 0, 0, 'L');
+            // Sede (debajo de Modalidad - usa texto1 del catálogo)
             PDF::SetXY(5, 105 + 12 - 20 + 10 + 3 + 10); 
             PDF::SetFont('helvetica', 'B', 13);
             PDF::Cell(60, 5, 'Sede :', 0, 0, 'L');
             PDF::SetXY(20, 105 + 12 - 20 + 10 + 3 + 10); 
             PDF::SetFont('helvetica', '', 13);
-            PDF::Cell(150, 5, $postulante->sede, 0, 0, 'L');
+            PDF::Cell(150, 5, $postulante->colegio, 0, 0, 'L');
             
-             // Colegio (debajo de Sede)
-            $yColegioSede = 105 + 12 - 20 + 10 + 3 + 10 + 5;
-            PDF::SetXY(5, $yColegioSede); 
-            PDF::SetFont('helvetica', 'B', 13);
-            PDF::Cell(60, 5, 'Colegio :', 0, 0, 'L');
-            PDF::SetXY(25, $yColegioSede); 
-            PDF::SetFont('helvetica', '', 13);
-            PDF::Cell(150, 5, html_entity_decode($postulante->colegio), 0, 0, 'L');
-            
-            // Dirección del colegio (debajo de Colegio)
-            $yDireccion = $yColegioSede + 5;
-            PDF::SetXY(5, $yDireccion); 
+            // Dirección de la Sede (usa texto2 del catálogo)
+            $yDireccionSede = 105 + 12 - 20 + 10 + 3 + 10 + 5;
+            PDF::SetXY(5, $yDireccionSede); 
             PDF::SetFont('helvetica', 'B', 13);
             PDF::Cell(60, 5, html_entity_decode('Direcci&oacute;n :'), 0, 0, 'L');
-            PDF::SetXY(30, $yDireccion); 
-            PDF::SetFont('helvetica', '', 13);
-            PDF::Cell(150, 5, html_entity_decode($postulante->direccion_sede), 0, 0, 'L');
+            PDF::SetXY(30, $yDireccionSede); 
+            PDF::SetFont('helvetica', '', 12);
+            PDF::Cell(150, 5, $postulante->direccion_sede, 0, 0, 'L');
+            
+            // Facultad (debajo de Dirección - join con tabla facultad)
+            // Si idmodalidad == 16, usar idfacultad2, de lo contrario idfacultad
+            $yFacultad = $yDireccionSede + 5;
+            $idFacultadUsar = ($postulante->idmodalidad == 16) ? $postulante->idfacultad2 : $postulante->idfacultad;
+            $objFacultad = \App\Models\Facultad::find($idFacultadUsar);
+            $nombreFacultad = $objFacultad ? $objFacultad->nombre : '---';
+            PDF::SetXY(5, $yFacultad); 
+            PDF::SetFont('helvetica', 'B', 13);
+            PDF::Cell(60, 5, 'Facultad :', 0, 0, 'L');
+            PDF::SetXY(28, $yFacultad); 
+            PDF::SetFont('helvetica', '', 12);
+            PDF::Cell(150, 5, $nombreFacultad, 0, 0, 'L');
+            
+            // Primera Especialidad (debajo de Facultad)
+            // Si idmodalidad == 16, usar nombre_especialidad4, de lo contrario nombre_especialidad
+            $yEspecialidad1 = $yFacultad + 5;
+            $nombreEsp1 = ($postulante->idmodalidad == 16) ? $postulante->nombre_especialidad4 : $postulante->nombre_especialidad;
+            PDF::SetXY(5, $yEspecialidad1); 
+            PDF::SetFont('helvetica', 'B', 13);
+            PDF::Cell(60, 5, '1ra Especialidad :', 0, 0, 'L');
+            PDF::SetXY(45, $yEspecialidad1); 
+            PDF::SetFont('helvetica', '', 12);
+            PDF::Cell(150, 5, $nombreEsp1, 0, 0, 'L');
+            
+            // Segunda Especialidad (debajo de Primera Especialidad)
+            // Si idmodalidad == 16, usar nombre_especialidad5, de lo contrario nombre_especialidad2
+            $yEspecialidad2 = $yEspecialidad1 + 5;
+            $nombreEsp2 = ($postulante->idmodalidad == 16) ? $postulante->nombre_especialidad5 : $postulante->nombre_especialidad2;
+            if ($nombreEsp2 != "---") {
+                PDF::SetXY(5, $yEspecialidad2); 
+                PDF::SetFont('helvetica', 'B', 13);
+                PDF::Cell(60, 5, '2da Especialidad :', 0, 0, 'L');
+                PDF::SetXY(45, $yEspecialidad2); 
+                PDF::SetFont('helvetica', '', 12);
+                PDF::Cell(150, 5, $nombreEsp2, 0, 0, 'L');
+            }
             
             // Separación reducida para que las prioridades estén más arriba
-            $yInicioPrioridades = $yDireccion + 5 + 3;
+            $yInicioPrioridades = $yEspecialidad2 + 5 + 3;
 
 
             $yLineaActual = $yInicioPrioridades;
-            
-            PDF::SetFont('helvetica', 'B', 10);
-            if ($postulante->nombre_especialidad == "---") {
 
-
-            }
-            PDF::SetFont('helvetica', 'B', 10);
-            if ($postulante->nombre_especialidad2 == "---" && $postulante->nombre_especialidad != "---") {
-                PDF::SetXY(5, $yLineaActual);
-                PDF::Cell(120, 5, 'ESPECIALIDAD: ');
-                PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(34, $yLineaActual);
-                PDF::Cell(120, 5, $postulante->nombre_especialidad, 0, 0, 'L');
-            }
-            if ($postulante->nombre_especialidad3 == "---" && $postulante->nombre_especialidad2 != "---") {
-                PDF::SetXY(5, $yLineaActual);
-                PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, $yLineaActual);
-                PDF::Cell(130, 5, $postulante->nombre_especialidad, 0, 0, 'L');
-                $yLineaActual += 6;
-
-                PDF::SetFont('helvetica', 'B', 10);
-                PDF::SetXY(5, $yLineaActual);
-                PDF::Cell(130, 5, 'SEGUNDA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetXY(45, $yLineaActual);
-                PDF::SetFont('helvetica', '', 10);
-                PDF::Cell(130, 5, $postulante->nombre_especialidad2, 0, 0, 'L');
-
-            }
-
-            if ($postulante->nombre_especialidad != "---" && $postulante->nombre_especialidad2 != "---" && $postulante->nombre_especialidad3 != "---") {
-                PDF::SetXY(5, $yLineaActual);
-                PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, $yLineaActual);
-                PDF::Cell(130, 5, $postulante->nombre_especialidad, 0, 0, 'L');
-                $yLineaActual += 6;
-
-                PDF::SetFont('helvetica', 'B', 10);
-                PDF::SetXY(5, $yLineaActual);
-                PDF::Cell(130, 5, 'SEGUNDA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetXY(45, $yLineaActual);
-                PDF::SetFont('helvetica', '', 10);
-                PDF::Cell(130, 5, $postulante->nombre_especialidad2, 0, 0, 'L');
-                $yLineaActual += 6;
-
-                PDF::SetFont('helvetica', 'B', 10);
-                PDF::SetXY(5, $yLineaActual);
-                PDF::Cell(130, 5, 'TERCERA PRIORIDAD: ', 0, 0, 'L');
-                PDF::SetFont('helvetica', '', 10);
-                PDF::SetXY(45, $yLineaActual);
-                PDF::Cell(130, 5, $postulante->nombre_especialidad3, 0, 0, 'L');
-
-
-            }
-
-            #PDF::Cell(110,5,,0,0,'L');
-            if ($postulante->codigo_modalidad == 'ID-CEPRE') {
-                #SEGUNDA MODALIDAD
-                PDF::SetXY(5, 110 + 16 - 20 + 10 + 3 + 10 + 6);
-                PDF::SetFont('helvetica', 'B', 13);
-                PDF::Cell(60, 5, 'Modalidad 2 :', 0, 0, 'L');
-                PDF::SetXY(34, 110 + 16 - 20 + 10 + 3 + 10 + 6);
-                PDF::SetFont('helvetica', '', 13);
-                PDF::Cell(110, 5, $postulante->nombre_modalidad2, 0, 0, 'L');
-
-
-                if ($postulante->nombre_especialidad5 == "---" && $postulante->nombre_especialidad4 != "---") {
-                    PDF::SetFont('helvetica', 'B', 10);
-                    PDF::SetXY(5, 134 + 6);
-                    PDF::Cell(120, 5, 'ESPECIALIDAD: ', 0, 0, 'L');
-
-                    PDF::SetFont('helvetica', '', 10);
-                    PDF::SetXY(34, 134.3 + 6);
-                    PDF::Cell(120, 5, $postulante->nombre_especialidad4, 0, 0, 'L');
-
-
-                }
-                if ($postulante->nombre_especialidad6 == "---" && $postulante->nombre_especialidad5 != "---") {
-                    PDF::SetFont('helvetica', 'B', 10);
-                    PDF::SetXY(5, 134 + 6);
-
-                    PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
-                    PDF::SetFont('helvetica', '', 10);
-                    PDF::SetXY(45, 134 + 6);
-                    PDF::Cell(130, 5, $postulante->nombre_especialidad4, 0, 0, 'L');
-
-                    PDF::SetFont('helvetica', 'B', 10);
-                    PDF::SetXY(5, 134 + 5 + 6);
-                    PDF::Cell(130, 5, 'SEGUNDA PRIORIDAD: ', 0, 0, 'L');
-                    PDF::SetFont('helvetica', '', 10);
-                    PDF::SetXY(45, 134 + 5 + 6);
-                    PDF::Cell(130, 5, $postulante->nombre_especialidad5, 0, 0, 'L');
-
-                }
-
-                if ($postulante->nombre_especialidad4 != "---" && $postulante->nombre_especialidad5 != "---" && $postulante->nombre_especialidad6 != "---") {
-                    PDF::SetXY(5, 134 + 6);
-                    PDF::SetFont('helvetica', 'B', 10);
-                    PDF::Cell(130, 5, 'PRIMERA PRIORIDAD: ', 0, 0, 'L');
-                    PDF::SetFont('helvetica', '', 10);
-                    PDF::SetXY(45, 134 + 6);
-                    PDF::Cell(130, 5, $postulante->nombre_especialidad4, 0, 0, 'L');
-
-                    PDF::SetFont('helvetica', 'B', 10);
-                    PDF::SetXY(5, 134 + 5 + 6);
-                    PDF::Cell(130, 5, 'SEGUNDA PRIORIDAD: ', 0, 0, 'L');
-                    PDF::SetFont('helvetica', '', 10);
-                    PDF::SetXY(45, 134 + 5 + 6);
-                    PDF::Cell(130, 5, $postulante->nombre_especialidad5, 0, 0, 'L');
-                    /*
-                    PDF::SetFont('helvetica', 'B', 10);
-                    PDF::SetXY(5, 134 + 5 + 5 + 6);
-                    PDF::Cell(130, 5, 'TERCERA PRIORIDAD: ', 0, 0, 'L');
-
-                    PDF::SetFont('helvetica', '', 10);
-                    PDF::SetXY(45, 134 + 5 + 5 + 6);
-                    PDF::Cell(130, 5, $postulante->nombre_especialidad6, 0, 0, 'L');
-                    */
-                }
-
-            }
             #AULAS
             $arq = false;
             if (($postulante->codigo_especialidad == 'A1' || $postulante->codigo_especialidad2 == 'A1') && $postulante->codigo_modalidad != 'ID-CEPRE') {
@@ -1022,7 +929,7 @@ class FichaController extends Controller
                 PDF::SetFillColor(119, 205, 238);
                 PDF::SetXY(5, 91 + 6 - 5 - 8);
                 PDF::SetFont('helvetica', 'B', 15);
-                PDF::Cell(40, 7, 'SA 09/08  ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'SA 14/02  ', 0, 0, 'C', 1, '', 1);
 
                 PDF::SetFont('helvetica', 'B', 25);
 
@@ -1037,7 +944,7 @@ class FichaController extends Controller
                     PDF::SetFillColor(119, 205, 238);
                     PDF::SetXY(5, 91 + 6 - 5 - 8);
                     PDF::SetFont('helvetica', 'B', 15);
-                    PDF::Cell(40, 7, 'SA 09/08 ', 0, 0, 'C', 1, '', 1);
+                    PDF::Cell(40, 7, 'SA 14/02 ', 0, 0, 'C', 1, '', 1);
                     PDF::SetFont('helvetica', 'B', 35);
                     PDF::SetXY(5, 97 + 6 - 5 - 8);
                     PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . ' PUERTA N�4B', 0, 0, 'L', true, '', 1, true);
@@ -1115,7 +1022,7 @@ class FichaController extends Controller
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
 
-                PDF::Cell(40, 7, 'DO 07/12 ', 0, 0, 'C', true);
+                PDF::Cell(40, 7, 'LU 16/02 ', 0, 0, 'C', true);
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
 
@@ -1125,7 +1032,7 @@ class FichaController extends Controller
                 PDF::SetFillColor(243, 218, 114);
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(55 + $varxx, 91 + 6 - 8 - 5);
-                PDF::Cell(40, 7, 'VI 15/08 ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'MI 18/02 ', 0, 0, 'C', 1, '', 1);
                 PDF::SetXY(55 + $varxx, 120 + 9 + 8 - 40 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
                 PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta2, 0, 0, 'L', true, '', 1, true);
@@ -1133,7 +1040,7 @@ class FichaController extends Controller
                 PDF::SetFillColor(247, 176, 203);
                 PDF::SetXY(105 + $varxx, 88 + 3 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 15);
-                PDF::Cell(40, 7, 'DO 17/08 ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'VI 20/02 ', 0, 0, 'C', 1, '', 1);
 
                 PDF::SetFont('helvetica', 'B', 25);
                 PDF::SetXY(105 + $varxx, 94 + 3 + 6 - 8 - 5);
@@ -1143,7 +1050,7 @@ class FichaController extends Controller
                 PDF::SetFillColor(243, 218, 114);
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
-                PDF::Cell(40, 7, 'DO 07/12 ', 0, 0, 'C', 1, '', 1);
+                PDF::Cell(40, 7, 'LU 16/02 ', 0, 0, 'C', 1, '', 1);
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
                 PDF::Cell(40, 12, $postulante->datos_aula_uno->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
@@ -1365,8 +1272,8 @@ class FichaController extends Controller
             $esLimaMetropolitana = strtoupper($postulante->sede) === 'LIMA METROPOLITANA';
             
             if ($esLimaMetropolitana) {
-                // Si es Lima, mostrar mapa.jpg
-                PDF::Image(storage_path('app/documentos/mapa.jpg'), 0, 0, 210, 297);
+                // Si es Lima, mostrar mapa_adm.jpg
+                PDF::Image(storage_path('app/documentos/mapa_adm.jpeg'), 0, 0, 210, 297);
             } else {
                 // Si es provincia, mostrar informacion.jpg
                 PDF::Image(storage_path('app/documentos/informacion.jpg'), 0, 0, 210, 297);
