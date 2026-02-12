@@ -43,6 +43,13 @@
                                     <i class="la la-bell-o"></i> CAMBIAR CONTRASEÑA
                                 </a>
                             </li>
+                            @if($tiene_postulante && $postulante->datos_ok)
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_portlet_base_demo_1_4_tab_content" role="tab">
+                                    <i class="la la-file-pdf-o"></i> FICHA
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -458,6 +465,12 @@
 
                         <div class="tab-pane" id="m_portlet_base_demo_1_3_tab_content" role="tabpanel">
                         </div>
+                        @if($tiene_postulante && $postulante->datos_ok)
+                        <div class="tab-pane" id="m_portlet_base_demo_1_4_tab_content" role="tabpanel">
+                            <h3>Ficha de Inscripción</h3>
+                            <iframe src="{{route('ficha2025.pdf',$postulante->id)}}" width="100%" height="700px" scrolling="auto"></iframe>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
