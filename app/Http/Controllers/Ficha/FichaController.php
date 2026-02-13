@@ -707,7 +707,7 @@ class FichaController extends Controller
             if (!isset($postulante->idaula1) || is_null($postulante->idaula1)) {
                 if ($postulante->traslado && (isset($postulante->idaula2) && !is_null($postulante->idaula2))) {
                     // Postulante de traslado con idaula2 asignada, puede ver su ficha
-                } else {
+                } else {S
                     Alert::warning('Aún no se le ha asignado aula. No puede ver su ficha en este momento.');
                     return redirect()->route('ficha.index');
                 }
@@ -1032,7 +1032,7 @@ class FichaController extends Controller
 
 
             if ($esTraslado) {
-                // Postulante de TRASLADO: mostrar aula 2
+                // Postulante de TRASLADO: solo mostrar aula 2
                 PDF::SetFillColor(243, 218, 114);
                 PDF::SetFont('helvetica', 'B', 15);
                 PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
@@ -1040,17 +1040,6 @@ class FichaController extends Controller
                 PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
                 PDF::SetFont('helvetica', 'B', 25);
                 PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
-
-                // Si tiene aula vocacional, también mostrarla
-                if (isset($postulante->idaulavoca) && !is_null($postulante->idaulavoca)) {
-                    PDF::SetFillColor(119, 205, 238);
-                    PDF::SetFont('helvetica', 'B', 15);
-                    PDF::SetXY(55 + $varxx, 91 + 6 - 8 - 5);
-                    PDF::Cell(40, 7, 'SA 14/02 ', 0, 0, 'C', 1, '', 1);
-                    PDF::SetXY(55 + $varxx, 97 + 6 - 8 - 5);
-                    PDF::SetFont('helvetica', 'B', 25);
-                    PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . ' PUERTA N°4B', 0, 0, 'L', true, '', 1, true);
-                }
 
             } elseif (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR'])) {
                 #  PDF::SetTextColor(0);
