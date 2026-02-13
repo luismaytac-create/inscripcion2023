@@ -703,12 +703,17 @@ class FichaController extends Controller
             }
             
             // Validar que tenga aula asignada para poder ver la ficha
+            // Excepción: postulantes con traslado=true pueden ver la ficha si tienen idaula2
             if (!isset($postulante->idaula1) || is_null($postulante->idaula1)) {
-                Alert::warning('Aún no se le ha asignado aula. No puede ver su ficha en este momento.');
-                return redirect()->route('ficha.index');
+                if ($postulante->traslado && (isset($postulante->idaula2) && !is_null($postulante->idaula2))) {
+                    // Postulante de traslado con idaula2 asignada, puede ver su ficha
+                } else {
+                    Alert::warning('Aún no se le ha asignado aula. No puede ver su ficha en este momento.');
+                    return redirect()->route('ficha.index');
+                }
             }
             
-            $evaluacion = Evaluacion::Activo()->first();
+         $evaluacion = Evaluacion::Activo()->first();
             /*
             $muestraficha = DB::table("vista_muestra_ficha")->where('numero_identificacion', $postulante->numero_identificacion)->where('ficha','MUESTRA')->count();
             if( $muestraficha >0){
@@ -753,7 +758,7 @@ class FichaController extends Controller
             PDF::AddPage('U', 'A4');
          
          
-            PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
+            PD   F::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, 0, '', false, false, 0);
             PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297, '', '', '', false, '', '', false, false, 0);
             
             PDF::Image(storage_path('app/documentos/ficha.jpg'), 0, 0, 210, 297);
