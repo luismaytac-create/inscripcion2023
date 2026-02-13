@@ -20,7 +20,7 @@ class Postulante extends Model
             'foto_cargada','foto_editada','foto_rechazada','foto_estado','foto_fecha_carga','foto_fecha_rechazo','foto_fecha_edicion',
             'idaula1','idaula2','idaula3','idaulavoca','anulado','datos_ok','fecha_registro','idusuario','inicio_estudios','fin_estudios','pago','fecha_pago','fecha_conformidad','idsede','foto_dni','idusuarioeditor','sisfoh','magisterio'
                 ,'idespecialidad3','idespecialidad4','idespecialidad5','idespecialidad6','idfacultad','idfacultad2','idturnopiloto'
-        ,'foto_fecha_subida','foto_fecha_editor','ficha_fecha','discapacidad','cuarta_df'];
+        ,'foto_fecha_subida','foto_fecha_editor','ficha_fecha','discapacidad','cuarta_df','traslado'];
 
     /**
     * Atributos Tipo de Identificacion
