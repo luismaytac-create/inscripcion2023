@@ -707,7 +707,7 @@ class FichaController extends Controller
             if (!isset($postulante->idaula1) || is_null($postulante->idaula1)) {
                 if ($postulante->traslado && (isset($postulante->idaula2) && !is_null($postulante->idaula2))) {
                     // Postulante de traslado con idaula2 asignada, puede ver su ficha
-                } else {S
+                } else {
                     Alert::warning('Aún no se le ha asignado aula. No puede ver su ficha en este momento.');
                     return redirect()->route('ficha.index');
                 }
