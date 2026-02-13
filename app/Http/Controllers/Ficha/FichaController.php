@@ -1022,7 +1022,7 @@ class FichaController extends Controller
             }
 
 
-            if (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE'])) {
+            if (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR'])) {
                 #  PDF::SetTextColor(0);
                 PDF::SetFillColor(143, 238, 87);
 
@@ -1689,7 +1689,7 @@ class FichaController extends Controller
          }
 
 
-        if (str_contains($postulante->codigo_modalidad,['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE'])) {
+        if (str_contains($postulante->codigo_modalidad,['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR'])) {
             #  PDF::SetTextColor(0);
             PDF::SetFillColor(143, 238, 87);
 
