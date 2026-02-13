@@ -975,23 +975,27 @@ class FichaController extends Controller
             
             // Solo mostrar puerta si la sede es LIMA
             $mostrarPuerta = strtoupper($postulante->sede) === 'LIMA METROPOLITANA';
+            
+            // Para postulantes de traslado, usar aula 2 como aula principal
+            $esTraslado = $postulante->traslado ? true : false;
+            $aulaPrincipal = $esTraslado ? $postulante->datos_aula_dos : $postulante->datos_aula_uno;
              
             $puerta1 = '';
             $puerta2 = '';
             $puerta3 = '';
             
             if ($mostrarPuerta) {
-                if ($postulante->datos_aula_uno->codigo == 'DIAD') {
+                if ($aulaPrincipal->codigo == 'DIAD') {
                     $puerta1 = 'PUERTA N°4-B';
-                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['A', 'C', 'D'])) {
+                } elseif (str_contains($aulaPrincipal->codigo, ['A', 'C', 'D'])) {
                     $puerta1 = 'PUERTA N°3';
-                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['G', 'H'])) {
+                } elseif (str_contains($aulaPrincipal->codigo, ['G', 'H'])) {
                     $puerta1 = 'PUERTA N°4';
-                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
+                } elseif (str_contains($aulaPrincipal->codigo, ['I', 'Q', 'M', 'R1', 'J3'])) {
                     $puerta1 = 'PUERTA N°5';
-                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['S', 'R5'])) {
+                } elseif (str_contains($aulaPrincipal->codigo, ['S', 'R5'])) {
                     $puerta1 = 'PUERTA N°6';
-                } elseif (str_contains($postulante->datos_aula_uno->codigo, ['T'])) {
+                } elseif (str_contains($aulaPrincipal->codigo, ['T'])) {
                     $puerta1 = 'PUERTA N°7';
                 }
                 
@@ -1027,7 +1031,28 @@ class FichaController extends Controller
             }
 
 
-            if (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR'])) {
+            if ($esTraslado) {
+                // Postulante de TRASLADO: mostrar aula 2
+                PDF::SetFillColor(243, 218, 114);
+                PDF::SetFont('helvetica', 'B', 15);
+                PDF::SetXY(5 + $varxx, 91 + 6 - 8 - 5);
+                PDF::Cell(40, 7, 'MI 18/02 ', 0, 0, 'C', 1, '', 1);
+                PDF::SetXY(5 + $varxx, 97 + 6 - 8 - 5);
+                PDF::SetFont('helvetica', 'B', 25);
+                PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
+
+                // Si tiene aula vocacional, también mostrarla
+                if (isset($postulante->idaulavoca) && !is_null($postulante->idaulavoca)) {
+                    PDF::SetFillColor(119, 205, 238);
+                    PDF::SetFont('helvetica', 'B', 15);
+                    PDF::SetXY(55 + $varxx, 91 + 6 - 8 - 5);
+                    PDF::Cell(40, 7, 'SA 14/02 ', 0, 0, 'C', 1, '', 1);
+                    PDF::SetXY(55 + $varxx, 97 + 6 - 8 - 5);
+                    PDF::SetFont('helvetica', 'B', 25);
+                    PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . ' PUERTA N°4B', 0, 0, 'L', true, '', 1, true);
+                }
+
+            } elseif (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR'])) {
                 #  PDF::SetTextColor(0);
                 PDF::SetFillColor(143, 238, 87);
 
@@ -1079,42 +1104,44 @@ class FichaController extends Controller
             PDF::SetXY(18, 89.5 - 8 - 8);
 
             $puerta = '';
+            // Usar aula principal (aula2 para traslados, aula1 para el resto)
+            $codigoAulaPrincipal = $aulaPrincipal->codigo;
 
-            if (str_contains($postulante->datos_aula_uno->codigo, 'C')) {
+            if (str_contains($codigoAulaPrincipal, 'C')) {
                 $puerta = 'PUERTA N°3';
             }
 
-            if (str_contains($postulante->datos_aula_uno->codigo, 'D')) {
+            if (str_contains($codigoAulaPrincipal, 'D')) {
                 $puerta = 'PUERTA N°3';
             }
-            if (str_contains($postulante->datos_aula_uno->codigo, 'A')) {
+            if (str_contains($codigoAulaPrincipal, 'A')) {
                 $puerta = 'PUERTA N°3';
             }
-            if (str_contains($postulante->datos_aula_uno->codigo, 'DIAD')) {
+            if (str_contains($codigoAulaPrincipal, 'DIAD')) {
                 $puerta = 'PUERTA N°4-B';
             }
 
 
-            if (str_contains($postulante->datos_aula_uno->codigo, 'G')) {
+            if (str_contains($codigoAulaPrincipal, 'G')) {
                 $puerta = 'PUERTA N°4A';
             }
-            if (str_contains($postulante->datos_aula_uno->codigo, 'H')) {
+            if (str_contains($codigoAulaPrincipal, 'H')) {
                 $puerta = 'PUERTA N°4A';
             }
 
 
-            if (str_contains($postulante->datos_aula_uno->codigo, 'I')) {
+            if (str_contains($codigoAulaPrincipal, 'I')) {
                 $puerta = 'PUERTA N°5';
             }
-            if (str_contains($postulante->datos_aula_uno->codigo, 'Q')) {
+            if (str_contains($codigoAulaPrincipal, 'Q')) {
                 $puerta = 'PUERTA N°5';
             }
 
-            if (str_contains($postulante->datos_aula_uno->codigo, 'S')) {
+            if (str_contains($codigoAulaPrincipal, 'S')) {
                 $puerta = 'PUERTA N°6';
             }
 
-            if (str_contains($postulante->datos_aula_uno->codigo, 'T')) {
+            if (str_contains($codigoAulaPrincipal, 'T')) {
                 $puerta = 'PUERTA N°7';
             }
 
