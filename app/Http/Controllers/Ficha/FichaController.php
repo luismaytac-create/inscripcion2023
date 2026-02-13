@@ -947,14 +947,14 @@ class FichaController extends Controller
 
                 $arq = true;
             } else {
-                if ($postulante->codigo_especialidad4 == 'A1' && $postulante->codigo_modalidad == 'ID-CEPRE') {
+                if (($postulante->codigo_especialidad4 == 'A1' || $postulante->codigo_especialidad5 == 'A1') && $postulante->codigo_modalidad == 'ID-CEPRE') {
                     PDF::SetFillColor(119, 205, 238);
                     PDF::SetXY(5, 91 + 6 - 5 - 8);
                     PDF::SetFont('helvetica', 'B', 15);
                     PDF::Cell(40, 7, 'SA 14/02 ', 0, 0, 'C', 1, '', 1);
                     PDF::SetFont('helvetica', 'B', 35);
                     PDF::SetXY(5, 97 + 6 - 5 - 8);
-                    PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . ' PUERTA N�4B', 0, 0, 'L', true, '', 1, true);
+                    PDF::Cell(40, 12, $postulante->datos_aula_voca->codigo . ' PUERTA N°4B', 0, 0, 'L', true, '', 1, true);
                     $arq = true;
                 }
 
