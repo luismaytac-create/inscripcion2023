@@ -1041,7 +1041,7 @@ class FichaController extends Controller
                 PDF::SetFont('helvetica', 'B', 25);
                 PDF::Cell(40, 12, $postulante->datos_aula_dos->codigo . ' ' . $puerta1, 0, 0, 'L', true, '', 1, true);
 
-            } elseif (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR'])) {
+            } elseif (str_contains($postulante->codigo_modalidad, ['O', 'E1PDI', 'E1DPA', 'E1DCAN', 'E1VTI', 'E1CABI', 'E1DB', 'ID-CEPRE', 'EPIR', 'INTR'])) {
                 #  PDF::SetTextColor(0);
                 PDF::SetFillColor(143, 238, 87);
 
